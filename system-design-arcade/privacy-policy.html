@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — System Design Arcade</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a1a;
+      color: #c0c0d8;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.7;
+      padding: 2rem 1.5rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #00fff5;
+      font-size: 1.6rem;
+      margin-bottom: 0.25rem;
+    }
+    h2 {
+      color: #fff;
+      font-size: 1.15rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid #2a2a5a;
+      padding-bottom: 0.25rem;
+    }
+    p, li { margin-bottom: 0.75rem; }
+    ul { padding-left: 1.25rem; }
+    a { color: #00fff5; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .subtitle { color: #606080; font-size: 0.9rem; margin-bottom: 2rem; }
+    .accent { color: #00fff5; }
+  </style>
+</head>
+<body>
+  <h1>Privacy Policy</h1>
+  <p class="subtitle">System Design Arcade — by Hyperfocused Engineer<br>Effective date: February 28, 2026</p>
+
+  <h2>Overview</h2>
+  <p>System Design Arcade is a mobile app that teaches system design concepts through interactive, arcade-style games. Your privacy matters to us. This policy explains what data we collect, why, and how we handle it.</p>
+  <p><strong>The short version:</strong> We collect minimal data. We don't sell your data. We don't run ads. We don't track you.</p>
+
+  <h2>What Data We Collect</h2>
+  <p><strong>If you play as a Guest:</strong></p>
+  <ul>
+    <li>No personal data is collected.</li>
+    <li>Game progress is stored only on your device (locally via AsyncStorage).</li>
+  </ul>
+  <p><strong>If you sign in (Google or Apple):</strong></p>
+  <ul>
+    <li><strong>Email address</strong> — provided by your OAuth provider (Google or Apple). Used solely to identify your account.</li>
+    <li><strong>Display name</strong> — if provided by your OAuth provider.</li>
+    <li><strong>Game progress</strong> — scores, stars, and level completion data synced to the cloud so you can access it across devices.</li>
+  </ul>
+  <p>We do <strong>not</strong> collect your location, contacts, photos, browsing history, or any other personal data.</p>
+
+  <h2>How We Use Your Data</h2>
+  <ul>
+    <li>To authenticate your account and sync game progress across devices.</li>
+    <li>That's it. No marketing, no profiling, no behavioral analysis.</li>
+  </ul>
+
+  <h2>Third-Party Services</h2>
+  <p>We use the following third-party services:</p>
+  <ul>
+    <li><strong>Supabase</strong> — authentication and cloud database for progress sync. <a href="https://supabase.com/privacy">Supabase Privacy Policy</a></li>
+    <li><strong>Google OAuth</strong> — for "Sign in with Google". <a href="https://policies.google.com/privacy">Google Privacy Policy</a></li>
+    <li><strong>Apple Sign In</strong> — for "Sign in with Apple". <a href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a></li>
+    <li><strong>Expo / EAS</strong> — app build and update infrastructure. <a href="https://expo.dev/privacy">Expo Privacy Policy</a></li>
+  </ul>
+  <p>We do not use any advertising networks, analytics trackers, or third-party SDKs that collect user data.</p>
+
+  <h2>Data Storage & Security</h2>
+  <ul>
+    <li>Guest data is stored locally on your device only.</li>
+    <li>Signed-in user data is stored in Supabase (hosted on AWS) with row-level security enabled.</li>
+    <li>Authentication tokens are stored securely on your device.</li>
+    <li>All communication with our servers uses HTTPS encryption.</li>
+  </ul>
+
+  <h2>Data Retention</h2>
+  <p>Your data is retained as long as your account exists. If you delete your account, all associated data is permanently removed from our servers.</p>
+
+  <h2>Your Rights</h2>
+  <p>You can:</p>
+  <ul>
+    <li><strong>Play without an account</strong> — use Guest mode with zero data collection.</li>
+    <li><strong>Request data deletion</strong> — email us and we will delete your account and all associated data within 30 days.</li>
+    <li><strong>Sign out</strong> — at any time from Settings within the app.</li>
+  </ul>
+
+  <h2>Children's Privacy</h2>
+  <p>System Design Arcade is not directed at children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal data, please contact us and we will delete it.</p>
+
+  <h2>Changes to This Policy</h2>
+  <p>We may update this policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+
+  <h2>Contact</h2>
+  <p>Questions or requests? Reach us at:<br>
+  <a href="mailto:hyperfocusedengineer@gmail.com">hyperfocusedengineer@gmail.com</a></p>
+</body>
+</html>
