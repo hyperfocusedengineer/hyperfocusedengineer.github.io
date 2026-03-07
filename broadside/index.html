@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broadside — Cross-Platform Social Media Composer</title>
+  <meta name="description" content="Compose once, dispatch everywhere. A vintage writing-desk app for cross-platform social media posting. Built in public by Hyperfocused Engineer.">
+  <meta property="og:title" content="Broadside — Cross-Platform Social Media Composer">
+  <meta property="og:description" content="Compose once, dispatch everywhere. A beautifully crafted mobile app with a vintage writing-desk aesthetic for posting across Twitter, LinkedIn, Reddit, Instagram, WhatsApp, and Facebook.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hyperfocusedengineer.github.io/broadside/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --parchment: #F5ECD7;
+      --parchment-mid: #EDE0C8;
+      --parchment-dark: #DDD0B5;
+      --parchment-shadow: #C8BA9E;
+      --desk: #1E110A;
+      --desk-mid: #2C1810;
+      --desk-light: #3D2518;
+      --desk-grain: #241610;
+      --leather: #6B3A20;
+      --ink: #2A2018;
+      --ink-light: #4A3C30;
+      --gold: #C5A55A;
+      --gold-bright: #D4B86A;
+      --gold-dim: rgba(197, 165, 90, 0.25);
+      --gold-ghost: rgba(197, 165, 90, 0.08);
+      --brass: #9A7520;
+      --wax: #8B1A1A;
+      --wax-light: #A82828;
+      --wax-dark: #5C0E0E;
+      --stamp-twitter: #1B4F72;
+      --stamp-linkedin: #1A3C5E;
+      --stamp-reddit: #8B2500;
+      --stamp-instagram: #6B2D5B;
+      --stamp-whatsapp: #2D5F2D;
+      --stamp-facebook: #2C3E6B;
+    }
+
+    /* ── SVG noise filter ── */
+    .svg-filters { position: absolute; width: 0; height: 0; }
+
+    body {
+      background: var(--desk);
+      color: var(--parchment);
+      font-family: 'Crimson Pro', Georgia, serif;
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── Desk surface ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        /* wood grain — tight horizontal lines */
+        repeating-linear-gradient(
+          180deg,
+          transparent 0px,
+          transparent 3px,
+          rgba(0,0,0,0.04) 3px,
+          rgba(0,0,0,0.04) 4px,
+          transparent 4px,
+          transparent 11px,
+          rgba(0,0,0,0.02) 11px,
+          rgba(0,0,0,0.02) 12px
+        ),
+        /* wood grain — wider bands */
+        repeating-linear-gradient(
+          178deg,
+          transparent 0px,
+          transparent 40px,
+          rgba(60,30,10,0.06) 40px,
+          rgba(60,30,10,0.06) 42px,
+          transparent 42px,
+          transparent 80px
+        ),
+        /* vignette */
+        radial-gradient(ellipse at 50% 30%, transparent 30%, rgba(0,0,0,0.4) 100%),
+        /* base desk color */
+        linear-gradient(180deg, #22140C 0%, var(--desk-mid) 20%, var(--desk-mid) 80%, #1A0E08 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Noise overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.35;
+      filter: url(#noise);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page { position: relative; z-index: 1; }
+
+    /* ══════════════════════════════════════
+       HEADER — Hero with wax seal ceremony
+       ══════════════════════════════════════ */
+    .header {
+      position: relative;
+      padding: 3.5rem 1.5rem 3rem;
+      text-align: center;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Desk lamp glow */
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 500px;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(197, 165, 90, 0.06) 0%,
+        rgba(197, 165, 90, 0.02) 40%,
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+
+    .back-link {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Special Elite', cursive;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+    .back-link:hover { opacity: 1; }
+
+    /* ── Wax seal animation ── */
+    .seal-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 2rem;
+    }
+
+    .wax-seal {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      position: relative;
+      animation: sealDrop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      opacity: 0;
+      transform: scale(0.3) translateY(-80px);
+    }
+
+    @keyframes sealDrop {
+      0% { opacity: 0; transform: scale(0.3) translateY(-80px); }
+      40% { opacity: 1; transform: scale(1.15) translateY(0); }
+      55% { transform: scale(0.92) translateY(0); }
+      70% { transform: scale(1.05) translateY(0); }
+      85% { transform: scale(0.98) translateY(0); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .wax-seal::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        /* highlight */
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,0.12) 0%, transparent 40%),
+        /* main wax gradient */
+        radial-gradient(circle at 40% 35%, var(--wax-light) 0%, var(--wax) 45%, var(--wax-dark) 100%);
+      box-shadow:
+        0 6px 25px rgba(92, 14, 14, 0.7),
+        0 2px 8px rgba(0,0,0,0.4),
+        inset 0 -3px 8px rgba(0,0,0,0.3),
+        inset 0 2px 6px rgba(255,180,180,0.08);
+    }
+
+    /* Wax drip details */
+    .wax-seal::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: radial-gradient(
+        ellipse at 50% 45%,
+        transparent 42%,
+        var(--wax-dark) 43%,
+        var(--wax) 46%,
+        transparent 47%
+      );
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    .seal-emblem {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      font-size: 2.8rem;
+      color: rgba(245, 236, 215, 0.2);
+      text-shadow:
+        0 1px 0 rgba(255,255,255,0.06),
+        0 -1px 0 rgba(0,0,0,0.3);
+      letter-spacing: 0.02em;
+      animation: emblemReveal 0.6s ease forwards 0.8s;
+      opacity: 0;
+    }
+
+    @keyframes emblemReveal {
+      to { opacity: 1; }
+    }
+
+    /* Seal ring detail */
+    .seal-ring {
+      position: absolute;
+      inset: 14px;
+      border-radius: 50%;
+      border: 1px solid rgba(245, 236, 215, 0.06);
+      animation: emblemReveal 0.6s ease forwards 0.9s;
+      opacity: 0;
+    }
+
+    .seal-ring::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 1px solid rgba(245, 236, 215, 0.04);
+    }
+
+    /* ── Title ── */
+    .app-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      font-size: 4.2rem;
+      color: var(--parchment);
+      letter-spacing: 0.14em;
+      text-shadow:
+        0 2px 12px rgba(0,0,0,0.6),
+        0 0 60px rgba(197, 165, 90, 0.06);
+      animation: titleFade 1s ease forwards 0.4s;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    @keyframes titleFade {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .app-tagline {
+      font-family: 'Special Elite', cursive;
+      font-size: 1rem;
+      color: var(--gold);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+      animation: titleFade 1s ease forwards 0.6s;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .app-subtitle {
+      font-family: 'Crimson Pro', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--parchment-dark);
+      max-width: 460px;
+      margin-top: 1.5rem;
+      line-height: 1.7;
+      animation: titleFade 1s ease forwards 0.8s;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .header-badges {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.75rem;
+      animation: titleFade 1s ease forwards 1s;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .badge {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.7rem;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 0.3rem 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .badge:hover {
+      background: var(--gold-ghost);
+      border-color: var(--gold);
+    }
+
+    /* Store links */
+    .header-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: titleFade 1s ease forwards 1.2s;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .header-store-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Special Elite', cursive;
+      font-size: 0.72rem;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--gold-dim);
+      transition: all 0.3s;
+    }
+    .header-store-link:hover { border-color: var(--gold); background: var(--gold-ghost); }
+    .header-store-link.coming-soon { opacity: 0.4; cursor: default; }
+    .header-store-link .si { font-family: -apple-system, sans-serif; font-size: 1rem; }
+
+    /* Screenshot gallery */
+    .gallery-scroll {
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      padding: 0.75rem 0.5rem 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-dim) transparent;
+    }
+    .gallery-scroll::-webkit-scrollbar { height: 3px; }
+    .gallery-scroll::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+    .gallery-frame {
+      flex-shrink: 0;
+      width: 170px;
+      height: 302px;
+      background: linear-gradient(170deg, var(--desk-light), var(--desk-grain));
+      border: 1px solid rgba(197, 165, 90, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .gallery-frame:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .gallery-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+    .gallery-placeholder {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.6rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .gallery-placeholder::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(197, 165, 90, 0.12);
+      border-radius: 6px;
+      margin: 0 auto 0.5rem;
+    }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scrollBob 2s ease-in-out infinite 2s, titleFade 1s ease forwards 1.5s;
+      opacity: 0;
+    }
+
+    .scroll-hint::before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(180deg, transparent, var(--gold-dim));
+      margin: 0 auto 6px;
+    }
+
+    .scroll-hint::after {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-right: 1px solid var(--gold-dim);
+      border-bottom: 1px solid var(--gold-dim);
+      transform: rotate(45deg);
+      margin: 0 auto;
+    }
+
+    @keyframes scrollBob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ══════════════════════════════
+       SECTIONS — Papers on the desk
+       ══════════════════════════════ */
+    .desk-section {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 4rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .desk-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Section titles — brass plate style */
+    .section-plate {
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .section-plate h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: var(--parchment);
+      letter-spacing: 0.08em;
+      display: inline-block;
+      padding: 0 1.5rem;
+      position: relative;
+    }
+
+    /* Brass flourish lines */
+    .section-plate h2::before,
+    .section-plate h2::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .section-plate h2::before { right: 100%; }
+    .section-plate h2::after { left: 100%; }
+
+    .section-plate .plate-sub {
+      display: block;
+      font-family: 'Special Elite', cursive;
+      font-size: 0.7rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
+
+    /* ── Gold divider with ornament ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1rem 2rem;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim));
+    }
+    .divider::after {
+      background: linear-gradient(90deg, var(--gold-dim), transparent);
+    }
+
+    .divider-diamond {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      opacity: 0.4;
+    }
+
+    /* ══════════════════
+       PLATFORM STAMPS
+       ══════════════════ */
+    .stamps-shelf {
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.15) 0%, transparent 3px, transparent 97%, rgba(0,0,0,0.15) 100%),
+        linear-gradient(170deg, var(--desk-light) 0%, var(--desk-grain) 100%);
+      border: 1px solid rgba(197, 165, 90, 0.08);
+      padding: 2rem 1.5rem;
+      position: relative;
+    }
+
+    /* Leather texture stripe at top */
+    .stamps-shelf::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--leather), var(--brass), var(--leather));
+      opacity: 0.4;
+    }
+
+    .stamps-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .stamp {
+      width: 80px;
+      height: 92px;
+      position: relative;
+      cursor: default;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .stamp:hover {
+      transform: translateY(-4px) rotate(-1deg);
+      filter: brightness(1.1);
+    }
+
+    /* Perforated border via clip-path alternative — radial dots */
+    .stamp-body {
+      position: absolute;
+      inset: 0;
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 8px;
+      /* Perforated edge simulation */
+      background-image:
+        radial-gradient(circle at 0 0, var(--desk) 2.5px, transparent 2.5px),
+        radial-gradient(circle at 0 0, var(--desk) 2.5px, transparent 2.5px),
+        radial-gradient(circle at 0 0, var(--desk) 2.5px, transparent 2.5px),
+        radial-gradient(circle at 0 0, var(--desk) 2.5px, transparent 2.5px);
+      background-size: 9px 9px;
+      background-position:
+        -4.5px -4.5px,
+        -4.5px calc(100% + 4.5px),
+        calc(100% + 4.5px) -4.5px,
+        calc(100% + 4.5px) calc(100% + 4.5px);
+      background-repeat: repeat-y, repeat-y, repeat-x, repeat-x;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .stamp-inner {
+      position: absolute;
+      inset: 6px;
+      border-radius: 1px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stamp-icon {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .stamp-label {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+    }
+
+    .stamp-value {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.5rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.05em;
+    }
+
+    .stamp.twitter .stamp-body { background-color: var(--stamp-twitter); }
+    .stamp.linkedin .stamp-body { background-color: var(--stamp-linkedin); }
+    .stamp.reddit .stamp-body { background-color: var(--stamp-reddit); }
+    .stamp.instagram .stamp-body { background-color: var(--stamp-instagram); }
+    .stamp.whatsapp .stamp-body { background-color: var(--stamp-whatsapp); }
+    .stamp.facebook .stamp-body { background-color: var(--stamp-facebook); }
+
+    .stamp.twitter .stamp-inner { background: var(--stamp-twitter); }
+    .stamp.linkedin .stamp-inner { background: var(--stamp-linkedin); }
+    .stamp.reddit .stamp-inner { background: var(--stamp-reddit); }
+    .stamp.instagram .stamp-inner { background: var(--stamp-instagram); }
+    .stamp.whatsapp .stamp-inner { background: var(--stamp-whatsapp); }
+    .stamp.facebook .stamp-inner { background: var(--stamp-facebook); }
+
+    /* Tier legend */
+    .tier-legend {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tier-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Special Elite', cursive;
+      font-size: 0.7rem;
+      color: var(--parchment-dark);
+      letter-spacing: 0.06em;
+    }
+
+    .tier-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .tier-dot.hybrid { background: var(--gold); }
+    .tier-dot.share { background: var(--wax); opacity: 0.7; }
+
+    /* ══════════════════
+       STORY — Parchment
+       ══════════════════ */
+    .paper-card {
+      position: relative;
+      background: var(--parchment);
+      color: var(--ink);
+      padding: 2.5rem 2.5rem 2.5rem 3rem;
+      box-shadow:
+        0 1px 3px rgba(0,0,0,0.12),
+        0 4px 16px rgba(0,0,0,0.2),
+        0 12px 40px rgba(0,0,0,0.15),
+        /* Paper edge highlight */
+        inset 0 1px 0 rgba(255,255,255,0.5);
+      /* Aged paper texture */
+      background-image:
+        /* Ruled lines */
+        repeating-linear-gradient(
+          180deg,
+          transparent,
+          transparent 31px,
+          rgba(59,47,47,0.06) 31px,
+          rgba(59,47,47,0.06) 32px
+        ),
+        /* Aging spots */
+        radial-gradient(ellipse at 85% 20%, rgba(180,150,100,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 15% 80%, rgba(180,150,100,0.1) 0%, transparent 40%),
+        /* Base gradient */
+        linear-gradient(175deg, #F8F0DD 0%, var(--parchment) 30%, var(--parchment-mid) 70%, var(--parchment-dark) 100%);
+      background-position: 0 0.75rem;
+    }
+
+    /* Red margin line */
+    .paper-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 2.25rem;
+      width: 1px;
+      background: rgba(180, 60, 60, 0.15);
+    }
+
+    /* Paper curl shadow */
+    .paper-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(
+        -45deg,
+        rgba(0,0,0,0.06) 0%,
+        transparent 50%
+      );
+    }
+
+    .paper-card p {
+      margin-bottom: 1.1rem;
+      font-size: 1.08rem;
+      line-height: 1.85;
+      position: relative;
+    }
+    .paper-card p:last-child { margin-bottom: 0; }
+
+    .paper-card strong {
+      color: var(--desk-mid);
+      font-weight: 600;
+    }
+
+    .paper-card em {
+      font-style: italic;
+      color: var(--ink-light);
+    }
+
+    /* ══════════════════
+       WORKFLOW — Steps
+       ══════════════════ */
+    .workflow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 520px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Vertical connector line */
+    .workflow::before {
+      content: '';
+      position: absolute;
+      top: 24px;
+      bottom: 24px;
+      left: 23px;
+      width: 1px;
+      background: repeating-linear-gradient(
+        180deg,
+        var(--gold-dim) 0px,
+        var(--gold-dim) 4px,
+        transparent 4px,
+        transparent 8px
+      );
+    }
+
+    .workflow-step {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      padding: 1rem 0;
+      position: relative;
+    }
+
+    .step-seal {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, var(--wax-light), var(--wax) 50%, var(--wax-dark) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: rgba(245, 236, 215, 0.35);
+      text-shadow: 0 1px 0 rgba(0,0,0,0.3);
+      box-shadow:
+        0 3px 10px rgba(92, 14, 14, 0.5),
+        inset 0 -2px 4px rgba(0,0,0,0.2),
+        inset 0 1px 3px rgba(255,255,255,0.05);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-content {
+      padding-top: 0.6rem;
+      flex: 1;
+    }
+
+    .step-content h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      color: var(--parchment);
+      font-size: 1.1rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.3rem;
+    }
+
+    .step-content p {
+      color: var(--parchment-shadow);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ══════════════════
+       FEATURES — Cards
+       ══════════════════ */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(197, 165, 90, 0.06);
+      border: 1px solid rgba(197, 165, 90, 0.06);
+    }
+
+    .feature-card {
+      background: var(--desk);
+      padding: 1.75rem;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    .feature-card:hover {
+      background: var(--desk-grain);
+    }
+
+    .feature-card::before {
+      content: attr(data-num);
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      font-size: 3rem;
+      color: rgba(197, 165, 90, 0.04);
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+      line-height: 1;
+    }
+
+    .feature-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+      position: relative;
+    }
+
+    .feature-card h3::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold-dim);
+      margin-top: 0.5rem;
+    }
+
+    .feature-card p {
+      font-size: 0.92rem;
+      color: var(--parchment-shadow);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ══════════════════
+       TECH STACK
+       ══════════════════ */
+    .tech-desk {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .tech-tag {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.78rem;
+      color: var(--parchment-shadow);
+      background: transparent;
+      border: 1px solid rgba(197, 165, 90, 0.12);
+      padding: 0.4rem 0.9rem;
+      letter-spacing: 0.06em;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .tech-tag::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold-ghost), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tech-tag:hover {
+      border-color: var(--gold-dim);
+      color: var(--parchment);
+    }
+    .tech-tag:hover::before { opacity: 1; }
+
+    /* ══════════════════
+       LINKS
+       ══════════════════ */
+    .links-row {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .link-btn {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      text-decoration: none;
+      padding: 0.7rem 1.5rem;
+      border: 1px solid var(--gold-dim);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .link-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold-ghost), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .link-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold-bright);
+      box-shadow: 0 0 20px rgba(197, 165, 90, 0.08);
+    }
+    .link-btn:hover::before { opacity: 1; }
+
+    /* ══════════════════
+       FOOTER
+       ══════════════════ */
+    .footer {
+      text-align: center;
+      padding: 3rem 1.5rem 2.5rem;
+      position: relative;
+    }
+
+    .footer-seal {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, var(--wax-light), var(--wax) 60%, var(--wax-dark));
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(92, 14, 14, 0.4);
+    }
+
+    .footer-seal span {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: rgba(245, 236, 215, 0.2);
+    }
+
+    .footer p {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.7rem;
+      color: rgba(245, 236, 215, 0.2);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .footer .footer-year {
+      display: block;
+      margin-top: 0.3rem;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.75rem;
+      font-style: italic;
+      color: rgba(245, 236, 215, 0.12);
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    /* ══════════════════
+       RESPONSIVE
+       ══════════════════ */
+    @media (max-width: 600px) {
+      .app-name { font-size: 2.6rem; letter-spacing: 0.08em; }
+      .app-subtitle { font-size: 1.05rem; }
+      .header { min-height: 80vh; padding: 2.5rem 1.25rem 2rem; }
+      .desk-section { padding: 0.5rem 1rem 3rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .stamps-row { gap: 0.6rem; }
+      .stamp { width: 68px; height: 78px; }
+      .paper-card { padding: 2rem 1.5rem 2rem 2.25rem; }
+      .paper-card::before { left: 1.5rem; }
+      .section-plate h2::before,
+      .section-plate h2::after { width: 20px; }
+    }
+
+    @media (max-width: 380px) {
+      .app-name { font-size: 2rem; }
+      .stamps-row { gap: 0.4rem; }
+      .stamp { width: 56px; height: 66px; }
+      .stamp-icon { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- SVG noise filter -->
+  <svg class="svg-filters">
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </svg>
+
+  <div class="page">
+
+    <!-- ─── HEADER ─── -->
+    <header class="header">
+      <a href="../" class="back-link">&larr; Hyperfocused Engineer</a>
+
+      <div class="seal-container">
+        <div class="wax-seal">
+          <div class="seal-ring"></div>
+          <div class="seal-emblem">B</div>
+        </div>
+      </div>
+
+      <h1 class="app-name">BROADSIDE</h1>
+      <p class="app-tagline">Compose once, dispatch everywhere</p>
+      <p class="app-subtitle">
+        A cross-platform social media composer with a vintage
+        writing-desk aesthetic. One post, six platforms, one tap.
+      </p>
+
+      <div class="header-badges">
+        <span class="badge">React Native</span>
+        <span class="badge">Building in Public</span>
+        <span class="badge">Open Source</span>
+      </div>
+
+      <div class="header-actions">
+        <!-- Replace # with actual store URLs when available -->
+        <a href="#" class="header-store-link coming-soon"><span class="si">&#63743;</span> App Store &mdash; Soon</a>
+        <a href="#" class="header-store-link coming-soon"><span class="si">&#9654;</span> Play Store &mdash; Soon</a>
+        <a href="https://github.com/harshssd/broadside" class="header-store-link"><span class="si">&lt;/&gt;</span> Source Code</a>
+      </div>
+
+      <div class="scroll-hint"></div>
+    </header>
+
+    <!-- ─── SCREENSHOTS ─── -->
+    <section class="desk-section">
+      <div class="section-plate">
+        <h2>The App</h2>
+        <span class="plate-sub">Screenshots from the writing desk</span>
+      </div>
+
+      <div class="gallery-scroll">
+        <div class="gallery-frame">
+          <!-- <img src="screenshots/compose.png" alt="Compose screen"> -->
+          <div class="gallery-placeholder">Compose<br>Screen</div>
+        </div>
+        <div class="gallery-frame">
+          <!-- <img src="screenshots/stamps.png" alt="Platform stamps"> -->
+          <div class="gallery-placeholder">Platform<br>Stamps</div>
+        </div>
+        <div class="gallery-frame">
+          <!-- <img src="screenshots/preview.png" alt="Platform preview"> -->
+          <div class="gallery-placeholder">Platform<br>Preview</div>
+        </div>
+        <div class="gallery-frame">
+          <!-- <img src="screenshots/dispatch.png" alt="Dispatch ceremony"> -->
+          <div class="gallery-placeholder">Dispatch<br>Ceremony</div>
+        </div>
+        <div class="gallery-frame">
+          <!-- <img src="screenshots/history.png" alt="Post history"> -->
+          <div class="gallery-placeholder">Post<br>History</div>
+        </div>
+        <div class="gallery-frame">
+          <!-- <img src="screenshots/accounts.png" alt="Accounts"> -->
+          <div class="gallery-placeholder">Account<br>Connections</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- ─── PLATFORMS ─── -->
+    <section class="desk-section">
+      <div class="section-plate">
+        <h2>Supported Platforms</h2>
+        <span class="plate-sub">Select your destinations</span>
+      </div>
+
+      <div class="stamps-shelf">
+        <div class="stamps-row">
+          <div class="stamp twitter">
+            <div class="stamp-body">
+              <div class="stamp-inner">
+                <span class="stamp-icon">&#120143;</span>
+                <span class="stamp-label">Twitter</span>
+                <span class="stamp-value">280</span>
+              </div>
+            </div>
+          </div>
+          <div class="stamp linkedin">
+            <div class="stamp-body">
+              <div class="stamp-inner">
+                <span class="stamp-icon">in</span>
+                <span class="stamp-label">LinkedIn</span>
+                <span class="stamp-value">3,000</span>
+              </div>
+            </div>
+          </div>
+          <div class="stamp reddit">
+            <div class="stamp-body">
+              <div class="stamp-inner">
+                <span class="stamp-icon">r/</span>
+                <span class="stamp-label">Reddit</span>
+                <span class="stamp-value">40,000</span>
+              </div>
+            </div>
+          </div>
+          <div class="stamp instagram">
+            <div class="stamp-body">
+              <div class="stamp-inner">
+                <span class="stamp-icon">IG</span>
+                <span class="stamp-label">Instagram</span>
+                <span class="stamp-value">2,200</span>
+              </div>
+            </div>
+          </div>
+          <div class="stamp whatsapp">
+            <div class="stamp-body">
+              <div class="stamp-inner">
+                <span class="stamp-icon">WA</span>
+                <span class="stamp-label">WhatsApp</span>
+                <span class="stamp-value">65,536</span>
+              </div>
+            </div>
+          </div>
+          <div class="stamp facebook">
+            <div class="stamp-body">
+              <div class="stamp-inner">
+                <span class="stamp-icon">fb</span>
+                <span class="stamp-label">Facebook</span>
+                <span class="stamp-value">63,206</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tier-legend">
+          <div class="tier-item"><div class="tier-dot hybrid"></div> Hybrid &mdash; API or Share Sheet</div>
+          <div class="tier-item"><div class="tier-dot share"></div> Share Sheet Only</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- ─── STORY ─── -->
+    <section class="desk-section">
+      <div class="section-plate">
+        <h2>The Story</h2>
+        <span class="plate-sub">Why this exists</span>
+      </div>
+
+      <div class="paper-card">
+        <p>
+          <strong>Broadside</strong> started from a simple need &mdash; I wanted to step up my posting
+          across platforms while building in public, but the friction of reformatting and manually
+          posting the same content to six different platforms was killing momentum.
+        </p>
+        <p>
+          Rather than committing to paid developer API keys for every platform and AI provider
+          from day one, I designed Broadside with a <strong>pragmatic tiered approach</strong>.
+          Platforms that support OAuth get direct API posting. The rest use the native share
+          sheet &mdash; still one-tap, just through the OS. For AI-powered content reformatting,
+          you can bring your own API key or use the <strong>chatbot paste-back workflow</strong>:
+          Broadside generates a platform-specific prompt, you paste it into ChatGPT, Claude, or
+          Gemini, and paste the result back. <em>Zero cost, minimal friction.</em>
+        </p>
+        <p>
+          The result is an app I use every day. Compose a post once, tap the platform stamps,
+          customize per platform if needed, and hit <strong>Seal &amp; Send</strong> &mdash;
+          complete with a wax-seal dispatch ceremony and haptic feedback that makes every
+          post feel intentional.
+        </p>
+      </div>
+    </section>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- ─── WORKFLOW ─── -->
+    <section class="desk-section">
+      <div class="section-plate">
+        <h2>The Workflow</h2>
+        <span class="plate-sub">From draft to dispatch</span>
+      </div>
+
+      <div class="workflow">
+        <div class="workflow-step">
+          <div class="step-seal">1</div>
+          <div class="step-content">
+            <h4>Compose</h4>
+            <p>Write on a parchment editor with serif typography, ruled lines, and a postmark date watermark. Add images, videos, or load a saved draft.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-seal">2</div>
+          <div class="step-content">
+            <h4>Select Destinations</h4>
+            <p>Tap postage-stamp icons for each platform. The character counter adapts to the tightest limit among your selections.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-seal">3</div>
+          <div class="step-content">
+            <h4>Customize Per Platform</h4>
+            <p>Long-press any stamp to preview and customize. Override content, add Twitter polls, pick subreddits and flairs, or reformat the tone with AI.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-seal">4</div>
+          <div class="step-content">
+            <h4>Seal &amp; Send</h4>
+            <p>Paper folds into an envelope, wax seal drops, postmark stamps, and your post dispatches across all platforms with haptic feedback.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- ─── FEATURES ─── -->
+    <section class="desk-section">
+      <div class="section-plate">
+        <h2>Features</h2>
+        <span class="plate-sub">What's on the desk</span>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card" data-num="01">
+          <h3>AI Reformat</h3>
+          <p>Adapt tone per platform: professional, casual, punchy, detailed, or humorous. Bring your own key or use the chatbot paste-back flow.</p>
+        </div>
+        <div class="feature-card" data-num="02">
+          <h3>Twitter Threads</h3>
+          <p>Long content auto-splits into numbered threads with intelligent word-boundary handling. Detects pre-formatted thread patterns.</p>
+        </div>
+        <div class="feature-card" data-num="03">
+          <h3>Dispatch Ceremony</h3>
+          <p>A 4-phase animation with haptic feedback: paper fold, wax seal drop, postmark stamp, and dispatch. Every send feels intentional.</p>
+        </div>
+        <div class="feature-card" data-num="04">
+          <h3>Rich Media</h3>
+          <p>Images and videos with per-platform validation, thumbnail strips, remove controls, and video duration badges.</p>
+        </div>
+        <div class="feature-card" data-num="05">
+          <h3>Drafts &amp; Templates</h3>
+          <p>Save work-in-progress drafts. Create reusable content templates and platform-specific hashtag groups for quick insertion.</p>
+        </div>
+        <div class="feature-card" data-num="06">
+          <h3>Post History</h3>
+          <p>Correspondence journal tracks every dispatch with per-platform status. Retry failed sends or re-dispatch previous posts with one tap.</p>
+        </div>
+        <div class="feature-card" data-num="07">
+          <h3>Hybrid Posting</h3>
+          <p>OAuth for direct API posting or native share sheet fallback. No forced account setup &mdash; start posting immediately.</p>
+        </div>
+        <div class="feature-card" data-num="08">
+          <h3>The Writing Desk</h3>
+          <p>Parchment textures, wax seals, brass accents, perforated stamps, and serif typography. Not a dashboard &mdash; a desk.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- ─── TECH STACK ─── -->
+    <section class="desk-section">
+      <div class="section-plate">
+        <h2>Tech Stack</h2>
+        <span class="plate-sub">Under the hood</span>
+      </div>
+
+      <div class="tech-desk">
+        <span class="tech-tag">React Native 0.81</span>
+        <span class="tech-tag">Expo SDK 54</span>
+        <span class="tech-tag">TypeScript</span>
+        <span class="tech-tag">Zustand</span>
+        <span class="tech-tag">expo-router</span>
+        <span class="tech-tag">Reanimated</span>
+        <span class="tech-tag">Cloudflare Workers</span>
+        <span class="tech-tag">expo-secure-store</span>
+        <span class="tech-tag">OAuth 2.0</span>
+      </div>
+    </section>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- ─── LINKS ─── -->
+    <section class="desk-section">
+      <div class="section-plate">
+        <h2>Links</h2>
+      </div>
+
+      <div class="links-row">
+        <a href="https://github.com/harshssd/broadside" class="link-btn">GitHub Repository</a>
+        <a href="privacy-policy.html" class="link-btn">Privacy Policy</a>
+      </div>
+    </section>
+
+    <!-- ─── FOOTER ─── -->
+    <footer class="footer">
+      <div class="footer-seal"><span>B</span></div>
+      <p>
+        Broadside &mdash; by Hyperfocused Engineer
+        <span class="footer-year">MMXXVI</span>
+      </p>
+    </footer>
+
+  </div>
+
+  <script>
+    // Scroll-triggered section reveals
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.desk-section').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

@@ -3,68 +3,1468 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hyperfocused Engineer</title>
-  <meta name="description" content="Apps and tools by Hyperfocused Engineer.">
+  <title>Hyperfocused Engineer — Apps &amp; Tools</title>
+  <meta name="description" content="Building focused, craft-driven software in public. Cross-platform social media composer, system design games, and more. By Hyperfocused Engineer.">
+  <meta property="og:title" content="Hyperfocused Engineer — Apps & Tools">
+  <meta property="og:description" content="Building focused, craft-driven software in public. Each project solves a real problem, then ships as something others can use.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hyperfocusedengineer.github.io/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0A0908;
+      --bg-elevated: #111110;
+      --bg-card: #141312;
+      --bg-subtle: #1A1918;
+      --text: #E8E2D8;
+      --text-secondary: #9E9689;
+      --text-muted: #5C5650;
+      --accent: #C17F3E;
+      --accent-dim: rgba(193, 127, 62, 0.15);
+      --accent-ghost: rgba(193, 127, 62, 0.06);
+      --border: rgba(200, 180, 150, 0.07);
+      --border-hover: rgba(200, 180, 150, 0.15);
+      --broadside-wax: #8B1A1A;
+      --broadside-gold: #C5A55A;
+      --arcade-cyan: #00E5D0;
+      --arcade-pink: #FF2D78;
+      --tossup-emerald: #10B981;
+      --tossup-blue: #3B82F6;
+      --koo-sky: #6BCBFF;
+      --koo-butter: #FFD93D;
+    }
+
     body {
-      background: #0a0a1a;
-      color: #c0c0d8;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-optical-sizing: auto;
+      min-height: 100vh;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.25;
+      filter: url(#grain);
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: overlay;
+    }
+
+    .svg-filters { position: absolute; width: 0; height: 0; }
+
+    /* ══════════════════════════
+       HERO
+       ══════════════════════════ */
+    .hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 2rem 1.5rem;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
     }
-    .container { max-width: 480px; }
-    h1 {
-      font-size: 2rem;
-      color: #00fff5;
-      text-shadow: 0 0 20px rgba(0, 255, 245, 0.4);
-      margin-bottom: 1rem;
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 700px;
+      background: radial-gradient(ellipse at center, rgba(193,127,62,0.035) 0%, transparent 55%);
+      pointer-events: none;
     }
-    .tagline {
-      font-size: 1.1rem;
-      color: #a0a0c0;
-      margin-bottom: 2.5rem;
+
+    .hero-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
     }
-    .apps {
+
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: 0.02em;
+      line-height: 1.08;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    .hero-line {
+      width: 48px;
+      height: 1px;
+      background: var(--accent);
+      margin: 1.75rem auto;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+
+    .hero-tagline {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      max-width: 460px;
+      line-height: 1.75;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.8s;
+    }
+
+    .hero-stats {
+      margin-top: 3.5rem;
       display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      width: 100%;
+      gap: 3.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1s;
     }
-    a {
-      color: #00fff5;
-      text-decoration: none;
-      font-size: 1rem;
-      padding: 0.75rem 1.25rem;
-      border: 1px solid #2a2a5a;
-      border-radius: 8px;
-      transition: border-color 0.2s;
+
+    .hero-stat { text-align: center; }
+
+    .hero-stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      color: var(--text);
+      display: block;
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
       display: block;
     }
-    a:hover { border-color: #00fff5; }
-    .app-desc { color: #606080; font-size: 0.8rem; margin-top: 0.25rem; }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.5s;
+    }
+
+    .scroll-cue span {
+      display: block;
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(180deg, transparent, var(--text-muted));
+      margin: 0 auto;
+      animation: scrollPulse 2.5s ease-in-out infinite 2s;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 0.7; transform: scaleY(1.15); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══════════════════════════
+       INDEX — Quick navigation
+       ══════════════════════════ */
+    .index-section {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.6s;
+    }
+
+    .index-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .index-card {
+      background: var(--bg);
+      padding: 1.5rem;
+      text-decoration: none;
+      transition: background 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      position: relative;
+    }
+    .index-card:hover { background: var(--bg-elevated); }
+
+    .index-accent {
+      width: 100%;
+      height: 2px;
+      opacity: 0.4;
+      border-radius: 1px;
+    }
+
+    .index-card-number {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.55rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .index-card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .index-card-type {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .index-card-desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .index-card-status {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: auto;
+      padding-top: 0.5rem;
+    }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+    .status-shipped { color: #10B981; }
+    .status-shipped .status-dot { background: #10B981; }
+    .status-dev { color: var(--text-muted); }
+    .status-dev .status-dot { background: var(--accent); animation: pulse 2s ease infinite; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .index-card-arrow {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      transition: all 0.3s;
+    }
+    .index-card:hover .index-card-arrow {
+      color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    @media (max-width: 768px) {
+      .index-grid { grid-template-columns: 1fr 1fr; }
+      .index-section { padding: 0 1.5rem 3rem; }
+    }
+    @media (max-width: 480px) {
+      .index-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ══════════════════════════
+       EXHIBITION
+       ══════════════════════════ */
+    .exhibition::before {
+      content: '';
+      display: block;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 5%, var(--border) 30%, var(--border) 70%, transparent 95%);
+    }
+
+    .exhibit {
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .exhibit.visible { opacity: 1; transform: translateY(0); }
+
+    .exhibit-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ── Meta column ── */
+    .exhibit-meta { position: sticky; top: 3rem; }
+
+    .exhibit-number {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .exhibit-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.1rem;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+    }
+
+    .exhibit-type {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .exhibit-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+      margin-bottom: 0.75rem;
+    }
+    .exhibit-link:hover { color: var(--accent); border-color: var(--accent-dim); }
+    .exhibit-link .arrow { transition: transform 0.3s; }
+    .exhibit-link:hover .arrow { transform: translateX(3px); }
+
+    /* Store links */
+    .store-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .store-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      padding: 0.45rem 0.7rem;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+
+    .store-link:hover {
+      border-color: var(--border-hover);
+      color: var(--text-secondary);
+    }
+
+    .store-link.coming-soon {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    .store-icon {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    /* ── Content column ── */
+    .exhibit-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .exhibit-accent {
+      width: 100%;
+      height: 2px;
+      opacity: 0.35;
+    }
+    .accent-broadside { background: linear-gradient(90deg, var(--broadside-wax), var(--broadside-gold), var(--broadside-wax)); }
+    .accent-arcade { background: linear-gradient(90deg, var(--arcade-cyan), var(--arcade-pink), var(--arcade-cyan)); }
+    .accent-tossup { background: linear-gradient(90deg, var(--tossup-emerald), var(--tossup-blue), var(--tossup-emerald)); }
+    .accent-koo { background: linear-gradient(90deg, var(--koo-sky), var(--koo-butter), var(--koo-sky)); }
+
+    .exhibit-summary {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.6;
+      max-width: 580px;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .exhibit-summary a {
+      color: var(--accent);
+      text-decoration: none;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      margin-left: 0.3rem;
+      transition: opacity 0.3s;
+    }
+    .exhibit-summary a:hover { opacity: 0.7; }
+
+    .exhibit-story {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-width: 580px;
+    }
+    .exhibit-story strong { color: var(--text); font-weight: 400; }
+
+    /* ── Screenshots ── */
+    .screenshots {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-hover) transparent;
+    }
+
+    .screenshots::-webkit-scrollbar { height: 4px; }
+    .screenshots::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 2px; }
+    .screenshots::-webkit-scrollbar-track { background: transparent; }
+
+    .screenshot-frame {
+      flex-shrink: 0;
+      width: 160px;
+      height: 284px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screenshot-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .screenshot-placeholder {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .screenshot-placeholder::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border-hover);
+      border-radius: 6px;
+      margin: 0 auto 0.6rem;
+    }
+
+    /* ── Highlights ── */
+    .exhibit-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .highlight {
+      background: var(--bg);
+      padding: 1.25rem;
+    }
+
+    .highlight-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .highlight-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    /* ── Features ── */
+    .exhibit-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 2rem;
+    }
+
+    .feature-item {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 0.75rem;
+      align-items: baseline;
+    }
+
+    .feature-marker {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--accent);
+      flex-shrink: 0;
+      padding-top: 0.2rem;
+    }
+
+    .feature-text {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    .feature-text strong {
+      color: var(--text);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.1rem;
+    }
+
+    /* ── Audience ── */
+    .exhibit-audience {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .audience-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      padding: 0.35rem 0.85rem;
+      background: var(--accent-ghost);
+      border: 1px solid var(--accent-dim);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Tech ── */
+    .exhibit-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tech-pill {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border);
+      letter-spacing: 0.04em;
+      transition: all 0.3s;
+    }
+    .tech-pill:hover { color: var(--text-secondary); border-color: var(--border-hover); }
+
+    /* ── Teaser ── */
+    .teaser-status {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .teaser-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* ══════════════════════════
+       FOOTER
+       ══════════════════════════ */
+    .footer {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 4rem 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-link {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.3s;
+    }
+    .footer-link:hover { color: var(--accent); }
+
+    /* ── YouTube / Content Section ── */
+    .content-band {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .content-band.visible { opacity: 1; transform: translateY(0); }
+
+    .content-band-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .content-band-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--text);
+    }
+
+    .content-band-link {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: opacity 0.3s;
+    }
+    .content-band-link:hover { opacity: 0.7; }
+
+    .content-band-desc {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .video-card {
+      background: var(--bg);
+      padding: 1.25rem;
+      transition: background 0.3s;
+    }
+    .video-card:hover { background: var(--bg-card); }
+
+    .video-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .video-title {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.4;
+      font-weight: 400;
+    }
+
+    @media (max-width: 600px) {
+      .video-grid { grid-template-columns: 1fr; }
+      .content-band { padding: 2.5rem 1.5rem; }
+    }
+
+    /* ══════════════════════════
+       RESPONSIVE
+       ══════════════════════════ */
+    @media (max-width: 768px) {
+      .exhibit-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 3.5rem 1.5rem;
+      }
+      .exhibit-meta {
+        position: static;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.4rem 1rem;
+      }
+      .exhibit-number { margin-bottom: 0; }
+      .exhibit-title { width: 100%; margin-bottom: 0.3rem; }
+      .exhibit-type { margin-bottom: 0; }
+      .store-links { flex-direction: row; flex-wrap: wrap; }
+      .exhibit-highlights { grid-template-columns: 1fr 1fr; }
+      .exhibit-features { grid-template-columns: 1fr; }
+      .hero-stats { gap: 2rem; }
+      .screenshot-frame { width: 130px; height: 230px; }
+      .footer { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .exhibit-inner { padding: 2.5rem 1.25rem; }
+      .hero-stats { flex-wrap: wrap; justify-content: center; }
+      .exhibit-highlights { grid-template-columns: 1fr; }
+      .screenshot-frame { width: 110px; height: 196px; }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>HYPERFOCUSED ENGINEER</h1>
-    <p class="tagline">Apps & Tools</p>
-    <div class="apps">
-      <a href="system-design-arcade/">
-        System Design Arcade
-        <div class="app-desc">Learn system design through arcade-style games</div>
+  <svg class="svg-filters">
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </svg>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <p class="hero-eyebrow">Apps &amp; Tools</p>
+    <h1 class="hero-name">Hyperfocused<br>Engineer</h1>
+    <div class="hero-line"></div>
+    <p class="hero-tagline">
+      Building focused, craft-driven software in public.
+      Each project solves a real problem I hit &mdash; then ships as something others can use.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">4</span>
+        <span class="hero-stat-label">Projects</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">1</span>
+        <span class="hero-stat-label">Shipped</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">3</span>
+        <span class="hero-stat-label">In Development</span>
+      </div>
+    </div>
+    <div class="scroll-cue"><span></span></div>
+  </section>
+
+  <!-- ─── INDEX ─── -->
+  <nav class="index-section">
+    <div class="index-grid">
+      <a href="broadside/" class="index-card">
+        <div class="index-accent accent-broadside"></div>
+        <span class="index-card-number">01</span>
+        <div class="index-card-title">Broadside</div>
+        <div class="index-card-type">Social Media Composer</div>
+        <p class="index-card-desc">Compose once, dispatch to 6 platforms. Vintage writing-desk aesthetic.</p>
+        <div class="index-card-status status-dev"><span class="status-dot"></span> In Development</div>
+        <span class="index-card-arrow">&rarr;</span>
       </a>
-      <a href="koo/">
-        Koo
-        <div class="app-desc">Coming soon</div>
+      <a href="system-design-arcade/" class="index-card">
+        <div class="index-accent accent-arcade"></div>
+        <span class="index-card-number">02</span>
+        <div class="index-card-title">System Design Arcade</div>
+        <div class="index-card-type">Learning Game</div>
+        <p class="index-card-desc">Master system design through interactive arcade-style games.</p>
+        <div class="index-card-status status-shipped"><span class="status-dot"></span> Shipped</div>
+        <span class="index-card-arrow">&rarr;</span>
+      </a>
+      <a href="tossup/" class="index-card">
+        <div class="index-accent accent-tossup"></div>
+        <span class="index-card-number">03</span>
+        <div class="index-card-title">TossUp</div>
+        <div class="index-card-type">Cricket Auction Platform</div>
+        <p class="index-card-desc">Real-time cricket auctions with dual bidding models and club management.</p>
+        <div class="index-card-status status-dev"><span class="status-dot"></span> In Development</div>
+        <span class="index-card-arrow">&rarr;</span>
+      </a>
+      <a href="koo/" class="index-card">
+        <div class="index-accent accent-koo"></div>
+        <span class="index-card-number">04</span>
+        <div class="index-card-title">Koo</div>
+        <div class="index-card-type">Baby Tracking App</div>
+        <p class="index-card-desc">Voice logging, WHO growth charts, and collaborative family caregiving.</p>
+        <div class="index-card-status status-dev"><span class="status-dot"></span> In Development</div>
+        <span class="index-card-arrow">&rarr;</span>
       </a>
     </div>
+  </nav>
+
+  <!-- ─── EXHIBITION ─── -->
+  <div class="exhibition">
+
+    <!-- ════ EXHIBIT 01: BROADSIDE ════ -->
+    <article class="exhibit">
+      <div class="exhibit-inner">
+        <div class="exhibit-meta">
+          <div class="exhibit-number">Exhibit 01</div>
+          <h2 class="exhibit-title">Broadside</h2>
+          <div class="exhibit-type">Social Media Composer</div>
+          <a href="broadside/" class="exhibit-link">Project details <span class="arrow">&rarr;</span></a>
+          <div class="store-links">
+            <!-- Replace # with actual store URLs when available -->
+            <a href="#" class="store-link coming-soon">
+              <span class="store-icon">&#63743;</span> App Store &mdash; Soon
+            </a>
+            <a href="#" class="store-link coming-soon">
+              <span class="store-icon">&#9654;</span> Play Store &mdash; Soon
+            </a>
+            <a href="https://github.com/harshssd/broadside" class="store-link">
+              <span class="store-icon">&lt;/&gt;</span> Source Code
+            </a>
+          </div>
+        </div>
+
+        <div class="exhibit-content">
+          <div class="exhibit-accent accent-broadside"></div>
+
+          <p class="exhibit-summary">
+            Compose a post once, customize per platform, and dispatch to Twitter, LinkedIn, Reddit,
+            Instagram, WhatsApp, and Facebook at once &mdash; with a vintage writing-desk aesthetic.
+            <a href="broadside/">&rarr; Details</a>
+          </p>
+
+          <p class="exhibit-story">
+            I needed to step up my posting across platforms while building in public, but
+            reformatting and manually posting the same content to six different platforms was
+            killing momentum. Rather than paying for every API and AI provider upfront, I designed
+            <strong>a pragmatic tiered system</strong> &mdash; OAuth where available, native share sheet
+            as fallback, and a chatbot paste-back workflow for AI reformatting that costs nothing.
+            The result is an app I use daily with a <strong>vintage writing-desk aesthetic</strong>
+            that makes every post feel intentional.
+          </p>
+
+          <!-- Screenshots — replace placeholders with actual images -->
+          <div class="screenshots">
+            <div class="screenshot-frame">
+              <!-- <img src="screenshots/broadside-compose.png" alt="Compose screen"> -->
+              <div class="screenshot-placeholder">Compose<br>Screen</div>
+            </div>
+            <div class="screenshot-frame">
+              <!-- <img src="screenshots/broadside-stamps.png" alt="Platform stamps"> -->
+              <div class="screenshot-placeholder">Platform<br>Stamps</div>
+            </div>
+            <div class="screenshot-frame">
+              <!-- <img src="screenshots/broadside-preview.png" alt="Preview screen"> -->
+              <div class="screenshot-placeholder">Platform<br>Preview</div>
+            </div>
+            <div class="screenshot-frame">
+              <!-- <img src="screenshots/broadside-dispatch.png" alt="Dispatch ceremony"> -->
+              <div class="screenshot-placeholder">Dispatch<br>Ceremony</div>
+            </div>
+            <div class="screenshot-frame">
+              <!-- <img src="screenshots/broadside-history.png" alt="Post history"> -->
+              <div class="screenshot-placeholder">Post<br>History</div>
+            </div>
+          </div>
+
+          <div class="exhibit-highlights">
+            <div class="highlight">
+              <div class="highlight-label">Platforms</div>
+              <div class="highlight-value">6</div>
+            </div>
+            <div class="highlight">
+              <div class="highlight-label">Posting Tiers</div>
+              <div class="highlight-value">API + Share Sheet</div>
+            </div>
+            <div class="highlight">
+              <div class="highlight-label">AI Reformat</div>
+              <div class="highlight-value">5 Tones</div>
+            </div>
+          </div>
+
+          <div class="exhibit-features">
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>One-to-Many Dispatch</strong>
+                Compose once, customize per platform, send to all at once
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Dispatch Ceremony</strong>
+                4-phase wax seal animation with haptic feedback on every send
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>AI Reformat</strong>
+                Adapt tone via your own API key or zero-cost chatbot paste-back
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Twitter Threads</strong>
+                Auto-split long content into numbered tweets at word boundaries
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Per-Platform Preview</strong>
+                Long-press stamps for platform-specific editing and customization
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Post History &amp; Retry</strong>
+                Journal tracks every dispatch; retry failed platforms individually
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit-audience">
+            <span class="audience-tag">Creators</span>
+            <span class="audience-tag">Build-in-Public Founders</span>
+            <span class="audience-tag">Content Marketers</span>
+            <span class="audience-tag">Indie Hackers</span>
+          </div>
+
+          <div class="exhibit-tech">
+            <span class="tech-pill">React Native</span>
+            <span class="tech-pill">Expo SDK 54</span>
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Zustand</span>
+            <span class="tech-pill">Reanimated</span>
+            <span class="tech-pill">Cloudflare Workers</span>
+            <span class="tech-pill">OAuth 2.0</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ════ EXHIBIT 02: SYSTEM DESIGN ARCADE ════ -->
+    <article class="exhibit">
+      <div class="exhibit-inner">
+        <div class="exhibit-meta">
+          <div class="exhibit-number">Exhibit 02</div>
+          <h2 class="exhibit-title">System Design Arcade</h2>
+          <div class="exhibit-type">Interactive Learning Game</div>
+          <a href="system-design-arcade/" class="exhibit-link">Project details <span class="arrow">&rarr;</span></a>
+          <div class="store-links">
+            <!-- Replace # with actual store URLs when available -->
+            <a href="#" class="store-link coming-soon">
+              <span class="store-icon">&#63743;</span> App Store &mdash; Soon
+            </a>
+            <a href="#" class="store-link coming-soon">
+              <span class="store-icon">&#9654;</span> Play Store &mdash; Soon
+            </a>
+          </div>
+        </div>
+
+        <div class="exhibit-content">
+          <div class="exhibit-accent accent-arcade"></div>
+
+          <p class="exhibit-summary">
+            Master system design concepts through interactive, arcade-style mobile games.
+            Learn caching, sharding, load balancing, and more &mdash; by playing.
+            <a href="system-design-arcade/">&rarr; Details</a>
+          </p>
+
+          <p class="exhibit-story">
+            System design interviews are notoriously hard to prepare for &mdash;
+            most resources are walls of text or hour-long videos. I wanted to learn by doing,
+            so I built <strong>an arcade-style mobile game</strong> that teaches concepts like
+            caching, sharding, load balancing, and database design through interactive challenges.
+            Play as a guest with zero data collection, or sign in to <strong>sync progress
+            across devices</strong>.
+          </p>
+
+          <!-- Screenshots — replace placeholders with actual images -->
+          <div class="screenshots">
+            <div class="screenshot-frame">
+              <!-- <img src="screenshots/arcade-home.png" alt="Arcade home"> -->
+              <div class="screenshot-placeholder">Home<br>Screen</div>
+            </div>
+            <div class="screenshot-frame">
+              <!-- <img src="screenshots/arcade-game.png" alt="Game level"> -->
+              <div class="screenshot-placeholder">Game<br>Level</div>
+            </div>
+            <div class="screenshot-frame">
+              <!-- <img src="screenshots/arcade-progress.png" alt="Progress tracking"> -->
+              <div class="screenshot-placeholder">Progress<br>Tracking</div>
+            </div>
+          </div>
+
+          <div class="exhibit-highlights">
+            <div class="highlight">
+              <div class="highlight-label">Format</div>
+              <div class="highlight-value">Arcade Games</div>
+            </div>
+            <div class="highlight">
+              <div class="highlight-label">Topics</div>
+              <div class="highlight-value">System Design</div>
+            </div>
+            <div class="highlight">
+              <div class="highlight-label">Auth</div>
+              <div class="highlight-value">Guest + OAuth</div>
+            </div>
+          </div>
+
+          <div class="exhibit-features">
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Learn by Playing</strong>
+                Arcade-style games that teach system design concepts interactively
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Zero-Friction Start</strong>
+                Play as guest with no sign-up; all progress stored locally
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Cloud Sync</strong>
+                Sign in with Google or Apple to sync progress across devices
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Privacy-First</strong>
+                No ads, no tracking, no analytics &mdash; just learning
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit-audience">
+            <span class="audience-tag">Software Engineers</span>
+            <span class="audience-tag">Interview Candidates</span>
+            <span class="audience-tag">CS Students</span>
+          </div>
+
+          <div class="exhibit-tech">
+            <span class="tech-pill">React Native</span>
+            <span class="tech-pill">Expo</span>
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Supabase</span>
+            <span class="tech-pill">Google OAuth</span>
+            <span class="tech-pill">Apple Sign In</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ════ EXHIBIT 03: TOSSUP ════ -->
+    <article class="exhibit">
+      <div class="exhibit-inner">
+        <div class="exhibit-meta">
+          <div class="exhibit-number">Exhibit 03</div>
+          <h2 class="exhibit-title">TossUp</h2>
+          <div class="exhibit-type">Cricket Auction &amp; Club Platform</div>
+          <a href="tossup/" class="exhibit-link">Project details <span class="arrow">&rarr;</span></a>
+          <div class="store-links">
+            <!-- Replace # with actual URL when available -->
+            <a href="#" class="store-link coming-soon">
+              <span class="store-icon">&#9671;</span> Web App &mdash; Soon
+            </a>
+          </div>
+        </div>
+
+        <div class="exhibit-content">
+          <div class="exhibit-accent accent-tossup"></div>
+
+          <p class="exhibit-summary">
+            Run professional-grade cricket auctions with real-time bidding, dual auction models,
+            role-based live views, club management, and tournament hosting.
+            <a href="tossup/">&rarr; Details</a>
+          </p>
+
+          <p class="exhibit-story">
+            Cricket auctions &mdash; especially IPL-style ones &mdash; require coordinated real-time
+            bidding, budget tracking, and instant player assignment. Running them on spreadsheets is
+            chaos. I built <strong>a full auction platform</strong> with two bidding models (sealed-tender
+            and open outcry), role-based live views for auctioneers, captains, and spectators, and
+            <strong>real-time Supabase subscriptions</strong> powering every update. It grew into a
+            complete cricket management platform with club creation, event scheduling, tournament
+            hosting, and a public discovery gateway.
+          </p>
+
+          <!-- Screenshots — replace placeholders with actual images -->
+          <div class="screenshots">
+            <div class="screenshot-frame">
+              <!-- <img src="screenshots/tossup-auction.png" alt="Live auction"> -->
+              <div class="screenshot-placeholder">Live<br>Auction</div>
+            </div>
+            <div class="screenshot-frame">
+              <!-- <img src="screenshots/tossup-captain.png" alt="Captain dashboard"> -->
+              <div class="screenshot-placeholder">Captain<br>Dashboard</div>
+            </div>
+            <div class="screenshot-frame">
+              <!-- <img src="screenshots/tossup-club.png" alt="Club dashboard"> -->
+              <div class="screenshot-placeholder">Club<br>Dashboard</div>
+            </div>
+            <div class="screenshot-frame">
+              <!-- <img src="screenshots/tossup-explore.png" alt="Explore gateway"> -->
+              <div class="screenshot-placeholder">Explore<br>Gateway</div>
+            </div>
+          </div>
+
+          <div class="exhibit-highlights">
+            <div class="highlight">
+              <div class="highlight-label">Bidding Models</div>
+              <div class="highlight-value">Sealed + Open Outcry</div>
+            </div>
+            <div class="highlight">
+              <div class="highlight-label">Live Views</div>
+              <div class="highlight-value">3 Roles</div>
+            </div>
+            <div class="highlight">
+              <div class="highlight-label">Platform</div>
+              <div class="highlight-value">Web (Next.js)</div>
+            </div>
+          </div>
+
+          <div class="exhibit-features">
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Dual Auction Modes</strong>
+                Sealed-tender or IPL-style open outcry with dynamic price increments
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Real-Time Live View</strong>
+                Role-based spectating: auctioneer, captain, and public views with 30+ toggles
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Captain Dashboard</strong>
+                Budget gauge, squad composition chart, tier tracking, and bid history
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Club &amp; Tournament Management</strong>
+                Create clubs, schedule events, host tournaments with registration workflows
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Discovery Gateway</strong>
+                Public explore page for finding clubs and tournaments in your area
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>CSV Player Import</strong>
+                Bulk-load player pools with tiers, roles, base prices, and metadata
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit-audience">
+            <span class="audience-tag">Cricket Clubs</span>
+            <span class="audience-tag">League Organizers</span>
+            <span class="audience-tag">Auction Hosts</span>
+            <span class="audience-tag">Team Captains</span>
+          </div>
+
+          <div class="exhibit-tech">
+            <span class="tech-pill">Next.js 16</span>
+            <span class="tech-pill">React 19</span>
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Supabase</span>
+            <span class="tech-pill">TailwindCSS 4</span>
+            <span class="tech-pill">shadcn/ui</span>
+            <span class="tech-pill">Framer Motion</span>
+            <span class="tech-pill">Zod</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ════ EXHIBIT 04: KOO ════ -->
+    <article class="exhibit">
+      <div class="exhibit-inner">
+        <div class="exhibit-meta">
+          <div class="exhibit-number">Exhibit 04</div>
+          <h2 class="exhibit-title">Koo</h2>
+          <div class="exhibit-type">Baby Tracking &amp; Parenting Companion</div>
+          <a href="koo/" class="exhibit-link">Project details <span class="arrow">&rarr;</span></a>
+          <div class="store-links">
+            <a href="#" class="store-link coming-soon">
+              <span class="store-icon">&#63743;</span> App Store &mdash; Soon
+            </a>
+            <a href="#" class="store-link coming-soon">
+              <span class="store-icon">&#9654;</span> Play Store &mdash; Soon
+            </a>
+          </div>
+        </div>
+
+        <div class="exhibit-content">
+          <div class="exhibit-accent accent-koo"></div>
+
+          <p class="exhibit-summary">
+            Track feeding, sleep, diapers, and milestones with voice logging, WHO growth percentiles,
+            and collaborative caregiving through real-time family sync.
+            <a href="koo/">&rarr; Details</a>
+          </p>
+
+          <p class="exhibit-story">
+            Parenting data is scattered &mdash; feeding logs in one app, sleep schedules in
+            another, photos on phones, no way for grandparents and caregivers to stay in sync.
+            I built <strong>Koo</strong> as a unified hub: log activities by voice or form, track
+            growth against <strong>WHO percentile curves</strong>, share milestones with family
+            through a private Village feed, and give each caregiver role-based access.
+            <strong>Offline-first</strong> with real-time Supabase sync when connected.
+          </p>
+
+          <div class="screenshots">
+            <div class="screenshot-frame">
+              <div class="screenshot-placeholder">Dashboard<br>Home</div>
+            </div>
+            <div class="screenshot-frame">
+              <div class="screenshot-placeholder">Activity<br>Logging</div>
+            </div>
+            <div class="screenshot-frame">
+              <div class="screenshot-placeholder">Growth<br>Charts</div>
+            </div>
+            <div class="screenshot-frame">
+              <div class="screenshot-placeholder">Village<br>Feed</div>
+            </div>
+          </div>
+
+          <div class="exhibit-highlights">
+            <div class="highlight">
+              <div class="highlight-label">Activity Types</div>
+              <div class="highlight-value">7</div>
+            </div>
+            <div class="highlight">
+              <div class="highlight-label">Growth Data</div>
+              <div class="highlight-value">WHO Curves</div>
+            </div>
+            <div class="highlight">
+              <div class="highlight-label">Access Roles</div>
+              <div class="highlight-value">4</div>
+            </div>
+          </div>
+
+          <div class="exhibit-features">
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Voice Logging</strong>
+                Say "4 oz bottle" and the form auto-fills &mdash; natural speech to structured data
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>WHO Growth Percentiles</strong>
+                Clinical-grade weight and length tracking with 3rd&ndash;97th percentile bands
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Collaborative Caregiving</strong>
+                Invite family with role-based access: admin, caretaker, family, consultant
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Village Feed</strong>
+                Share milestones privately with family; reactions and celebrations built in
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Analytics Dashboard</strong>
+                Feeding, sleep, diaper trends with day/week/month views and comparisons
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Offline-First Sync</strong>
+                Works without internet; queues changes and syncs via Supabase Realtime
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit-audience">
+            <span class="audience-tag">New Parents</span>
+            <span class="audience-tag">Extended Families</span>
+            <span class="audience-tag">Caregivers &amp; Nannies</span>
+            <span class="audience-tag">Pediatric Consultants</span>
+          </div>
+
+          <div class="exhibit-tech">
+            <span class="tech-pill">React Native</span>
+            <span class="tech-pill">Expo SDK 54</span>
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Zustand</span>
+            <span class="tech-pill">Supabase</span>
+            <span class="tech-pill">Google Gemini</span>
+            <span class="tech-pill">Speech Recognition</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
   </div>
+
+  <!-- ─── YOUTUBE / CONTENT ─── -->
+  <section class="content-band">
+    <div class="content-band-header">
+      <h2 class="content-band-title">Content</h2>
+      <a href="https://www.youtube.com/@hyperfocusedengineer" class="content-band-link" target="_blank" rel="noopener">YouTube &rarr;</a>
+    </div>
+    <p class="content-band-desc">
+      Learning by doing &mdash; mostly livestreams with raw, real-time problem-solving.
+      Exploring new technologies, building apps, and sharing the journey one stream at a time.
+    </p>
+    <div class="video-grid">
+      <div class="video-card">
+        <span class="video-tag">Series</span>
+        <div class="video-title">AI &amp; Machine Learning</div>
+      </div>
+      <div class="video-card">
+        <span class="video-tag">Series</span>
+        <div class="video-title">Vibe Coding</div>
+      </div>
+      <div class="video-card">
+        <span class="video-tag">Series</span>
+        <div class="video-title">DSA &amp; LeetCode</div>
+      </div>
+      <div class="video-card">
+        <span class="video-tag">Series</span>
+        <div class="video-title">System Design</div>
+      </div>
+      <div class="video-card">
+        <span class="video-tag">Series</span>
+        <div class="video-title">Data Structures</div>
+      </div>
+      <div class="video-card">
+        <span class="video-tag">Series</span>
+        <div class="video-title">Building in Public</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="footer">
+    <div class="footer-brand">Hyperfocused Engineer</div>
+    <div class="footer-links">
+      <a href="https://github.com/harshssd" class="footer-link">GitHub</a>
+      <a href="https://www.youtube.com/@hyperfocusedengineer" class="footer-link">YouTube</a>
+      <a href="mailto:hyperfocusedengineer@gmail.com" class="footer-link">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.04, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.exhibit, .content-band').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>

@@ -5,74 +5,652 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>System Design Arcade — Learn System Design Through Games</title>
   <meta name="description" content="Master system design interviews through interactive, arcade-style games. Learn caching, databases, sharding, load balancing, and more. By Hyperfocused Engineer.">
+  <meta property="og:title" content="System Design Arcade — Learn Through Games">
+  <meta property="og:description" content="Master system design concepts through interactive arcade-style mobile games. Caching, sharding, load balancing, and more.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hyperfocusedengineer.github.io/system-design-arcade/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #06060F;
+      --bg-card: #0C0C1A;
+      --bg-elevated: #10101F;
+      --cyan: #00E5D0;
+      --cyan-dim: rgba(0, 229, 208, 0.15);
+      --cyan-ghost: rgba(0, 229, 208, 0.05);
+      --pink: #FF2D78;
+      --pink-dim: rgba(255, 45, 120, 0.15);
+      --yellow: #FFD93D;
+      --text: #D0D0E8;
+      --text-secondary: #8080A0;
+      --text-muted: #404060;
+      --border: rgba(0, 229, 208, 0.08);
+    }
+
     body {
-      background: #0a0a1a;
-      color: #c0c0d8;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Scanline overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        180deg,
+        transparent 0px,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .svg-filters { position: absolute; width: 0; height: 0; }
+
+    /* ═══════════════
+       HERO
+       ═══════════════ */
+    .hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 2rem 1.5rem;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
     }
-    .container {
-      max-width: 480px;
+
+    /* CRT glow effect */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 400px;
+      background:
+        radial-gradient(ellipse at center, rgba(0, 229, 208, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 40% 60%, rgba(255, 45, 120, 0.02) 0%, transparent 40%);
+      pointer-events: none;
     }
-    h1 {
-      font-size: 2rem;
-      color: #00fff5;
-      text-shadow: 0 0 20px rgba(0, 255, 245, 0.4);
-      margin-bottom: 0.25rem;
+
+    .back-link {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
     }
-    .subtitle {
-      font-size: 1.5rem;
-      color: #ff2d78;
+    .back-link:hover { color: var(--cyan); }
+
+    .hero-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      color: var(--cyan);
+      text-shadow:
+        0 0 20px rgba(0, 229, 208, 0.4),
+        0 0 60px rgba(0, 229, 208, 0.15);
+      line-height: 1.6;
+      letter-spacing: 0.04em;
+      opacity: 0;
+      animation: glitchIn 0.8s ease forwards 0.3s;
+    }
+
+    .hero-subtitle {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.9rem, 2.5vw, 1.5rem);
+      color: var(--pink);
       text-shadow: 0 0 15px rgba(255, 45, 120, 0.4);
-      margin-bottom: 1.5rem;
+      margin-top: 0.5rem;
+      opacity: 0;
+      animation: glitchIn 0.8s ease forwards 0.5s;
     }
-    .tagline {
+
+    @keyframes glitchIn {
+      0% { opacity: 0; transform: translateY(10px); filter: blur(4px); }
+      80% { filter: blur(0); }
+      100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+
+    .hero-desc {
       font-size: 1.1rem;
-      color: #a0a0c0;
-      margin-bottom: 0.5rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin-top: 2rem;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.7s;
     }
-    .by {
-      font-size: 0.9rem;
-      color: #606080;
-      margin-bottom: 2.5rem;
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .links {
+
+    /* Store links */
+    .hero-actions {
       display: flex;
-      gap: 1.5rem;
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
       justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.9s;
+    }
+
+    .store-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cyan);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      padding: 0.6rem 1.1rem;
+      border: 1px solid var(--cyan-dim);
+      transition: all 0.3s;
+    }
+    .store-link:hover { border-color: var(--cyan); background: var(--cyan-ghost); }
+    .store-link.coming-soon { opacity: 0.4; cursor: default; }
+    .store-link .si { font-family: -apple-system, sans-serif; font-size: 1rem; }
+
+    .hero-by {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.1s;
+    }
+
+    /* Scroll cue */
+    .scroll-cue {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.5s;
+    }
+
+    .scroll-cue span {
+      display: block;
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(180deg, transparent, var(--text-muted));
+      margin: 0 auto;
+      animation: scrollPulse 2.5s ease-in-out infinite 2s;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+    }
+
+    /* ═══════════════
+       SECTIONS
+       ═══════════════ */
+    .content-section {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 1rem 2rem 4rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .content-section.visible { opacity: 1; transform: translateY(0); }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.85rem;
+      color: var(--cyan);
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 10px rgba(0, 229, 208, 0.3);
+    }
+
+    .section-header .sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1rem 2rem;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .divider-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 6px rgba(0, 229, 208, 0.5);
+    }
+
+    /* ═══════════════
+       SCREENSHOTS
+       ═══════════════ */
+    .gallery-scroll {
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      padding: 0.5rem 0 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--cyan-dim) transparent;
+    }
+    .gallery-scroll::-webkit-scrollbar { height: 3px; }
+    .gallery-scroll::-webkit-scrollbar-thumb { background: var(--cyan-dim); }
+
+    .gallery-frame {
+      flex-shrink: 0;
+      width: 170px;
+      height: 302px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .gallery-frame:hover { transform: translateY(-4px); border-color: var(--cyan-dim); }
+    .gallery-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+    .gallery-placeholder {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .gallery-placeholder::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      margin: 0 auto 0.5rem;
+    }
+
+    /* ═══════════════
+       STORY CARD
+       ═══════════════ */
+    .story-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+    }
+
+    /* Top accent line */
+    .story-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--pink), var(--cyan));
+      opacity: 0.4;
+    }
+
+    .story-card p {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .story-card p:last-child { margin-bottom: 0; }
+    .story-card strong { color: var(--text); font-weight: 500; }
+
+    /* ═══════════════
+       FEATURES
+       ═══════════════ */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .feature-card {
+      background: var(--bg);
+      padding: 1.5rem;
+      transition: background 0.3s;
+    }
+    .feature-card:hover { background: var(--bg-card); }
+
+    .feature-card h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--cyan);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.6rem;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ═══════════════
+       TOPICS
+       ═══════════════ */
+    .topics-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .topic-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--border);
+      letter-spacing: 0.04em;
+      transition: all 0.3s;
+    }
+    .topic-tag:hover { color: var(--text-secondary); border-color: var(--cyan-dim); }
+
+    /* ═══════════════
+       TECH STACK
+       ═══════════════ */
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+    }
+
+    .tech-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border);
+      letter-spacing: 0.04em;
+      transition: all 0.3s;
+    }
+    .tech-pill:hover { color: var(--text-secondary); border-color: var(--cyan-dim); }
+
+    /* ═══════════════
+       LINKS & FOOTER
+       ═══════════════ */
+    .links-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
       flex-wrap: wrap;
     }
-    a {
-      color: #00fff5;
+
+    .link-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--cyan);
       text-decoration: none;
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-      border: 1px solid #2a2a5a;
-      border-radius: 8px;
-      transition: border-color 0.2s;
+      padding: 0.6rem 1.25rem;
+      border: 1px solid var(--cyan-dim);
+      transition: all 0.3s;
     }
-    a:hover {
-      border-color: #00fff5;
+    .link-btn:hover { border-color: var(--cyan); background: var(--cyan-ghost); }
+
+    .footer {
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    .footer p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+    }
+
+    /* ═══════════════
+       RESPONSIVE
+       ═══════════════ */
+    @media (max-width: 600px) {
+      .hero { padding: 2.5rem 1.25rem; }
+      .content-section { padding: 0.5rem 1.25rem 3rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .gallery-frame { width: 140px; height: 248px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>SYSTEM DESIGN</h1>
-    <div class="subtitle">ARCADE</div>
-    <p class="tagline">Learn system design through arcade-style games</p>
-    <p class="by">by Hyperfocused Engineer</p>
-    <div class="links">
-      <a href="privacy-policy.html">Privacy Policy</a>
+  <svg class="svg-filters">
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </svg>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <a href="../" class="back-link">&larr; Hyperfocused Engineer</a>
+
+    <h1 class="hero-title">SYSTEM DESIGN</h1>
+    <div class="hero-subtitle">ARCADE</div>
+
+    <p class="hero-desc">
+      Master system design concepts through interactive, arcade-style games.
+      Learn caching, databases, sharding, load balancing, and more &mdash; by playing.
+    </p>
+
+    <div class="hero-actions">
+      <!-- Replace # with actual store URLs when available -->
+      <a href="#" class="store-link coming-soon"><span class="si">&#63743;</span> App Store &mdash; Soon</a>
+      <a href="#" class="store-link coming-soon"><span class="si">&#9654;</span> Play Store &mdash; Soon</a>
     </div>
-  </div>
+
+    <p class="hero-by">by Hyperfocused Engineer</p>
+
+    <div class="scroll-cue"><span></span></div>
+  </section>
+
+  <!-- ─── SCREENSHOTS ─── -->
+  <section class="content-section">
+    <div class="section-header">
+      <h2>THE GAME</h2>
+      <span class="sub">Screenshots</span>
+    </div>
+
+    <div class="gallery-scroll">
+      <div class="gallery-frame">
+        <!-- <img src="screenshots/home.png" alt="Home screen"> -->
+        <div class="gallery-placeholder">Home<br>Screen</div>
+      </div>
+      <div class="gallery-frame">
+        <!-- <img src="screenshots/level-select.png" alt="Level select"> -->
+        <div class="gallery-placeholder">Level<br>Select</div>
+      </div>
+      <div class="gallery-frame">
+        <!-- <img src="screenshots/gameplay.png" alt="Gameplay"> -->
+        <div class="gallery-placeholder">Game<br>Play</div>
+      </div>
+      <div class="gallery-frame">
+        <!-- <img src="screenshots/results.png" alt="Results"> -->
+        <div class="gallery-placeholder">Results<br>Screen</div>
+      </div>
+      <div class="gallery-frame">
+        <!-- <img src="screenshots/progress.png" alt="Progress"> -->
+        <div class="gallery-placeholder">Progress<br>Tracking</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-dot"></div></div>
+
+  <!-- ─── STORY ─── -->
+  <section class="content-section">
+    <div class="section-header">
+      <h2>THE STORY</h2>
+      <span class="sub">Why this exists</span>
+    </div>
+
+    <div class="story-card">
+      <p>
+        System design interviews are notoriously hard to prepare for. Most resources
+        are either dense walls of text, hour-long lecture videos, or expensive courses.
+        I wanted to <strong>learn by doing</strong>.
+      </p>
+      <p>
+        So I built an arcade-style mobile game where each level teaches a system design
+        concept through interactive challenges. No passive reading &mdash; you make
+        decisions, see consequences, and build intuition through gameplay.
+      </p>
+      <p>
+        Play as a guest with <strong>zero data collection</strong>, or sign in with
+        Google or Apple to sync your progress across devices. No ads, no tracking,
+        no analytics. Just learning.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-dot"></div></div>
+
+  <!-- ─── FEATURES ─── -->
+  <section class="content-section">
+    <div class="section-header">
+      <h2>FEATURES</h2>
+      <span class="sub">What you get</span>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>Learn by Playing</h3>
+        <p>Interactive arcade-style games that teach system design concepts through decision-making and consequences.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Zero-Friction Start</h3>
+        <p>Play immediately as a guest. No sign-up required. All progress stored locally on your device.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Cloud Sync</h3>
+        <p>Sign in with Google or Apple to sync scores and progress across all your devices.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Privacy-First</h3>
+        <p>No ads, no tracking, no analytics, no third-party data collection. Just the game.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-dot"></div></div>
+
+  <!-- ─── TOPICS ─── -->
+  <section class="content-section">
+    <div class="section-header">
+      <h2>TOPICS</h2>
+      <span class="sub">System design concepts covered</span>
+    </div>
+
+    <div class="topics-list">
+      <span class="topic-tag">Caching</span>
+      <span class="topic-tag">Databases</span>
+      <span class="topic-tag">Sharding</span>
+      <span class="topic-tag">Load Balancing</span>
+      <span class="topic-tag">CAP Theorem</span>
+      <span class="topic-tag">Message Queues</span>
+      <span class="topic-tag">Replication</span>
+      <span class="topic-tag">Rate Limiting</span>
+      <span class="topic-tag">Consistent Hashing</span>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-dot"></div></div>
+
+  <!-- ─── TECH STACK ─── -->
+  <section class="content-section">
+    <div class="section-header">
+      <h2>TECH STACK</h2>
+    </div>
+
+    <div class="tech-list">
+      <span class="tech-pill">React Native</span>
+      <span class="tech-pill">Expo</span>
+      <span class="tech-pill">TypeScript</span>
+      <span class="tech-pill">Supabase</span>
+      <span class="tech-pill">Google OAuth</span>
+      <span class="tech-pill">Apple Sign In</span>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-dot"></div></div>
+
+  <!-- ─── LINKS ─── -->
+  <section class="content-section">
+    <div class="links-row">
+      <a href="privacy-policy.html" class="link-btn">Privacy Policy</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>System Design Arcade &mdash; by Hyperfocused Engineer</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.content-section').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>

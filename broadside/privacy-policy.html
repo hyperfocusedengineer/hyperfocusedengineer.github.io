@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Broadside</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #2C1810;
+      color: #E8DCC6;
+      font-family: Georgia, 'Times New Roman', serif;
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+      line-height: 1.7;
+    }
+    .container { max-width: 600px; margin: 0 auto; }
+    h1 { font-size: 1.8rem; color: #F5ECD7; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.2rem; color: #C5A55A; margin: 1.5rem 0 0.5rem; }
+    p, li { font-size: 0.95rem; margin-bottom: 0.75rem; }
+    ul { padding-left: 1.25rem; }
+    a { color: #C5A55A; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .date { font-size: 0.85rem; color: rgba(232,220,198,0.5); margin-bottom: 2rem; }
+    .back { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="./" class="back">&larr; Back to Broadside</a>
+    <h1>Privacy Policy</h1>
+    <p class="date">Last updated: March 6, 2026</p>
+
+    <h2>Overview</h2>
+    <p>Broadside is a cross-platform social media composer built by Hyperfocused Engineer. Your privacy matters. This policy explains what data the app handles and how.</p>
+
+    <h2>Data Storage</h2>
+    <p>All your data stays on your device:</p>
+    <ul>
+      <li><strong>Posts, drafts, and history</strong> are stored locally using AsyncStorage.</li>
+      <li><strong>OAuth tokens</strong> are stored securely using the device's secure enclave (expo-secure-store).</li>
+      <li><strong>AI API keys</strong> you provide are stored in the device's secure storage and never transmitted to our servers.</li>
+    </ul>
+
+    <h2>Third-Party Services</h2>
+    <p>When you connect accounts or use AI features, Broadside communicates directly with the respective platform APIs:</p>
+    <ul>
+      <li><strong>Social platforms</strong> (Twitter, LinkedIn, Reddit): OAuth tokens are used to post on your behalf. Broadside uses a Cloudflare Worker for token refresh only.</li>
+      <li><strong>AI providers</strong> (Claude, OpenAI, Gemini): If you provide an API key, your content is sent to the selected provider for reformatting. No content is stored server-side.</li>
+      <li><strong>Share sheet</strong> (Instagram, WhatsApp, Facebook): Content is passed to the native OS share interface. No data leaves the device until you confirm the share.</li>
+    </ul>
+
+    <h2>Data We Do Not Collect</h2>
+    <ul>
+      <li>We do not collect analytics or telemetry.</li>
+      <li>We do not store your posts, credentials, or API keys on any server.</li>
+      <li>We do not sell or share your data with third parties.</li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>Questions? Open an issue on <a href="https://github.com/harshssd/broadside">GitHub</a>.</p>
+  </div>
+</body>
+</html>
