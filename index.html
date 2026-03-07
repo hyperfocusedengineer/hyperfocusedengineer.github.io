@@ -36,6 +36,10 @@
       --tossup-blue: #3B82F6;
       --koo-sky: #6BCBFF;
       --koo-butter: #FFD93D;
+      --zeroshot-orange: #F97316;
+      --zeroshot-yellow: #EAB308;
+      --cortis-violet: #8B5CF6;
+      --cortis-indigo: #6366F1;
     }
 
     body {
@@ -66,13 +70,13 @@
        HERO
        ══════════════════════════ */
     .hero {
-      min-height: 100vh;
+      min-height: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 3rem 2rem;
+      padding: 6rem 2rem 2.5rem;
       position: relative;
       overflow: hidden;
     }
@@ -201,7 +205,7 @@
 
     .index-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1px;
       background: var(--border);
     }
@@ -436,6 +440,8 @@
     .accent-arcade { background: linear-gradient(90deg, var(--arcade-cyan), var(--arcade-pink), var(--arcade-cyan)); }
     .accent-tossup { background: linear-gradient(90deg, var(--tossup-emerald), var(--tossup-blue), var(--tossup-emerald)); }
     .accent-koo { background: linear-gradient(90deg, var(--koo-sky), var(--koo-butter), var(--koo-sky)); }
+    .accent-zeroshot { background: linear-gradient(90deg, var(--zeroshot-orange), var(--zeroshot-yellow), var(--zeroshot-orange)); }
+    .accent-cortis { background: linear-gradient(90deg, var(--cortis-violet), var(--cortis-indigo), var(--cortis-violet)); }
 
     .exhibit-summary {
       font-size: 1rem;
@@ -819,7 +825,7 @@
     </p>
     <div class="hero-stats">
       <div class="hero-stat">
-        <span class="hero-stat-num">4</span>
+        <span class="hero-stat-num">6</span>
         <span class="hero-stat-label">Projects</span>
       </div>
       <div class="hero-stat">
@@ -827,7 +833,7 @@
         <span class="hero-stat-label">Shipped</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-num">3</span>
+        <span class="hero-stat-num">5</span>
         <span class="hero-stat-label">In Development</span>
       </div>
     </div>
@@ -837,41 +843,59 @@
   <!-- ─── INDEX ─── -->
   <nav class="index-section">
     <div class="index-grid">
-      <a href="broadside/" class="index-card">
-        <div class="index-accent accent-broadside"></div>
+      <a href="#exhibit-cortis" class="index-card">
+        <div class="index-accent accent-cortis"></div>
         <span class="index-card-number">01</span>
+        <div class="index-card-title">CORTIS</div>
+        <div class="index-card-type">Context Intelligence Platform</div>
+        <p class="index-card-desc">On-device AI for high-stakes conversations. Knows who you're talking to before you do.</p>
+        <div class="index-card-status status-dev"><span class="status-dot"></span> In Development</div>
+        <span class="index-card-arrow">&darr;</span>
+      </a>
+      <a href="#exhibit-broadside" class="index-card">
+        <div class="index-accent accent-broadside"></div>
+        <span class="index-card-number">02</span>
         <div class="index-card-title">Broadside</div>
         <div class="index-card-type">Social Media Composer</div>
         <p class="index-card-desc">Compose once, dispatch to 6 platforms. Vintage writing-desk aesthetic.</p>
         <div class="index-card-status status-dev"><span class="status-dot"></span> In Development</div>
-        <span class="index-card-arrow">&rarr;</span>
+        <span class="index-card-arrow">&darr;</span>
       </a>
-      <a href="system-design-arcade/" class="index-card">
+      <a href="#exhibit-arcade" class="index-card">
         <div class="index-accent accent-arcade"></div>
-        <span class="index-card-number">02</span>
+        <span class="index-card-number">03</span>
         <div class="index-card-title">System Design Arcade</div>
         <div class="index-card-type">Learning Game</div>
         <p class="index-card-desc">Master system design through interactive arcade-style games.</p>
         <div class="index-card-status status-shipped"><span class="status-dot"></span> Shipped</div>
-        <span class="index-card-arrow">&rarr;</span>
+        <span class="index-card-arrow">&darr;</span>
       </a>
-      <a href="tossup/" class="index-card">
+      <a href="#exhibit-tossup" class="index-card">
         <div class="index-accent accent-tossup"></div>
-        <span class="index-card-number">03</span>
+        <span class="index-card-number">04</span>
         <div class="index-card-title">TossUp</div>
         <div class="index-card-type">Cricket Auction Platform</div>
-        <p class="index-card-desc">Real-time cricket auctions with dual bidding models and club management.</p>
-        <div class="index-card-status status-dev"><span class="status-dot"></span> In Development</div>
-        <span class="index-card-arrow">&rarr;</span>
+        <p class="index-card-desc">Real-time cricket auctions with dual bidding and club management.</p>
+        <div class="index-card-status status-dev"><span class="status-dot"></span> MVP</div>
+        <span class="index-card-arrow">&darr;</span>
       </a>
-      <a href="koo/" class="index-card">
+      <a href="#exhibit-koo" class="index-card">
         <div class="index-accent accent-koo"></div>
-        <span class="index-card-number">04</span>
+        <span class="index-card-number">05</span>
         <div class="index-card-title">Koo</div>
         <div class="index-card-type">Baby Tracking App</div>
-        <p class="index-card-desc">Voice logging, WHO growth charts, and collaborative family caregiving.</p>
+        <p class="index-card-desc">Voice logging, WHO growth charts, and collaborative caregiving.</p>
         <div class="index-card-status status-dev"><span class="status-dot"></span> In Development</div>
-        <span class="index-card-arrow">&rarr;</span>
+        <span class="index-card-arrow">&darr;</span>
+      </a>
+      <a href="#exhibit-zeroshot" class="index-card">
+        <div class="index-accent accent-zeroshot"></div>
+        <span class="index-card-number">06</span>
+        <div class="index-card-title">Zeroshot</div>
+        <div class="index-card-type">AI / ML Learning</div>
+        <p class="index-card-desc">Brushing up Python and learning AI/ML from the ground up.</p>
+        <div class="index-card-status status-dev"><span class="status-dot"></span> MVP</div>
+        <span class="index-card-arrow">&darr;</span>
       </a>
     </div>
   </nav>
@@ -879,11 +903,87 @@
   <!-- ─── EXHIBITION ─── -->
   <div class="exhibition">
 
-    <!-- ════ EXHIBIT 01: BROADSIDE ════ -->
-    <article class="exhibit">
+    <!-- ════ EXHIBIT 01: CORTIS ════ -->
+    <article class="exhibit" id="exhibit-cortis">
       <div class="exhibit-inner">
         <div class="exhibit-meta">
           <div class="exhibit-number">Exhibit 01</div>
+          <h2 class="exhibit-title">CORTIS</h2>
+          <div class="exhibit-type">Context Intelligence Platform</div>
+          <a href="cortis/" class="exhibit-link">Project details <span class="arrow">&rarr;</span></a>
+        </div>
+
+        <div class="exhibit-content">
+          <div class="exhibit-accent accent-cortis"></div>
+
+          <p class="exhibit-summary">
+            On-device AI for high-stakes conversations &mdash; your AI that knows who you're talking to before you do.
+          </p>
+
+          <p class="exhibit-story">
+            <strong>CORTIS</strong> is a context intelligence platform that ingests your life context &mdash; calendar, email,
+            contacts, LinkedIn, CRM &mdash; and delivers actionable intelligence before and during every conversation.
+            Not meeting notes. Not post-call analysis. Live runtime intelligence delivered through phone, earbuds, or smart glasses.
+            CORTIS targets the gap between
+            what you know and what you can recall in the moment.
+          </p>
+
+          <div class="exhibit-highlights">
+            <div class="highlight-card">
+              <div class="highlight-num">&lt;500ms</div>
+              <div class="highlight-label">Pre-fetched context</div>
+            </div>
+            <div class="highlight-card">
+              <div class="highlight-num">On-device</div>
+              <div class="highlight-label">No cloud round-trip</div>
+            </div>
+            <div class="highlight-card">
+              <div class="highlight-num">6 layers</div>
+              <div class="highlight-label">Full-stack AI pipeline</div>
+            </div>
+          </div>
+
+          <div class="exhibit-features">
+            <div class="feature-item">
+              <div class="feature-name">Interview Prep (Beachhead)</div>
+              <div class="feature-desc">Auto-detect interviews, generate company briefings, interviewer intel, and talking points.</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-name">Live Context Surfacing</div>
+              <div class="feature-desc">Proactively surfaces relevant history and data points before and during conversations.</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-name">Personal Knowledge Graph</div>
+              <div class="feature-desc">Compounding graph from every interaction. Hot cache of top contacts with pre-built profiles.</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-name">Multi-Device Delivery</div>
+              <div class="feature-desc">Phone notifications, earbuds audio, or smart glasses overlay. Sub-200ms push delivery.</div>
+            </div>
+          </div>
+
+          <div class="exhibit-audience">
+            <span class="audience-tag">Founders &amp; Executives</span>
+            <span class="audience-tag">Sales Teams</span>
+            <span class="audience-tag">Consultants</span>
+            <span class="audience-tag">Product Leaders</span>
+          </div>
+
+          <div class="exhibit-tech">
+            <span class="tech-pill">Python (FastAPI)</span>
+            <span class="tech-pill">Anthropic Claude</span>
+            <span class="tech-pill">Whisper / Deepgram</span>
+            <span class="tech-pill">LangGraph</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ════ EXHIBIT 02: BROADSIDE ════ -->
+    <article class="exhibit" id="exhibit-broadside">
+      <div class="exhibit-inner">
+        <div class="exhibit-meta">
+          <div class="exhibit-number">Exhibit 02</div>
           <h2 class="exhibit-title">Broadside</h2>
           <div class="exhibit-type">Social Media Composer</div>
           <a href="broadside/" class="exhibit-link">Project details <span class="arrow">&rarr;</span></a>
@@ -1024,11 +1124,11 @@
       </div>
     </article>
 
-    <!-- ════ EXHIBIT 02: SYSTEM DESIGN ARCADE ════ -->
-    <article class="exhibit">
+    <!-- ════ EXHIBIT 03: SYSTEM DESIGN ARCADE ════ -->
+    <article class="exhibit" id="exhibit-arcade">
       <div class="exhibit-inner">
         <div class="exhibit-meta">
-          <div class="exhibit-number">Exhibit 02</div>
+          <div class="exhibit-number">Exhibit 03</div>
           <h2 class="exhibit-title">System Design Arcade</h2>
           <div class="exhibit-type">Interactive Learning Game</div>
           <a href="system-design-arcade/" class="exhibit-link">Project details <span class="arrow">&rarr;</span></a>
@@ -1141,11 +1241,11 @@
       </div>
     </article>
 
-    <!-- ════ EXHIBIT 03: TOSSUP ════ -->
-    <article class="exhibit">
+    <!-- ════ EXHIBIT 04: TOSSUP ════ -->
+    <article class="exhibit" id="exhibit-tossup">
       <div class="exhibit-inner">
         <div class="exhibit-meta">
-          <div class="exhibit-number">Exhibit 03</div>
+          <div class="exhibit-number">Exhibit 04</div>
           <h2 class="exhibit-title">TossUp</h2>
           <div class="exhibit-type">Cricket Auction &amp; Club Platform</div>
           <a href="tossup/" class="exhibit-link">Project details <span class="arrow">&rarr;</span></a>
@@ -1277,11 +1377,11 @@
       </div>
     </article>
 
-    <!-- ════ EXHIBIT 04: KOO ════ -->
-    <article class="exhibit">
+    <!-- ════ EXHIBIT 05: KOO ════ -->
+    <article class="exhibit" id="exhibit-koo">
       <div class="exhibit-inner">
         <div class="exhibit-meta">
-          <div class="exhibit-number">Exhibit 04</div>
+          <div class="exhibit-number">Exhibit 05</div>
           <h2 class="exhibit-title">Koo</h2>
           <div class="exhibit-type">Baby Tracking &amp; Parenting Companion</div>
           <a href="koo/" class="exhibit-link">Project details <span class="arrow">&rarr;</span></a>
@@ -1403,6 +1503,75 @@
             <span class="tech-pill">Supabase</span>
             <span class="tech-pill">Google Gemini</span>
             <span class="tech-pill">Speech Recognition</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ════ EXHIBIT 06: ZEROSHOT ════ -->
+    <article class="exhibit" id="exhibit-zeroshot">
+      <div class="exhibit-inner">
+        <div class="exhibit-meta">
+          <div class="exhibit-number">Exhibit 06</div>
+          <h2 class="exhibit-title">Zeroshot</h2>
+          <div class="exhibit-type">AI / ML Learning Project</div>
+          <a href="zeroshot/" class="exhibit-link">Project details <span class="arrow">&rarr;</span></a>
+        </div>
+
+        <div class="exhibit-content">
+          <div class="exhibit-accent accent-zeroshot"></div>
+
+          <p class="exhibit-summary">
+            Learning AI/ML from scratch &mdash; Python refresher meets hands-on machine learning, one experiment at a time.
+          </p>
+
+          <p class="exhibit-story">
+            <strong>Zeroshot</strong> started as a way to brush up on Python and dive headfirst into AI and machine learning.
+            Rather than passive tutorials, the project is built around real experiments &mdash; implementing models from scratch,
+            understanding the math, and building intuition through doing. Currently in MVP development, with the goal of
+            creating a personal toolkit of ML primitives and practical applications.
+          </p>
+
+          <div class="exhibit-highlights">
+            <div class="highlight-card">
+              <div class="highlight-num">0 &rarr; 1</div>
+              <div class="highlight-label">Ground-up learning</div>
+            </div>
+            <div class="highlight-card">
+              <div class="highlight-num">Python</div>
+              <div class="highlight-label">Core language</div>
+            </div>
+            <div class="highlight-card">
+              <div class="highlight-num">ML</div>
+              <div class="highlight-label">Models &amp; algorithms</div>
+            </div>
+          </div>
+
+          <div class="exhibit-features">
+            <div class="feature-item">
+              <div class="feature-name">Python Fundamentals Refresh</div>
+              <div class="feature-desc">Rebuilding fluency in Python with modern idioms and best practices.</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-name">ML From Scratch</div>
+              <div class="feature-desc">Implementing core algorithms without frameworks to understand the internals.</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-name">Experiment-Driven</div>
+              <div class="feature-desc">Each concept is validated through hands-on experiments, not just theory.</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-name">Building a Toolkit</div>
+              <div class="feature-desc">Creating reusable ML primitives for future AI-powered projects.</div>
+            </div>
+          </div>
+
+          <div class="exhibit-tech">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">NumPy</span>
+            <span class="tech-pill">Pandas</span>
+            <span class="tech-pill">scikit-learn</span>
+            <span class="tech-pill">Jupyter</span>
           </div>
         </div>
       </div>

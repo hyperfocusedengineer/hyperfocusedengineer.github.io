@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zeroshot — AI/ML Learning Project</title>
+  <meta name="description" content="Learning AI and machine learning from scratch. Python refresher meets hands-on experiments. By Hyperfocused Engineer.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@200;300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0C0A09;
+      --bg-card: #1A1614;
+      --bg-elevated: #231E1A;
+      --text: #F5F0EB;
+      --text-secondary: #A8998A;
+      --text-muted: #5C524A;
+      --orange: #F97316;
+      --yellow: #EAB308;
+      --amber: #F59E0B;
+      --orange-dim: rgba(249, 115, 22, 0.12);
+      --orange-ghost: rgba(249, 115, 22, 0.05);
+      --border: rgba(249, 115, 22, 0.1);
+      --border-hover: rgba(249, 115, 22, 0.25);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', -apple-system, sans-serif;
+      min-height: 100vh;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Notebook grid background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 20%, rgba(249,115,22,0.04) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 80%, rgba(234,179,8,0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page { position: relative; z-index: 1; }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1.5rem 2rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--orange); }
+    .back-link .arrow { transition: transform 0.3s; }
+    .back-link:hover .arrow { transform: translateX(-3px); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      background: var(--orange-dim);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.65rem;
+      color: var(--orange);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: blink 2s ease infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .hero-title {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--yellow) 50%, var(--orange) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── Terminal block ── */
+    .terminal {
+      max-width: 700px;
+      margin: 3rem auto 0;
+      background: #0D0D0D;
+      border: 1px solid rgba(249,115,22,0.15);
+      border-radius: 8px;
+      overflow: hidden;
+      text-align: left;
+    }
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.6rem 1rem;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .terminal-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .terminal-dot:nth-child(1) { background: #FF5F57; }
+    .terminal-dot:nth-child(2) { background: #FEBC2E; }
+    .terminal-dot:nth-child(3) { background: #28C840; }
+    .terminal-code {
+      padding: 1.25rem 1.5rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+    .terminal-code .prompt { color: var(--orange); }
+    .terminal-code .comment { color: var(--text-muted); font-style: italic; }
+    .terminal-code .string { color: var(--yellow); }
+    .terminal-code .keyword { color: #C084FC; }
+
+    /* ── Section shared ── */
+    .section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.6rem;
+      color: var(--orange);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Origin story ── */
+    .story-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .story-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--orange), var(--yellow), var(--orange));
+    }
+    .story-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+    .story-card p + p { margin-top: 1rem; }
+    .story-card strong { color: var(--text); font-weight: 500; }
+
+    /* ── Learning path ── */
+    .path-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .path-card {
+      background: var(--bg);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .path-number {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+    }
+    .path-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .path-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    .path-status {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.6rem;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: auto;
+      padding-top: 0.5rem;
+    }
+
+    /* ── Features grid ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.25rem;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: border-color 0.3s;
+    }
+    .feature-card:hover { border-color: var(--border-hover); }
+    .feature-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .feature-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .feature-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ── Tech stack ── */
+    .tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tech-pill {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.65rem;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+      transition: all 0.3s;
+    }
+    .tech-pill:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+      background: var(--orange-ghost);
+    }
+
+    /* ── Screenshot gallery ── */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .gallery-frame {
+      aspect-ratio: 16 / 10;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--orange-ghost) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+    .footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer a:hover { color: var(--orange); }
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 2rem 1.5rem 3rem; }
+      .section { padding: 3rem 1.5rem; }
+      .hero-title { font-size: 2.2rem; }
+      .path-grid { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a href="../" class="back-link"><span class="arrow">&larr;</span> Back to Portfolio</a>
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+      <div class="hero-badge"><span class="dot"></span> MVP in Development</div>
+      <h1 class="hero-title">Zeroshot</h1>
+      <div class="hero-subtitle">AI / ML from the ground up</div>
+      <p class="hero-desc">
+        Brushing up Python and diving into machine learning &mdash; not through tutorials,
+        but by building, breaking, and understanding from scratch.
+      </p>
+
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+        </div>
+        <div class="terminal-code">
+          <span class="comment"># zeroshot &mdash; learning AI/ML one experiment at a time</span><br>
+          <span class="prompt">$</span> <span class="keyword">python</span> train.py --model linear_regression --from-scratch<br>
+          <span class="string">[ok]</span> Dataset loaded: 1,200 samples<br>
+          <span class="string">[ok]</span> Training from scratch (no sklearn)...<br>
+          <span class="string">[ok]</span> MSE: 0.0234 | R2: 0.967<br>
+          <span class="prompt">$</span> <span class="keyword">python</span> experiment.py --next<br>
+          <span class="comment"># next: neural network from numpy only</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ORIGIN STORY ── -->
+    <section class="section">
+      <div class="section-label">// origin</div>
+      <h2 class="section-title">Why Zeroshot?</h2>
+      <div class="story-card">
+        <p>
+          After years of building production systems at scale, I realized I was consuming AI as a black box.
+          APIs, SDKs, pre-trained models &mdash; powerful, but I didn't <strong>understand</strong> what was happening underneath.
+        </p>
+        <p>
+          <strong>Zeroshot</strong> is my commitment to learning from zero. Refreshing Python fundamentals,
+          implementing ML algorithms without frameworks, understanding the math behind gradient descent,
+          backpropagation, and attention mechanisms. Each concept is validated through hands-on experiments,
+          not just theory.
+        </p>
+        <p>
+          The name says it all &mdash; starting with zero assumptions, building real intuition one experiment at a time.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── LEARNING PATH ── -->
+    <section class="section">
+      <div class="section-label">// learning path</div>
+      <h2 class="section-title">The Journey</h2>
+      <p class="section-desc">A structured path from Python refresher to building ML models from scratch.</p>
+
+      <div class="path-grid">
+        <div class="path-card">
+          <div class="path-number">PHASE 01</div>
+          <div class="path-name">Python Refresh</div>
+          <div class="path-desc">Modern idioms, data structures, functional patterns, and Pythonic best practices.</div>
+          <div class="path-status">In Progress</div>
+        </div>
+        <div class="path-card">
+          <div class="path-number">PHASE 02</div>
+          <div class="path-name">Math Foundations</div>
+          <div class="path-desc">Linear algebra, calculus, probability, and statistics for ML.</div>
+          <div class="path-status">Up Next</div>
+        </div>
+        <div class="path-card">
+          <div class="path-number">PHASE 03</div>
+          <div class="path-name">ML From Scratch</div>
+          <div class="path-desc">Implementing regression, trees, SVMs, and clustering without sklearn.</div>
+          <div class="path-status">Planned</div>
+        </div>
+        <div class="path-card">
+          <div class="path-number">PHASE 04</div>
+          <div class="path-name">Deep Learning</div>
+          <div class="path-desc">Neural networks, backprop, CNNs, and transformers with only NumPy.</div>
+          <div class="path-status">Planned</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FEATURES ── -->
+    <section class="section">
+      <div class="section-label">// approach</div>
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-desc">Not a course. Not a tutorial follow-along. A hands-on experiment lab.</p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F9EA;</div>
+          <div class="feature-name">Experiment-First</div>
+          <div class="feature-desc">Every concept gets a runnable experiment. Theory without code doesn't stick.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F527;</div>
+          <div class="feature-name">From Scratch</div>
+          <div class="feature-desc">Implement algorithms without frameworks first, then compare with library versions.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4D0;</div>
+          <div class="feature-name">Math Grounded</div>
+          <div class="feature-desc">Understand the math behind each algorithm. Derivations, not just formulas.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4E6;</div>
+          <div class="feature-name">Reusable Toolkit</div>
+          <div class="feature-desc">Building a personal library of ML primitives for future AI-powered projects.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREENSHOTS ── -->
+    <section class="section">
+      <div class="section-label">// preview</div>
+      <h2 class="section-title">Screenshots</h2>
+      <div class="gallery">
+        <div class="gallery-frame">Jupyter Notebook</div>
+        <div class="gallery-frame">Model Training</div>
+        <div class="gallery-frame">Visualization</div>
+      </div>
+    </section>
+
+    <!-- ── TECH STACK ── -->
+    <section class="section">
+      <div class="section-label">// tech stack</div>
+      <h2 class="section-title">Built With</h2>
+      <div class="tech-row">
+        <span class="tech-pill">Python 3.12</span>
+        <span class="tech-pill">NumPy</span>
+        <span class="tech-pill">Pandas</span>
+        <span class="tech-pill">Matplotlib</span>
+        <span class="tech-pill">scikit-learn</span>
+        <span class="tech-pill">Jupyter Notebooks</span>
+        <span class="tech-pill">Poetry</span>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <a href="../">Hyperfocused Engineer</a>
+      <div class="footer-links">
+        <a href="https://github.com/harshssd" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.youtube.com/@hyperfocusedengineer" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.04, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.section').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CORTIS — Context Intelligence Platform</title>
+  <meta name="description" content="Real-time, on-device AI for high-stakes conversations. Your AI that knows who you're talking to before you do. By Hyperfocused Engineer.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #07060B;
+      --bg-card: #0F0D16;
+      --bg-elevated: #15121F;
+      --text: #EDE9F5;
+      --text-secondary: #9B93AE;
+      --text-muted: #4E4666;
+      --violet: #8B5CF6;
+      --indigo: #6366F1;
+      --purple: #A78BFA;
+      --violet-dim: rgba(139, 92, 246, 0.1);
+      --violet-ghost: rgba(139, 92, 246, 0.04);
+      --border: rgba(139, 92, 246, 0.08);
+      --border-hover: rgba(139, 92, 246, 0.2);
+      --glow: rgba(139, 92, 246, 0.15);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Sora', -apple-system, sans-serif;
+      min-height: 100vh;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      right: -10%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -20%;
+      left: -10%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(99,102,241,0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page { position: relative; z-index: 1; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1.5rem 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--violet); }
+    .back-link .arrow { transition: transform 0.3s; }
+    .back-link:hover .arrow { transform: translateX(-3px); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2rem 5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-hook {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--violet);
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, var(--violet) 0%, var(--indigo) 40%, var(--purple) 70%, var(--violet) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 60px var(--glow));
+    }
+
+    .hero-tagline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-desc {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+    .hero-desc em {
+      color: var(--purple);
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    .hero-not {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+    .hero-not .strike { text-decoration: line-through; opacity: 0.5; }
+
+    .founder-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 1.25rem;
+      background: var(--violet-dim);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-top: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+    }
+    .founder-badge .sep { width: 1px; height: 14px; background: var(--border-hover); }
+    .founder-badge .companies { color: var(--text-muted); }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      background: var(--violet-dim);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--violet);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 1.25rem;
+    }
+    .status-badge .dot {
+      width: 6px; height: 6px;
+      background: var(--violet);
+      border-radius: 50%;
+      animation: blink 2s ease infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* ── Sections ── */
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+    .section.visible { opacity: 1; transform: translateY(0); }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--violet);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .section-desc {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      max-width: 620px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Story card ── */
+    .story-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .story-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--violet), var(--indigo), var(--violet));
+    }
+    .story-card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle at top right, var(--violet-ghost) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .story-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      font-weight: 300;
+    }
+    .story-card p + p { margin-top: 1.25rem; }
+    .story-card strong { color: var(--text); font-weight: 500; }
+
+    /* ── Capability cards ── */
+    .capabilities {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .capability-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .capability-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 0 40px var(--violet-ghost);
+    }
+    .capability-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(180deg, var(--violet), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .capability-card:hover::before { opacity: 1; }
+    .capability-icon {
+      width: 36px; height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--violet-dim);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    .capability-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .capability-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    /* ── Use case cards ── */
+    .use-cases {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .use-case-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem;
+      transition: border-color 0.3s;
+    }
+    .use-case-card:hover { border-color: var(--border-hover); }
+    .use-case-card.beachhead { border-color: var(--violet); }
+    .use-case-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--violet);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .use-case-name {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .use-case-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    /* ── Course cards ── */
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .course-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: border-color 0.3s;
+      position: relative;
+    }
+    .course-card:hover { border-color: var(--border-hover); }
+    .course-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.6rem;
+    }
+    .course-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .course-maps {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--violet);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .course-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ── Architecture layers ── */
+    .arch-layers {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .arch-layer {
+      background: var(--bg);
+      padding: 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .arch-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--violet);
+      font-weight: 500;
+      padding-top: 0.15rem;
+    }
+    .arch-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .arch-detail {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ── Audience ── */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .audience-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    .audience-card:hover { border-color: var(--border-hover); }
+    .audience-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+    .audience-role { font-size: 0.85rem; font-weight: 500; color: var(--text); margin-bottom: 0.35rem; }
+    .audience-why { font-size: 0.75rem; color: var(--text-secondary); font-weight: 300; }
+
+    /* ── Tech pills ── */
+    .tech-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tech-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.63rem;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+      transition: all 0.3s;
+    }
+    .tech-pill:hover {
+      border-color: var(--violet);
+      color: var(--violet);
+      background: var(--violet-ghost);
+    }
+
+    /* ── Gallery ── */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .gallery-frame {
+      aspect-ratio: 16 / 10;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.63rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--violet-ghost) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .store-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .store-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: all 0.3s;
+    }
+    .store-link:hover { border-color: var(--violet); color: var(--violet); }
+
+    /* ── Footer ── */
+    .footer {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+    .footer a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+    .footer a:hover { color: var(--violet); }
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 2.5rem 1.5rem 3.5rem; }
+      .section { padding: 3rem 1.5rem; }
+      .hero-title { font-size: 3rem; }
+      .capabilities, .use-cases, .courses { grid-template-columns: 1fr; }
+      .audience-grid { grid-template-columns: 1fr 1fr; }
+      .arch-layer { grid-template-columns: 30px 1fr; }
+      .footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .founder-badge { flex-direction: column; gap: 0.35rem; }
+      .founder-badge .sep { width: 30px; height: 1px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a href="../" class="back-link"><span class="arrow">&larr;</span> Back to Portfolio</a>
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+      <div class="hero-hook">"Your AI that knows who you're talking to before you do."</div>
+      <h1 class="hero-title">CORTIS</h1>
+      <div class="hero-tagline">Context Intelligence Platform</div>
+      <p class="hero-desc">
+        Real-time, on-device AI for <em>high-stakes conversations</em>.
+        Ingests your calendar, email, contacts, and CRM &mdash; delivers the right context
+        at the right moment through any device.
+      </p>
+      <div class="hero-not">
+        <span class="strike">meeting notes</span> &nbsp;
+        <span class="strike">post-call analysis</span> &nbsp;
+        <span class="strike">passive transcription</span> &nbsp;
+        &rarr; live runtime intelligence
+      </div>
+      <div class="founder-badge">
+        Solo Founder Build
+        <span class="sep"></span>
+        <span class="companies">ex-AWS / DoorDash / Cruise</span>
+      </div>
+      <br>
+      <div class="status-badge"><span class="dot"></span> Initial Development</div>
+    </section>
+
+    <!-- ── STORY ── -->
+    <section class="section">
+      <div class="section-label">// the problem</div>
+      <h2 class="section-title">Every Professional Goes In Blind</h2>
+      <div class="story-card">
+        <p>
+          Meeting prep takes hours. Interview research is scattered across 10 tabs. Context about who
+          you're talking to lives in your head or nowhere. You <strong>know</strong> you have relevant
+          information somewhere &mdash; but you can't surface it in the moment that matters.
+        </p>
+        <p>
+          <strong>CORTIS</strong> closes that gap. It's a context intelligence platform that ingests your
+          life context &mdash; calendar, email, contacts, LinkedIn, CRM &mdash; and delivers actionable
+          intelligence before and during every conversation. Not after. Not as a summary. <strong>In real time.</strong>
+        </p>
+        <p>
+          Built by a solo founder with experience shipping real-time systems at <strong>Cruise</strong>
+          (autonomous vehicles, millisecond decisions), infrastructure at <strong>AWS</strong>, and
+          personalization at <strong>DoorDash</strong>. Currently experiencing the exact problem CORTIS
+          solves &mdash; interviewing while building.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── CAPABILITIES ── -->
+    <section class="section">
+      <div class="section-label">// core intelligence</div>
+      <h2 class="section-title">Four Pillars</h2>
+      <p class="section-desc">Pre-fetch, don't react. The latency secret is doing work before you need it.</p>
+
+      <div class="capabilities">
+        <div class="capability-card">
+          <div class="capability-icon">&#x1F399;</div>
+          <div class="capability-name">Live Conversation Processing</div>
+          <div class="capability-desc">On-device speech processing. Understands context, intent, and nuance as the conversation unfolds &mdash; no cloud round-trip.</div>
+        </div>
+        <div class="capability-card">
+          <div class="capability-icon">&#x1F50D;</div>
+          <div class="capability-name">Context Surfacing</div>
+          <div class="capability-desc">Proactively surfaces relevant history, documents, and data points. Pre-fetched for known events (&lt;500ms), live for spontaneous (&lt;2s).</div>
+        </div>
+        <div class="capability-card">
+          <div class="capability-icon">&#x1F4AC;</div>
+          <div class="capability-name">Response Intelligence</div>
+          <div class="capability-desc">Suggests talking points grounded in your actual knowledge base. Delivered via phone, earbuds, or smart glasses.</div>
+        </div>
+        <div class="capability-card">
+          <div class="capability-icon">&#x1F9E0;</div>
+          <div class="capability-name">Personal Knowledge Graph</div>
+          <div class="capability-desc">Builds a compounding graph from every interaction. Hot cache of top 200-500 contacts with pre-built profiles.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── USE CASES ── -->
+    <section class="section">
+      <div class="section-label">// use cases</div>
+      <h2 class="section-title">Same Platform, Many Verticals</h2>
+      <p class="section-desc">
+        All use cases share the same architecture: context ingestion, intelligence synthesis,
+        briefing generation, post-analysis. Only the data sources and templates change.
+      </p>
+
+      <div class="use-cases">
+        <div class="use-case-card beachhead">
+          <div class="use-case-badge">Beachhead &mdash; Build First</div>
+          <div class="use-case-name">Interview Preparation</div>
+          <div class="use-case-desc">
+            Auto-detect interviews from calendar. Generate company briefings, interviewer intel,
+            talking points. Real-time assist during calls. Post-interview analysis and pipeline tracking.
+          </div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-badge">Month 4-5</div>
+          <div class="use-case-name">Sales Call Assist</div>
+          <div class="use-case-desc">
+            CRM integration, pre-call briefings with account history, real-time objection handling,
+            auto-generated follow-ups.
+          </div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-badge">Expansion</div>
+          <div class="use-case-name">Networking &amp; Events</div>
+          <div class="use-case-desc">
+            Scan attendee lists, pre-build profiles. Quick lookup via phone or smart glasses during events.
+            Post-event follow-up generation.
+          </div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-badge">Expansion</div>
+          <div class="use-case-name">Executive Meeting Prep</div>
+          <div class="use-case-desc">
+            Universal calendar intelligence. Who's attending, last discussion summary, agenda,
+            talking points. Works for any meeting.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ARCHITECTURE ── -->
+    <section class="section">
+      <div class="section-label">// architecture</div>
+      <h2 class="section-title">Six-Layer Stack</h2>
+      <p class="section-desc">From data ingestion to sub-200ms delivery.</p>
+
+      <div class="arch-layers">
+        <div class="arch-layer">
+          <div class="arch-num">L1</div>
+          <div>
+            <div class="arch-name">Data Ingestion</div>
+            <div class="arch-detail">Calendar, email, contacts, LinkedIn, CRM, Slack. Batch every 5-15 min.</div>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-num">L2</div>
+          <div>
+            <div class="arch-name">Personal Knowledge Graph</div>
+            <div class="arch-detail">Vector DB (pgvector &rarr; Pinecone) + graph DB for relationship mapping.</div>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-num">L3</div>
+          <div>
+            <div class="arch-name">Context Fusion Engine</div>
+            <div class="arch-detail">RAG pipeline with re-ranking. &lt;500ms pre-fetched, &lt;2s real-time retrieval.</div>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-num">L4</div>
+          <div>
+            <div class="arch-name">LLM Reasoning</div>
+            <div class="arch-detail">Claude Haiku for speed, Sonnet for depth. &lt;1s pre-generated, &lt;3s live.</div>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-num">L5</div>
+          <div>
+            <div class="arch-name">Delivery Layer</div>
+            <div class="arch-detail">Phone notifications, Meta SDK for glasses, audio via earbuds. &lt;200ms push.</div>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-num">L6</div>
+          <div>
+            <div class="arch-name">Audio / Visual Processing</div>
+            <div class="arch-detail">Whisper (local) for STT, speaker diarization, CLIP for visual recognition.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── COURSES ── -->
+    <section class="section">
+      <div class="section-label">// prerequisite learning</div>
+      <h2 class="section-title">Active Coursework</h2>
+      <p class="section-desc">
+        Four DeepLearning.AI courses mapping directly to CORTIS's technical architecture.
+      </p>
+
+      <div class="courses">
+        <div class="course-card">
+          <div class="course-num">COURSE 01</div>
+          <div class="course-name">Introduction to On-Device AI</div>
+          <div class="course-maps">&rarr; Edge inference layer</div>
+          <div class="course-desc">Mobile inference and hardware constraints for running AI on phones and smart glasses without cloud round-trips.</div>
+        </div>
+        <div class="course-card">
+          <div class="course-num">COURSE 02</div>
+          <div class="course-name">Building AI Voice Agents for Production</div>
+          <div class="course-maps">&rarr; Real-time conversation pipeline</div>
+          <div class="course-desc">Latency management, voice-based AI orchestration, and production challenges of real-time audio processing.</div>
+        </div>
+        <div class="course-card">
+          <div class="course-num">COURSE 03</div>
+          <div class="course-name">Quantization Fundamentals with Hugging Face</div>
+          <div class="course-maps">&rarr; Model compression layer</div>
+          <div class="course-desc">Compress models to run on phones and glasses without lag. Practical skills for constrained hardware.</div>
+        </div>
+        <div class="course-card">
+          <div class="course-num">COURSE 04</div>
+          <div class="course-name">AI Agents in LangGraph</div>
+          <div class="course-maps">&rarr; Autonomous orchestration backbone</div>
+          <div class="course-desc">Multi-step agent workflows: read calendar, detect event, pull data, fetch profiles, generate briefing, deliver.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── AUDIENCE ── -->
+    <section class="section">
+      <div class="section-label">// built for</div>
+      <h2 class="section-title">Anyone Whose Conversations Have Consequences</h2>
+
+      <div class="audience-grid">
+        <div class="audience-card">
+          <div class="audience-icon">&#x1F680;</div>
+          <div class="audience-role">Founders &amp; Executives</div>
+          <div class="audience-why">Board meetings, investor calls, strategy</div>
+        </div>
+        <div class="audience-card">
+          <div class="audience-icon">&#x1F4BC;</div>
+          <div class="audience-role">Sales Teams</div>
+          <div class="audience-why">Client calls, deal reviews, competitive intel</div>
+        </div>
+        <div class="audience-card">
+          <div class="audience-icon">&#x1F3AF;</div>
+          <div class="audience-role">Consultants</div>
+          <div class="audience-why">Client engagements, cross-project context</div>
+        </div>
+        <div class="audience-card">
+          <div class="audience-icon">&#x1F4CB;</div>
+          <div class="audience-role">Product Leaders</div>
+          <div class="audience-why">Stakeholder alignment, roadmap decisions</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREENSHOTS ── -->
+    <section class="section">
+      <div class="section-label">// preview</div>
+      <h2 class="section-title">Screenshots</h2>
+      <div class="gallery">
+        <div class="gallery-frame">Live Context Panel</div>
+        <div class="gallery-frame">Knowledge Graph</div>
+        <div class="gallery-frame">Interview Briefing</div>
+      </div>
+      <div class="store-links">
+        <a href="#" class="store-link">App Store &mdash; Coming Soon</a>
+        <a href="#" class="store-link">Play Store &mdash; Coming Soon</a>
+        <a href="#" class="store-link">Web App &mdash; Coming Soon</a>
+      </div>
+    </section>
+
+    <!-- ── TECH ── -->
+    <section class="section">
+      <div class="section-label">// tech stack</div>
+      <h2 class="section-title">Under the Hood</h2>
+      <div class="tech-row">
+        <span class="tech-pill">Python (FastAPI)</span>
+        <span class="tech-pill">Supabase</span>
+        <span class="tech-pill">Anthropic Claude</span>
+        <span class="tech-pill">Whisper / Deepgram</span>
+        <span class="tech-pill">pgvector / Pinecone</span>
+        <span class="tech-pill">LangGraph</span>
+        <span class="tech-pill">React Native</span>
+        <span class="tech-pill">Google APIs (OAuth2)</span>
+        <span class="tech-pill">Meta Wearables SDK</span>
+        <span class="tech-pill">WebSockets</span>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <a href="../">Hyperfocused Engineer</a>
+      <div class="footer-links">
+        <a href="https://github.com/harshssd" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.youtube.com/@hyperfocusedengineer" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.04, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.section').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
