@@ -7,56 +7,59 @@
   <meta name="description" content="A gamified mobile app that teaches Python, PyTorch, and AI/ML concepts through cyberpunk-themed coding missions with an AI co-founder. By Hyperfocused Engineer.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@200;300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0C0A09;
-      --bg-card: #1A1614;
-      --bg-elevated: #231E1A;
-      --text: #F5F0EB;
-      --text-secondary: #A8998A;
-      --text-muted: #5C524A;
-      --orange: #F97316;
-      --yellow: #EAB308;
-      --amber: #F59E0B;
-      --orange-dim: rgba(249, 115, 22, 0.12);
-      --orange-ghost: rgba(249, 115, 22, 0.05);
-      --border: rgba(249, 115, 22, 0.1);
-      --border-hover: rgba(249, 115, 22, 0.25);
+      --bg: #080C0A;
+      --bg-card: #0D1512;
+      --bg-elevated: #111E19;
+      --text: #D0F0E0;
+      --text-secondary: #7A9E8C;
+      --text-muted: #3A5548;
+      --green: #00F0A0;
+      --green-bright: #00FF9D;
+      --green-dim: rgba(0, 240, 160, 0.12);
+      --green-ghost: rgba(0, 240, 160, 0.04);
+      --green-glow: rgba(0, 240, 160, 0.3);
+      --border: rgba(0, 240, 160, 0.1);
+      --border-hover: rgba(0, 240, 160, 0.3);
     }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Outfit', -apple-system, sans-serif;
+      font-family: 'Rajdhani', -apple-system, sans-serif;
       min-height: 100vh;
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    /* ── Notebook grid background ── */
+    /* ── Scan lines ── */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 40px 40px;
-      opacity: 0.3;
+      background: repeating-linear-gradient(
+        180deg,
+        transparent 0px,
+        transparent 3px,
+        rgba(0, 240, 160, 0.015) 3px,
+        rgba(0, 240, 160, 0.015) 4px
+      );
       pointer-events: none;
-      z-index: 0;
+      z-index: 9999;
     }
 
     body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background: radial-gradient(ellipse at 30% 20%, rgba(249,115,22,0.04) 0%, transparent 50%),
-                  radial-gradient(ellipse at 70% 80%, rgba(234,179,8,0.03) 0%, transparent 50%);
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(0,240,160,0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(0,240,160,0.03) 0%, transparent 40%);
       pointer-events: none;
       z-index: 0;
     }
@@ -69,14 +72,15 @@
       align-items: center;
       gap: 0.5rem;
       padding: 1.5rem 2rem;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.75rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
       color: var(--text-muted);
       text-decoration: none;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       transition: color 0.3s;
     }
-    .back-link:hover { color: var(--orange); }
+    .back-link:hover { color: var(--green); }
     .back-link .arrow { transition: transform 0.3s; }
     .back-link:hover .arrow { transform: translateX(-3px); }
 
@@ -84,103 +88,135 @@
     .hero {
       max-width: 860px;
       margin: 0 auto;
-      padding: 3rem 2rem 4rem;
+      padding: 2rem 2rem 4rem;
       text-align: center;
+      position: relative;
+    }
+
+    /* HUD corner brackets */
+    .hero::before,
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-color: var(--border);
+      border-style: solid;
+    }
+    .hero::before {
+      top: 0; left: 1rem;
+      border-width: 1px 0 0 1px;
+    }
+    .hero::after {
+      top: 0; right: 1rem;
+      border-width: 1px 1px 0 0;
     }
 
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 1rem;
-      background: var(--orange-dim);
+      gap: 0.6rem;
+      padding: 0.3rem 1rem;
+      background: var(--green-dim);
       border: 1px solid var(--border);
-      border-radius: 100px;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.65rem;
-      color: var(--orange);
-      letter-spacing: 0.15em;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--green);
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       margin-bottom: 2rem;
     }
     .hero-badge .dot {
       width: 6px; height: 6px;
-      background: var(--orange);
+      background: var(--green);
       border-radius: 50%;
-      animation: blink 2s ease infinite;
+      box-shadow: 0 0 8px var(--green-glow);
+      animation: pulse 2s ease infinite;
     }
-    @keyframes blink {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; box-shadow: 0 0 4px var(--green-glow); }
+      50% { opacity: 1; box-shadow: 0 0 12px var(--green-glow); }
     }
 
     .hero-title {
-      font-family: 'Space Mono', monospace;
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 800;
+      letter-spacing: 0.08em;
       line-height: 1.05;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, var(--orange) 0%, var(--yellow) 50%, var(--orange) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      margin-bottom: 0.3rem;
+      color: var(--green);
+      text-shadow:
+        0 0 30px rgba(0,240,160,0.4),
+        0 0 80px rgba(0,240,160,0.15);
     }
 
     .hero-subtitle {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.8rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
       color: var(--text-muted);
-      letter-spacing: 0.2em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       margin-bottom: 2rem;
     }
 
     .hero-desc {
       font-size: 1.15rem;
-      font-weight: 300;
+      font-weight: 400;
       color: var(--text-secondary);
-      max-width: 580px;
+      max-width: 540px;
       margin: 0 auto;
       line-height: 1.7;
     }
 
     /* ── Terminal block ── */
     .terminal {
-      max-width: 700px;
+      max-width: 620px;
       margin: 3rem auto 0;
-      background: #0D0D0D;
-      border: 1px solid rgba(249,115,22,0.15);
-      border-radius: 8px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--border);
       overflow: hidden;
       text-align: left;
+      position: relative;
+    }
+    .terminal::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      opacity: 0.5;
     }
     .terminal-bar {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 0.75rem;
       padding: 0.6rem 1rem;
-      background: rgba(255,255,255,0.03);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: rgba(0,240,160,0.03);
+      border-bottom: 1px solid var(--border);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
     }
-    .terminal-dot {
-      width: 10px; height: 10px;
+    .terminal-bar .indicator {
+      width: 6px; height: 6px;
+      background: var(--green);
       border-radius: 50%;
+      box-shadow: 0 0 6px var(--green-glow);
     }
-    .terminal-dot:nth-child(1) { background: #FF5F57; }
-    .terminal-dot:nth-child(2) { background: #FEBC2E; }
-    .terminal-dot:nth-child(3) { background: #28C840; }
     .terminal-code {
       padding: 1.25rem 1.5rem;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.78rem;
-      line-height: 1.8;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      line-height: 1.9;
       color: var(--text-secondary);
     }
-    .terminal-code .prompt { color: var(--orange); }
-    .terminal-code .comment { color: var(--text-muted); font-style: italic; }
-    .terminal-code .string { color: var(--yellow); }
-    .terminal-code .keyword { color: #C084FC; }
+    .terminal-code .prompt { color: var(--green); }
+    .terminal-code .comment { color: var(--text-muted); }
+    .terminal-code .string { color: var(--green-bright); }
+    .terminal-code .keyword { color: #66D9EF; }
 
     /* ── Section shared ── */
     .section {
@@ -197,36 +233,52 @@
     }
 
     .section-label {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.6rem;
-      color: var(--orange);
-      letter-spacing: 0.25em;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--green);
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       margin-bottom: 0.75rem;
+      opacity: 0.7;
     }
 
     .section-title {
-      font-family: 'Space Mono', monospace;
-      font-size: 1.5rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--text);
+      letter-spacing: 0.06em;
       margin-bottom: 1rem;
     }
 
     .section-desc {
       font-size: 1rem;
-      font-weight: 300;
+      font-weight: 400;
       color: var(--text-secondary);
       max-width: 600px;
       line-height: 1.7;
       margin-bottom: 2.5rem;
     }
 
+    /* ── Divider ── */
+    .divider {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 1px;
+      position: relative;
+    }
+    .divider::after {
+      content: '';
+      display: block;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
     /* ── Origin story ── */
     .story-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 6px;
       padding: 2rem;
       position: relative;
       overflow: hidden;
@@ -235,91 +287,112 @@
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--orange), var(--yellow), var(--orange));
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      opacity: 0.4;
     }
     .story-card p {
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--text-secondary);
       line-height: 1.8;
-      font-weight: 300;
+      font-weight: 400;
     }
     .story-card p + p { margin-top: 1rem; }
-    .story-card strong { color: var(--text); font-weight: 500; }
+    .story-card strong { color: var(--green-bright); font-weight: 600; }
 
-    /* ── Learning path ── */
+    /* ── Learning path / Sectors ── */
     .path-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1px;
       background: var(--border);
-      border-radius: 6px;
       overflow: hidden;
     }
     .path-card {
       background: var(--bg);
-      padding: 1.75rem;
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.6rem;
+      position: relative;
+      transition: background 0.3s;
     }
+    .path-card:hover { background: var(--bg-card); }
+    .path-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 2px;
+      height: 100%;
+      background: var(--green);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .path-card:first-child::before { opacity: 0.5; }
     .path-number {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.55rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.5rem;
       color: var(--text-muted);
-      letter-spacing: 0.2em;
+      letter-spacing: 0.25em;
     }
     .path-name {
-      font-family: 'Space Mono', monospace;
-      font-size: 1rem;
-      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
       color: var(--text);
+      letter-spacing: 0.03em;
     }
     .path-desc {
       font-size: 0.85rem;
       color: var(--text-secondary);
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.6;
     }
     .path-status {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.6rem;
-      color: var(--orange);
-      letter-spacing: 0.1em;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--green);
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       margin-top: auto;
       padding-top: 0.5rem;
     }
+    .path-status.locked { color: var(--text-muted); }
 
     /* ── Features grid ── */
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1px;
+      background: var(--border);
     }
     .feature-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 6px;
+      background: var(--bg);
       padding: 1.5rem;
-      transition: border-color 0.3s;
+      transition: background 0.3s;
     }
-    .feature-card:hover { border-color: var(--border-hover); }
+    .feature-card:hover { background: var(--bg-card); }
     .feature-icon {
-      font-size: 1.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--green);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
       margin-bottom: 0.75rem;
+      opacity: 0.6;
     }
     .feature-name {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
       color: var(--text);
       margin-bottom: 0.5rem;
+      letter-spacing: 0.03em;
     }
     .feature-desc {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       color: var(--text-secondary);
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.6;
     }
 
@@ -330,43 +403,51 @@
       gap: 0.5rem;
     }
     .tech-pill {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.65rem;
-      padding: 0.35rem 0.85rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      padding: 0.3rem 0.8rem;
       border: 1px solid var(--border);
-      border-radius: 100px;
       color: var(--text-secondary);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       transition: all 0.3s;
     }
     .tech-pill:hover {
-      border-color: var(--orange);
-      color: var(--orange);
-      background: var(--orange-ghost);
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--green-ghost);
+      box-shadow: 0 0 8px rgba(0,240,160,0.1);
     }
 
     /* ── Screenshot gallery ── */
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
+      display: flex;
+      gap: 1.25rem;
       margin-top: 2rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--green-dim) transparent;
     }
+    .gallery::-webkit-scrollbar { height: 3px; }
+    .gallery::-webkit-scrollbar-thumb { background: var(--green-dim); }
+
     .gallery-frame {
+      flex-shrink: 0;
+      width: 220px;
       aspect-ratio: 9 / 16;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      position: relative;
       overflow: hidden;
+      position: relative;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .gallery-frame:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+      box-shadow: 0 4px 20px rgba(0,240,160,0.08);
     }
     .gallery-frame img {
       width: 100%;
@@ -383,23 +464,26 @@
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid var(--border);
-      font-family: 'Fira Code', monospace;
-      font-size: 0.7rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
       color: var(--text-muted);
+      letter-spacing: 0.05em;
     }
     .footer a {
       color: var(--text-muted);
       text-decoration: none;
       transition: color 0.3s;
     }
-    .footer a:hover { color: var(--orange); }
+    .footer a:hover { color: var(--green); }
     .footer-links { display: flex; gap: 1.5rem; }
 
     @media (max-width: 600px) {
-      .hero { padding: 2rem 1.5rem 3rem; }
+      .hero { padding: 1.5rem 1.5rem 3rem; }
       .section { padding: 3rem 1.5rem; }
-      .hero-title { font-size: 2.2rem; }
+      .hero-title { font-size: 2.5rem; }
       .path-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .gallery-frame { width: 170px; }
       .footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
   </style>
@@ -411,8 +495,8 @@
     <!-- ── HERO ── -->
     <section class="hero">
       <div class="hero-badge"><span class="dot"></span> MVP in Development</div>
-      <h1 class="hero-title">Zeroshot</h1>
-      <div class="hero-subtitle">Gamified Python &amp; AI/ML Learning</div>
+      <h1 class="hero-title">ZEROSHOT</h1>
+      <div class="hero-subtitle">Mission Control // System_Active</div>
       <p class="hero-desc">
         Learn Python, PyTorch, and AI/ML concepts through cyberpunk-themed coding missions.
         Write real code, guided by Nova &mdash; your AI co-founder.
@@ -420,26 +504,26 @@
 
       <div class="terminal">
         <div class="terminal-bar">
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
+          <span class="indicator"></span> nova // system_link
         </div>
         <div class="terminal-code">
-          <span class="comment"># ZEROSHOT // MISSION CONTROL // SYSTEM_ACTIVE</span><br>
-          <span class="prompt">&gt;</span> <span class="keyword">sector</span> 1: The Infiltration<br>
-          <span class="string">[ACTIVE]</span> Learn Python basics to breach the outer firewall<br>
+          <span class="comment"># ZEROSHOT // SECTOR 1 // THE INFILTRATION</span><br>
+          <span class="prompt">&gt;</span> <span class="keyword">mission</span> MSN_01: The Big Idea<br>
+          <span class="string">[ACTIVE]</span> Initialize your app name. Breach the outer firewall.<br>
           <span class="prompt">&gt;</span> <span class="keyword">nova</span> // Hey there! I'm Nova, your AI co-founder.<br>
           <span class="string">[OK]</span> Let's build something amazing together.<br>
-          <span class="prompt">&gt;</span> <span class="keyword">run</span> mission_01 --difficulty MEDIUM<br>
-          <span class="string">[MISSION CLEARED]</span> Launch Successful
+          <span class="prompt">&gt;</span> <span class="keyword">run</span> --difficulty MEDIUM<br>
+          <span class="string">[MISSION CLEARED]</span> Launch Successful &mdash; +100 XP
         </div>
       </div>
     </section>
 
+    <div class="divider"></div>
+
     <!-- ── ORIGIN STORY ── -->
     <section class="section">
       <div class="section-label">// origin</div>
-      <h2 class="section-title">Why Zeroshot?</h2>
+      <h2 class="section-title">WHY ZEROSHOT?</h2>
       <div class="story-card">
         <p>
           Most coding education is passive &mdash; watch a video, copy an example, move on. Nothing sticks.
@@ -458,10 +542,25 @@
       </div>
     </section>
 
+    <div class="divider"></div>
+
+    <!-- ── SCREENSHOTS ── -->
+    <section class="section">
+      <div class="section-label">// preview</div>
+      <h2 class="section-title">SCREENSHOTS</h2>
+      <div class="gallery">
+        <div class="gallery-frame"><img src="screenshots/mission-control.png" alt="Mission Control with sectors and difficulty levels"></div>
+        <div class="gallery-frame"><img src="screenshots/code-editor.png" alt="In-app code editor with Nova AI co-founder"></div>
+        <div class="gallery-frame"><img src="screenshots/mission-cleared.png" alt="Mission Cleared success screen"></div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
     <!-- ── LEARNING PATH ── -->
     <section class="section">
-      <div class="section-label">// learning path</div>
-      <h2 class="section-title">The Journey</h2>
+      <div class="section-label">// sectors</div>
+      <h2 class="section-title">THE JOURNEY</h2>
       <p class="section-desc">Missions are organized into sectors, each unlocking harder concepts.</p>
 
       <div class="path-grid">
@@ -475,68 +574,61 @@
           <div class="path-number">SECTOR 02</div>
           <div class="path-name">Data Structures</div>
           <div class="path-desc">Lists, dicts, sets, and algorithmic thinking. Build your arsenal.</div>
-          <div class="path-status">Up Next</div>
+          <div class="path-status locked">Up Next</div>
         </div>
         <div class="path-card">
           <div class="path-number">SECTOR 03</div>
           <div class="path-name">PyTorch &amp; Tensors</div>
           <div class="path-desc">From NumPy to PyTorch. Build and train models from the ground up.</div>
-          <div class="path-status">Planned</div>
+          <div class="path-status locked">Locked</div>
         </div>
         <div class="path-card">
           <div class="path-number">SECTOR 04</div>
           <div class="path-name">LLMs &amp; AI/ML</div>
           <div class="path-desc">Transformers, attention, fine-tuning, and building with large language models.</div>
-          <div class="path-status">Planned</div>
+          <div class="path-status locked">Locked</div>
         </div>
       </div>
     </section>
 
+    <div class="divider"></div>
+
     <!-- ── FEATURES ── -->
     <section class="section">
-      <div class="section-label">// approach</div>
-      <h2 class="section-title">How It Works</h2>
+      <div class="section-label">// systems</div>
+      <h2 class="section-title">HOW IT WORKS</h2>
       <p class="section-desc">Not a course. Not a tutorial. A cyberpunk mission system where you write real code.</p>
 
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F3AF;</div>
+          <div class="feature-icon">// 01</div>
           <div class="feature-name">Mission-Based</div>
           <div class="feature-desc">Each concept is a mission with clear objectives. Complete code challenges to progress through sectors.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F916;</div>
-          <div class="feature-name">Nova AI Co-Founder</div>
-          <div class="feature-desc">Your AI guide that provides hints, reviews your code, and adapts to your learning pace.</div>
+          <div class="feature-icon">// 02</div>
+          <div class="feature-name">Nova AI</div>
+          <div class="feature-desc">Your AI co-founder provides hints, reviews your code, and adapts to your learning pace.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x2B50;</div>
+          <div class="feature-icon">// 03</div>
           <div class="feature-name">Difficulty Tiers</div>
           <div class="feature-desc">Easy, Medium, and Hard modes for every mission. Earn stars and track mastery across topics.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4BB;</div>
-          <div class="feature-name">In-App Code Editor</div>
+          <div class="feature-icon">// 04</div>
+          <div class="feature-name">Code Editor</div>
           <div class="feature-desc">Write and run real Python directly in the app. No external tools or setup required.</div>
         </div>
       </div>
     </section>
 
-    <!-- ── SCREENSHOTS ── -->
-    <section class="section">
-      <div class="section-label">// preview</div>
-      <h2 class="section-title">Screenshots</h2>
-      <div class="gallery">
-        <div class="gallery-frame"><img src="screenshots/mission-control.png" alt="Mission Control with sectors and difficulty levels"></div>
-        <div class="gallery-frame"><img src="screenshots/code-editor.png" alt="In-app code editor with Nova AI co-founder"></div>
-        <div class="gallery-frame"><img src="screenshots/mission-cleared.png" alt="Mission Cleared success screen"></div>
-      </div>
-    </section>
+    <div class="divider"></div>
 
     <!-- ── TECH STACK ── -->
     <section class="section">
       <div class="section-label">// tech stack</div>
-      <h2 class="section-title">Built With</h2>
+      <h2 class="section-title">BUILT WITH</h2>
       <div class="tech-row">
         <span class="tech-pill">React Native</span>
         <span class="tech-pill">Expo</span>
