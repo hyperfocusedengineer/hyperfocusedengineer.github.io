@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zeroshot — AI/ML Learning Project</title>
-  <meta name="description" content="Learning AI and machine learning from scratch. Python refresher meets hands-on experiments. By Hyperfocused Engineer.">
+  <title>Zeroshot — Gamified Python &amp; AI/ML Learning</title>
+  <meta name="description" content="A gamified mobile app that teaches Python, PyTorch, and AI/ML concepts through cyberpunk-themed coding missions with an AI co-founder. By Hyperfocused Engineer.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@200;300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
@@ -353,7 +353,7 @@
       margin-top: 2rem;
     }
     .gallery-frame {
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 9 / 16;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -368,12 +368,10 @@
       position: relative;
       overflow: hidden;
     }
-    .gallery-frame::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, var(--orange-ghost) 0%, transparent 60%);
-      pointer-events: none;
+    .gallery-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     /* ── Footer ── */
@@ -414,10 +412,10 @@
     <section class="hero">
       <div class="hero-badge"><span class="dot"></span> MVP in Development</div>
       <h1 class="hero-title">Zeroshot</h1>
-      <div class="hero-subtitle">AI / ML from the ground up</div>
+      <div class="hero-subtitle">Gamified Python &amp; AI/ML Learning</div>
       <p class="hero-desc">
-        Brushing up Python and diving into machine learning &mdash; not through tutorials,
-        but by building, breaking, and understanding from scratch.
+        Learn Python, PyTorch, and AI/ML concepts through cyberpunk-themed coding missions.
+        Write real code, guided by Nova &mdash; your AI co-founder.
       </p>
 
       <div class="terminal">
@@ -427,13 +425,13 @@
           <span class="terminal-dot"></span>
         </div>
         <div class="terminal-code">
-          <span class="comment"># zeroshot &mdash; learning AI/ML one experiment at a time</span><br>
-          <span class="prompt">$</span> <span class="keyword">python</span> train.py --model linear_regression --from-scratch<br>
-          <span class="string">[ok]</span> Dataset loaded: 1,200 samples<br>
-          <span class="string">[ok]</span> Training from scratch (no sklearn)...<br>
-          <span class="string">[ok]</span> MSE: 0.0234 | R2: 0.967<br>
-          <span class="prompt">$</span> <span class="keyword">python</span> experiment.py --next<br>
-          <span class="comment"># next: neural network from numpy only</span>
+          <span class="comment"># ZEROSHOT // MISSION CONTROL // SYSTEM_ACTIVE</span><br>
+          <span class="prompt">&gt;</span> <span class="keyword">sector</span> 1: The Infiltration<br>
+          <span class="string">[ACTIVE]</span> Learn Python basics to breach the outer firewall<br>
+          <span class="prompt">&gt;</span> <span class="keyword">nova</span> // Hey there! I'm Nova, your AI co-founder.<br>
+          <span class="string">[OK]</span> Let's build something amazing together.<br>
+          <span class="prompt">&gt;</span> <span class="keyword">run</span> mission_01 --difficulty MEDIUM<br>
+          <span class="string">[MISSION CLEARED]</span> Launch Successful
         </div>
       </div>
     </section>
@@ -444,17 +442,18 @@
       <h2 class="section-title">Why Zeroshot?</h2>
       <div class="story-card">
         <p>
-          After years of building production systems at scale, I realized I was consuming AI as a black box.
-          APIs, SDKs, pre-trained models &mdash; powerful, but I didn't <strong>understand</strong> what was happening underneath.
+          Most coding education is passive &mdash; watch a video, copy an example, move on. Nothing sticks.
+          <strong>Zeroshot</strong> flips that by turning learning into a cyberpunk narrative where you
+          write real code to complete missions, guided by <strong>Nova</strong>, your AI co-founder.
         </p>
         <p>
-          <strong>Zeroshot</strong> is my commitment to learning from zero. Refreshing Python fundamentals,
-          implementing ML algorithms without frameworks, understanding the math behind gradient descent,
-          backpropagation, and attention mechanisms. Each concept is validated through hands-on experiments,
-          not just theory.
+          Starting with Python fundamentals ("breach the outer firewall"), the journey progresses through
+          data structures, PyTorch, and into LLMs and AI/ML concepts. Each sector unlocks harder challenges
+          across Easy, Medium, and Hard difficulty tiers. You earn stars, clear missions, and build
+          real intuition &mdash; not just syntax familiarity.
         </p>
         <p>
-          The name says it all &mdash; starting with zero assumptions, building real intuition one experiment at a time.
+          The name says it all &mdash; starting with zero assumptions, zero-shot into the deep end.
         </p>
       </div>
     </section>
@@ -463,31 +462,31 @@
     <section class="section">
       <div class="section-label">// learning path</div>
       <h2 class="section-title">The Journey</h2>
-      <p class="section-desc">A structured path from Python refresher to building ML models from scratch.</p>
+      <p class="section-desc">Missions are organized into sectors, each unlocking harder concepts.</p>
 
       <div class="path-grid">
         <div class="path-card">
-          <div class="path-number">PHASE 01</div>
-          <div class="path-name">Python Refresh</div>
-          <div class="path-desc">Modern idioms, data structures, functional patterns, and Pythonic best practices.</div>
-          <div class="path-status">In Progress</div>
+          <div class="path-number">SECTOR 01</div>
+          <div class="path-name">The Infiltration</div>
+          <div class="path-desc">Python basics &mdash; variables, strings, functions. Breach the outer firewall.</div>
+          <div class="path-status">Active</div>
         </div>
         <div class="path-card">
-          <div class="path-number">PHASE 02</div>
-          <div class="path-name">Math Foundations</div>
-          <div class="path-desc">Linear algebra, calculus, probability, and statistics for ML.</div>
+          <div class="path-number">SECTOR 02</div>
+          <div class="path-name">Data Structures</div>
+          <div class="path-desc">Lists, dicts, sets, and algorithmic thinking. Build your arsenal.</div>
           <div class="path-status">Up Next</div>
         </div>
         <div class="path-card">
-          <div class="path-number">PHASE 03</div>
-          <div class="path-name">ML From Scratch</div>
-          <div class="path-desc">Implementing regression, trees, SVMs, and clustering without sklearn.</div>
+          <div class="path-number">SECTOR 03</div>
+          <div class="path-name">PyTorch &amp; Tensors</div>
+          <div class="path-desc">From NumPy to PyTorch. Build and train models from the ground up.</div>
           <div class="path-status">Planned</div>
         </div>
         <div class="path-card">
-          <div class="path-number">PHASE 04</div>
-          <div class="path-name">Deep Learning</div>
-          <div class="path-desc">Neural networks, backprop, CNNs, and transformers with only NumPy.</div>
+          <div class="path-number">SECTOR 04</div>
+          <div class="path-name">LLMs &amp; AI/ML</div>
+          <div class="path-desc">Transformers, attention, fine-tuning, and building with large language models.</div>
           <div class="path-status">Planned</div>
         </div>
       </div>
@@ -497,28 +496,28 @@
     <section class="section">
       <div class="section-label">// approach</div>
       <h2 class="section-title">How It Works</h2>
-      <p class="section-desc">Not a course. Not a tutorial follow-along. A hands-on experiment lab.</p>
+      <p class="section-desc">Not a course. Not a tutorial. A cyberpunk mission system where you write real code.</p>
 
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F9EA;</div>
-          <div class="feature-name">Experiment-First</div>
-          <div class="feature-desc">Every concept gets a runnable experiment. Theory without code doesn't stick.</div>
+          <div class="feature-icon">&#x1F3AF;</div>
+          <div class="feature-name">Mission-Based</div>
+          <div class="feature-desc">Each concept is a mission with clear objectives. Complete code challenges to progress through sectors.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F527;</div>
-          <div class="feature-name">From Scratch</div>
-          <div class="feature-desc">Implement algorithms without frameworks first, then compare with library versions.</div>
+          <div class="feature-icon">&#x1F916;</div>
+          <div class="feature-name">Nova AI Co-Founder</div>
+          <div class="feature-desc">Your AI guide that provides hints, reviews your code, and adapts to your learning pace.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4D0;</div>
-          <div class="feature-name">Math Grounded</div>
-          <div class="feature-desc">Understand the math behind each algorithm. Derivations, not just formulas.</div>
+          <div class="feature-icon">&#x2B50;</div>
+          <div class="feature-name">Difficulty Tiers</div>
+          <div class="feature-desc">Easy, Medium, and Hard modes for every mission. Earn stars and track mastery across topics.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4E6;</div>
-          <div class="feature-name">Reusable Toolkit</div>
-          <div class="feature-desc">Building a personal library of ML primitives for future AI-powered projects.</div>
+          <div class="feature-icon">&#x1F4BB;</div>
+          <div class="feature-name">In-App Code Editor</div>
+          <div class="feature-desc">Write and run real Python directly in the app. No external tools or setup required.</div>
         </div>
       </div>
     </section>
@@ -528,9 +527,9 @@
       <div class="section-label">// preview</div>
       <h2 class="section-title">Screenshots</h2>
       <div class="gallery">
-        <div class="gallery-frame">Jupyter Notebook</div>
-        <div class="gallery-frame">Model Training</div>
-        <div class="gallery-frame">Visualization</div>
+        <div class="gallery-frame"><img src="screenshots/mission-control.png" alt="Mission Control with sectors and difficulty levels"></div>
+        <div class="gallery-frame"><img src="screenshots/code-editor.png" alt="In-app code editor with Nova AI co-founder"></div>
+        <div class="gallery-frame"><img src="screenshots/mission-cleared.png" alt="Mission Cleared success screen"></div>
       </div>
     </section>
 
@@ -539,13 +538,13 @@
       <div class="section-label">// tech stack</div>
       <h2 class="section-title">Built With</h2>
       <div class="tech-row">
-        <span class="tech-pill">Python 3.12</span>
-        <span class="tech-pill">NumPy</span>
-        <span class="tech-pill">Pandas</span>
-        <span class="tech-pill">Matplotlib</span>
-        <span class="tech-pill">scikit-learn</span>
-        <span class="tech-pill">Jupyter Notebooks</span>
-        <span class="tech-pill">Poetry</span>
+        <span class="tech-pill">React Native</span>
+        <span class="tech-pill">Expo</span>
+        <span class="tech-pill">TypeScript</span>
+        <span class="tech-pill">Google Gemini</span>
+        <span class="tech-pill">Zustand</span>
+        <span class="tech-pill">Python Runtime</span>
+        <span class="tech-pill">PyTorch</span>
       </div>
     </section>
 
