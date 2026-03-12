@@ -1,30 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — Koo</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #0a0a1a;
-      color: #c0c0d8;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      line-height: 1.7;
-      padding: 2rem 1.5rem;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-    h1 { color: #00fff5; font-size: 1.6rem; margin-bottom: 0.25rem; }
-    .subtitle { color: #606080; font-size: 0.9rem; margin-bottom: 2rem; }
-    p { margin-bottom: 0.75rem; }
-    a { color: #00fff5; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Koo Baby Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #2D3436;
+            background: #FFF9F0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, #FFE066, #FFECD2);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 3px solid #2D3436;
+        }
+        header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #2D3436;
+        }
+        header p {
+            color: #555;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 32px 0 12px;
+            color: #2D3436;
+        }
+        p, li {
+            font-size: 15px;
+            color: #444;
+            margin-bottom: 12px;
+        }
+        ul {
+            padding-left: 24px;
+            margin-bottom: 16px;
+        }
+        li { margin-bottom: 6px; }
+        strong { color: #2D3436; }
+        a { color: #6BCBFF; }
+        a:hover { text-decoration: underline; }
+        .updated {
+            font-size: 13px;
+            color: #888;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #E2E8F0;
+        }
+    </style>
 </head>
 <body>
-  <h1>Privacy Policy</h1>
-  <p class="subtitle">Koo — by Hyperfocused Engineer</p>
-  <p>This privacy policy is coming soon. For questions, contact <a href="mailto:hyperfocusedengineer@gmail.com">hyperfocusedengineer@gmail.com</a>.</p>
+    <header>
+        <h1>Koo — Baby Tracker</h1>
+        <p>Privacy Policy</p>
+    </header>
+    <div class="container">
+        <h2>Introduction</h2>
+        <p>Koo ("we", "our", or "us") is a baby tracking application designed for parents and caregivers. We take your privacy and the privacy of your children seriously. This Privacy Policy explains how we collect, use, and protect your information when you use the Koo mobile application.</p>
+
+        <h2>Information We Collect</h2>
+        <p><strong>Account Information:</strong> When you create an account, we collect your email address and display name. If you sign in with Google, we receive your name and email from Google.</p>
+        <p><strong>Baby Profile Data:</strong> Information you provide about your child, including name, date of birth, and profile photo.</p>
+        <p><strong>Activity Data:</strong> Tracking entries you create, including feeding, sleep, diaper, growth, medicine, milestone, and food logs. This data is stored locally on your device and, if you choose to sync, on our secure cloud servers.</p>
+        <p><strong>Voice Data:</strong> If you use voice logging, audio is processed on-device using your device's speech recognition service. We do not store audio recordings.</p>
+        <p><strong>Photos:</strong> Photos you attach to activities or baby profiles are stored locally and, if synced, uploaded to our secure cloud storage.</p>
+
+        <h2>How We Use Your Information</h2>
+        <ul>
+            <li>To provide and maintain the baby tracking service</li>
+            <li>To sync your data across your devices</li>
+            <li>To enable family sharing features (Village)</li>
+            <li>To provide AI-powered parenting tips (using anonymized context only)</li>
+            <li>To generate analytics and insights about your baby's patterns</li>
+            <li>To improve the app experience through anonymized usage analytics</li>
+        </ul>
+
+        <h2>Data Storage and Security</h2>
+        <p>Koo follows a local-first approach. Your data is stored on your device first and synced to our cloud servers (powered by Supabase) only when you are signed in. Data is transmitted using TLS encryption and stored securely with row-level security policies.</p>
+
+        <h2>Data Sharing</h2>
+        <p>We do not sell your data to third parties. Your baby's data is only shared with family members or caregivers you explicitly invite through the app's sharing features. We use the following third-party services:</p>
+        <ul>
+            <li><strong>Supabase:</strong> Cloud database and authentication</li>
+            <li><strong>Google Gemini AI:</strong> AI chat features (no personal data is sent; only anonymized context)</li>
+            <li><strong>PostHog:</strong> Anonymous usage analytics (can be disabled)</li>
+        </ul>
+
+        <h2>Children's Privacy (COPPA Compliance)</h2>
+        <p>Koo is designed for use by parents and caregivers, not by children directly. We do not knowingly collect personal information from children under 13. All child data is entered and managed by the parent or caregiver account holder. Parents can delete all baby data at any time through the app's Profile settings.</p>
+
+        <h2>Your Rights</h2>
+        <p>You have the right to:</p>
+        <ul>
+            <li>Access all data stored about you and your children</li>
+            <li>Export your data in a portable format (available in Profile &gt; Export Data)</li>
+            <li>Delete your account and all associated data (available in Profile &gt; Delete All Data)</li>
+            <li>Revoke access for any shared family member at any time</li>
+        </ul>
+
+        <h2>Data Retention</h2>
+        <p>Your data is retained as long as your account is active. When you delete your account or specific baby data, it is permanently removed from our servers within 30 days. Local data is removed immediately upon deletion.</p>
+
+        <h2>Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy in the app and updating the "Last Updated" date below.</p>
+
+        <h2>Contact Us</h2>
+        <p>If you have any questions about this Privacy Policy or our data practices, please contact us at:</p>
+        <p>Email: <a href="mailto:hyperfocusedengineer@gmail.com">hyperfocusedengineer@gmail.com</a></p>
+
+        <p class="updated">Last Updated: March 12, 2026</p>
+    </div>
 </body>
 </html>
