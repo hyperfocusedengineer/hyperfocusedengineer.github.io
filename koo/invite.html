@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koo - Baby Tracker | Join Circle</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2D3436;
+            background: #FFF9F0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 24px;
+            border: 3px solid #2D3436;
+            border-bottom-width: 7px;
+            padding: 32px 24px;
+            max-width: 380px;
+            width: 100%;
+            text-align: center;
+        }
+        .logo {
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            background: #FFD93D;
+            border: 3px solid #2D3436;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 32px;
+            font-weight: 900;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+        .subtitle {
+            color: #6B7280;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .code-box {
+            background: #F1F5F9;
+            border-radius: 16px;
+            border: 3px solid #2D3436;
+            padding: 16px;
+            margin-bottom: 8px;
+        }
+        .code {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            color: #111827;
+        }
+        .hint {
+            color: #9CA3AF;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .open-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #6BCBFF;
+            color: #fff;
+            font-weight: 900;
+            font-size: 16px;
+            border: 2px solid #2D3436;
+            border-bottom-width: 4px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-bottom: 12px;
+        }
+        .open-btn:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .stores {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .store-link {
+            flex: 1;
+            padding: 10px 8px;
+            background: #F3F4F6;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #374151;
+            font-weight: 800;
+            font-size: 13px;
+        }
+        .manual {
+            background: #F8FAFC;
+            border-radius: 12px;
+            border: 1px solid #E5E7EB;
+            padding: 14px;
+            text-align: left;
+        }
+        .manual-title {
+            font-weight: 900;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #374151;
+        }
+        .manual-step {
+            color: #6B7280;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .error {
+            color: #EF4444;
+            font-weight: 700;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" id="card">
+        <div class="logo">K</div>
+        <h1>Join a Circle on Koo</h1>
+        <p class="subtitle">You've been invited to track a baby together</p>
+
+        <div id="content">
+            <p class="error">No invite code found in this link.</p>
+        </div>
+    </div>
+
+    <div id="invite-template" style="display:none">
+        <div class="code-box"><div class="code" id="tpl-code"></div></div>
+        <p class="hint">Enter this code in the Koo app to join</p>
+        <a class="open-btn" id="tpl-open-btn" href="#">Open in Koo</a>
+        <div class="stores">
+            <a class="store-link" href="https://testflight.apple.com/join/NHsDTsJD">iOS TestFlight</a>
+            <a class="store-link" href="https://play.google.com/apps/testing/com.hyperfocused.koo">Android Testing</a>
+        </div>
+        <div class="manual">
+            <div class="manual-title">Manual entry</div>
+            <p class="manual-step">1. Open the Koo app</p>
+            <p class="manual-step">2. Go to Profile &rarr; Join a Baby</p>
+            <p class="manual-step">3. Enter code: <strong id="tpl-manual-code"></strong></p>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var raw = (params.get('code') || '').toUpperCase().trim();
+
+            // Strict alphanumeric allowlist, exactly 6 chars (matches app validation)
+            if (!/^[A-Z0-9]{6}$/.test(raw)) return;
+
+            var code = raw;
+            var deepLink = 'koo://invite/' + code;
+            var content = document.getElementById('content');
+            var template = document.getElementById('invite-template');
+
+            // Populate via textContent (safe from XSS)
+            document.getElementById('tpl-code').textContent = code;
+            document.getElementById('tpl-manual-code').textContent = code;
+            document.getElementById('tpl-open-btn').href = deepLink;
+
+            // Swap template into content area
+            content.innerHTML = '';
+            template.style.display = '';
+            content.appendChild(template);
+
+            // Attempt to open the app via deep link
+            window.location.href = deepLink;
+        })();
+    </script>
+</body>
+</html>
