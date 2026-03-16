@@ -567,7 +567,7 @@
         <span class="companies">ex-AWS / DoorDash / Cruise</span>
       </div>
       <br>
-      <div class="status-badge"><span class="dot"></span> Initial Development</div>
+      <div class="status-badge"><span class="dot"></span> Active Development &mdash; UI Design Complete</div>
     </section>
 
     <!-- ── STORY ── -->
@@ -680,42 +680,42 @@
           <div class="arch-num">L1</div>
           <div>
             <div class="arch-name">Data Ingestion</div>
-            <div class="arch-detail">Calendar, email, contacts, LinkedIn, CRM, Slack. Batch every 5-15 min.</div>
+            <div class="arch-detail">Manual input via Expo app (MVP). Google Calendar webhooks + batch polling planned for future.</div>
           </div>
         </div>
         <div class="arch-layer">
           <div class="arch-num">L2</div>
           <div>
             <div class="arch-name">Personal Knowledge Graph</div>
-            <div class="arch-detail">Vector DB (pgvector &rarr; Pinecone) + graph DB for relationship mapping.</div>
+            <div class="arch-detail">Supabase pgvector for embeddings + relational tables for contacts, companies, and relationships. Thin abstraction for future Pinecone swap.</div>
           </div>
         </div>
         <div class="arch-layer">
           <div class="arch-num">L3</div>
           <div>
             <div class="arch-name">Context Fusion Engine</div>
-            <div class="arch-detail">RAG pipeline with re-ranking. &lt;500ms pre-fetched, &lt;2s real-time retrieval.</div>
+            <div class="arch-detail">LangGraph orchestration: fetch context &rarr; rank &rarr; sanitize &rarr; generate. Input sanitization for LLM injection protection.</div>
           </div>
         </div>
         <div class="arch-layer">
           <div class="arch-num">L4</div>
           <div>
             <div class="arch-name">LLM Reasoning</div>
-            <div class="arch-detail">Claude Haiku for speed, Sonnet for depth. &lt;1s pre-generated, &lt;3s live.</div>
+            <div class="arch-detail">Claude Haiku for speed, Sonnet for depth. Retry 2x with backoff, graceful fallback to raw context. Full prompt/response logging.</div>
           </div>
         </div>
         <div class="arch-layer">
           <div class="arch-num">L5</div>
           <div>
             <div class="arch-name">Delivery Layer</div>
-            <div class="arch-detail">Phone notifications, Meta SDK for glasses, audio via earbuds. &lt;200ms push.</div>
+            <div class="arch-detail">Expo universal app (iOS, Android, Web). Push notifications + in-app briefing cards. Deepgram cloud transcription for audio.</div>
           </div>
         </div>
         <div class="arch-layer">
           <div class="arch-num">L6</div>
           <div>
-            <div class="arch-name">Audio / Visual Processing</div>
-            <div class="arch-detail">Whisper (local) for STT, speaker diarization, CLIP for visual recognition.</div>
+            <div class="arch-name">On-Device Intelligence (Planned)</div>
+            <div class="arch-detail">Expo-modules wrapping CoreML (iOS) / NNAPI (Android) for real-time on-device inference. Speaker diarization and Meta glasses SDK deferred.</div>
           </div>
         </div>
       </div>
@@ -786,19 +786,103 @@
       </div>
     </section>
 
-    <!-- ── SCREENSHOTS ── -->
+    <!-- ── UI DESIGN ── -->
     <section class="section">
-      <div class="section-label">// preview</div>
-      <h2 class="section-title">Screenshots</h2>
-      <div class="gallery">
-        <div class="gallery-frame">Live Context Panel</div>
-        <div class="gallery-frame">Knowledge Graph</div>
-        <div class="gallery-frame">Interview Briefing</div>
+      <div class="section-label">// ui design &mdash; 19 screens designed</div>
+      <h2 class="section-title">Interface Design</h2>
+      <p class="section-desc">
+        Premium dark aesthetic. 19 screens covering core flows, error states, loading states, and edge cases.
+        Expo universal app targeting iOS, Android, and Web from a single codebase.
+      </p>
+
+      <div class="gallery" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
+        <div class="gallery-frame" style="aspect-ratio:9/16; font-size:0.55rem;">Dashboard</div>
+        <div class="gallery-frame" style="aspect-ratio:9/16; font-size:0.55rem;">Interview Briefing</div>
+        <div class="gallery-frame" style="aspect-ratio:9/16; font-size:0.55rem;">Pipeline Progress</div>
+        <div class="gallery-frame" style="aspect-ratio:9/16; font-size:0.55rem;">Audio Recorder</div>
+        <div class="gallery-frame" style="aspect-ratio:9/16; font-size:0.55rem;">Post-Meeting Analysis</div>
+        <div class="gallery-frame" style="aspect-ratio:9/16; font-size:0.55rem;">Share Briefing</div>
       </div>
+
+      <div style="margin-top: 1.5rem;">
+        <div class="section-label" style="margin-bottom: 0.75rem;">// design system highlights</div>
+        <div class="tech-row">
+          <span class="tech-pill">Instrument Serif + DM Sans</span>
+          <span class="tech-pill">Amber/Gold Accent on Deep Dark</span>
+          <span class="tech-pill">19 Screen Designs</span>
+          <span class="tech-pill">Error States</span>
+          <span class="tech-pill">Loading Skeletons</span>
+          <span class="tech-pill">Pipeline Animation</span>
+          <span class="tech-pill">Share Sheet</span>
+          <span class="tech-pill">Pull to Refresh</span>
+        </div>
+      </div>
+
       <div class="store-links">
         <a href="#" class="store-link">App Store &mdash; Coming Soon</a>
         <a href="#" class="store-link">Play Store &mdash; Coming Soon</a>
         <a href="#" class="store-link">Web App &mdash; Coming Soon</a>
+      </div>
+    </section>
+
+    <!-- ── DEVELOPMENT STATUS ── -->
+    <section class="section">
+      <div class="section-label">// development status</div>
+      <h2 class="section-title">Build Progress</h2>
+      <p class="section-desc">
+        4-week MVP roadmap. Currently in the UI design phase with architecture decisions finalized.
+      </p>
+
+      <div class="arch-layers">
+        <div class="arch-layer" style="border-left: 3px solid var(--violet);">
+          <div class="arch-num" style="color: var(--violet);">&#10003;</div>
+          <div>
+            <div class="arch-name">Architecture Review</div>
+            <div class="arch-detail">Engineering + CEO review complete. Vector store, orchestration, ingestion, security, and observability decisions finalized.</div>
+          </div>
+        </div>
+        <div class="arch-layer" style="border-left: 3px solid var(--violet);">
+          <div class="arch-num" style="color: var(--violet);">&#10003;</div>
+          <div>
+            <div class="arch-name">UI/UX Design &mdash; 19 Screens</div>
+            <div class="arch-detail">Core flows, error states, loading states, empty states, settings, share sheet, pull-to-refresh. All review conditions passed.</div>
+          </div>
+        </div>
+        <div class="arch-layer" style="border-left: 3px solid var(--violet);">
+          <div class="arch-num" style="color: var(--violet);">&#10003;</div>
+          <div>
+            <div class="arch-name">Task Breakdown &mdash; 19 Tasks</div>
+            <div class="arch-detail">4 milestones: Foundation, Intelligence Pipeline, Audio + Knowledge, Deploy + Dogfood. Tracked in GitHub Projects.</div>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-num" style="opacity: 0.4;">&#9711;</div>
+          <div>
+            <div class="arch-name">Milestone 1: Foundation</div>
+            <div class="arch-detail">Monorepo setup, Supabase schema + RLS, FastAPI skeleton, Expo auth flow.</div>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-num" style="opacity: 0.4;">&#9711;</div>
+          <div>
+            <div class="arch-name">Milestone 2: Intelligence Pipeline</div>
+            <div class="arch-detail">Input parser, knowledge store, Proxycurl enrichment, LangGraph briefing pipeline, Expo UI.</div>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-num" style="opacity: 0.4;">&#9711;</div>
+          <div>
+            <div class="arch-name">Milestone 3: Audio + Knowledge</div>
+            <div class="arch-detail">Deepgram transcription, transcript analysis, audio recording, knowledge graph feedback loop.</div>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-num" style="opacity: 0.4;">&#9711;</div>
+          <div>
+            <div class="arch-name">Milestone 4: Deploy + Dogfood</div>
+            <div class="arch-detail">Railway/Render deployment, Expo EAS builds, test suites, dogfood for real interviews.</div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -808,15 +892,14 @@
       <h2 class="section-title">Under the Hood</h2>
       <div class="tech-row">
         <span class="tech-pill">Python (FastAPI)</span>
-        <span class="tech-pill">Supabase</span>
-        <span class="tech-pill">Anthropic Claude</span>
-        <span class="tech-pill">Whisper / Deepgram</span>
-        <span class="tech-pill">pgvector / Pinecone</span>
+        <span class="tech-pill">Supabase (Auth + pgvector + RLS)</span>
+        <span class="tech-pill">Anthropic Claude (Haiku + Sonnet)</span>
+        <span class="tech-pill">Deepgram Cloud</span>
         <span class="tech-pill">LangGraph</span>
-        <span class="tech-pill">React Native</span>
-        <span class="tech-pill">Google APIs (OAuth2)</span>
-        <span class="tech-pill">Meta Wearables SDK</span>
-        <span class="tech-pill">WebSockets</span>
+        <span class="tech-pill">Expo SDK 54 (iOS + Android + Web)</span>
+        <span class="tech-pill">Proxycurl (LinkedIn)</span>
+        <span class="tech-pill">structlog + Sentry</span>
+        <span class="tech-pill">Railway / Render</span>
       </div>
     </section>
 
