@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gumball — AI Agent Builder with Task-Aware UI</title>
+  <meta name="description" content="Create AI agents with your voice. Each agent gets a custom, task-aware workspace. Built with React Native, Claude, and a candy-shop aesthetic. By Hyperfocused Engineer.">
+  <meta property="og:title" content="Gumball — AI Agent Builder">
+  <meta property="og:description" content="Create AI agents with your voice. Each one gets a custom workspace designed for what it does.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0D0A14;
+      --bg-card: #13101C;
+      --bg-elevated: #1A1526;
+      --text: #F0ECF8;
+      --text-secondary: #A09AAF;
+      --text-muted: #5A5368;
+      --purple: #7C5CFC;
+      --pink: #FF6B9D;
+      --purple-dim: rgba(124, 92, 252, 0.1);
+      --purple-ghost: rgba(124, 92, 252, 0.04);
+      --border: rgba(124, 92, 252, 0.08);
+      --border-hover: rgba(124, 92, 252, 0.2);
+      --glow: rgba(124, 92, 252, 0.15);
+      --ocean: #0EA5E9;
+      --sunset: #F97316;
+      --forest: #10B981;
+      --lavender: #A855F7;
+      --ember: #EF4444;
+      --slate: #64748B;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      min-height: 100vh;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -15%;
+      right: -10%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(124,92,252,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -20%;
+      left: -10%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(255,107,157,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .page { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1.5rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--purple); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 4rem 0 3rem;
+      text-align: center;
+    }
+    .hero-emoji {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .hero-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+    .hero-title .dot { color: var(--purple); }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .hero-gradient {
+      height: 3px;
+      width: 120px;
+      margin: 2rem auto 0;
+      background: linear-gradient(90deg, var(--purple), var(--pink));
+      border-radius: 2px;
+    }
+
+    /* ── Stats ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 2rem 0 3rem;
+    }
+    .stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Fraunces', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--purple);
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.25rem;
+    }
+
+    /* ── Sections ── */
+    .section {
+      margin-bottom: 3.5rem;
+    }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .section-body {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    /* ── Block Types Grid ── */
+    .blocks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .block-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      transition: border-color 0.3s, transform 0.2s;
+    }
+    .block-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+    .block-card-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.35rem;
+    }
+    .block-card-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .block-card-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--purple);
+      margin-top: 0.5rem;
+      opacity: 0.7;
+    }
+
+    /* ── Mood Palette ── */
+    .moods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+    .mood-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.6rem 1.1rem;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      transition: border-color 0.3s;
+    }
+    .mood-chip:hover { border-color: var(--border-hover); }
+    .mood-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .mood-label { font-weight: 500; }
+    .mood-domain {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Feature Cards ── */
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .feature {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+    }
+    .feature-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+    .feature-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Tech Stack ── */
+    .tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .tech-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      background: var(--purple-dim);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.85rem;
+      border-radius: 100px;
+    }
+
+    /* ── Architecture ── */
+    .arch-diagram {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-top: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      white-space: pre;
+      overflow-x: auto;
+    }
+    .arch-diagram .hl { color: var(--purple); }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 3rem 0;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+    .footer-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .footer-link {
+      color: var(--purple);
+      text-decoration: none;
+    }
+    .footer-link:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .features { grid-template-columns: 1fr; }
+      .blocks-grid { grid-template-columns: 1fr; }
+      .page { padding: 0 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a href="../" class="back-link"><span class="arrow">&larr;</span> All Projects</a>
+
+  <header class="hero">
+    <span class="hero-emoji">🍬</span>
+    <h1 class="hero-title">gumball<span class="dot">.</span></h1>
+    <p class="hero-subtitle">
+      Create AI agents with your voice. Each one gets a custom, task-aware workspace
+      designed for what it does &mdash; not a generic chat window.
+    </p>
+    <div class="hero-gradient"></div>
+  </header>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">11</div>
+      <div class="stat-label">Block Types</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Color Moods</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">44</div>
+      <div class="stat-label">Tests</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Claude Models</div>
+    </div>
+  </div>
+
+  <!-- What it does -->
+  <section class="section">
+    <div class="section-label">The Idea</div>
+    <h2 class="section-title">The UI is the output</h2>
+    <p class="section-body">
+      Most AI tools give you a chatbot. Gumball gives you a <strong>workspace</strong>.
+      Tell it "track Austin housing for me" and you don't get a text response &mdash; you get a
+      signal card showing buy/wait, a metrics dashboard with median price and mortgage rates,
+      a 20-week price trend chart, and a ranked list of matching properties. All generated by
+      Claude, all rendered as native mobile components.
+    </p>
+    <p class="section-body" style="margin-top: 1rem;">
+      The key insight: <em>different tasks need different interfaces</em>. A tweet composer needs
+      draft variants, character counts, and tone pickers. A YouTube script needs expandable sections,
+      research sources, and a hook editor. Gumball's block system makes this possible &mdash; Claude
+      picks the right blocks for each agent's job.
+    </p>
+  </section>
+
+  <!-- Task-Aware UI / Blocks -->
+  <section class="section">
+    <div class="section-label">Core Concept</div>
+    <h2 class="section-title">Task-Aware UI &mdash; 11 Block Types</h2>
+    <p class="section-body">
+      Each agent's workspace is composed of blocks. Claude selects 3&ndash;6 blocks per agent
+      based on what the agent does. Blocks are self-contained UI components with their own data.
+    </p>
+    <div class="blocks-grid">
+      <div class="block-card">
+        <div class="block-card-name">Signal Card</div>
+        <div class="block-card-desc">Buy/wait/alert indicator with description and date</div>
+        <div class="block-card-type">signal-card</div>
+      </div>
+      <div class="block-card">
+        <div class="block-card-name">Metrics Table</div>
+        <div class="block-card-desc">Row of stat cards with label, value, and subtitle</div>
+        <div class="block-card-type">metrics-table</div>
+      </div>
+      <div class="block-card">
+        <div class="block-card-name">Price Chart</div>
+        <div class="block-card-desc">Animated bar chart with highlighted recent data</div>
+        <div class="block-card-type">price-chart</div>
+      </div>
+      <div class="block-card">
+        <div class="block-card-name">Top Picks</div>
+        <div class="block-card-desc">Ranked items with match percentage badges</div>
+        <div class="block-card-type">top-picks</div>
+      </div>
+      <div class="block-card">
+        <div class="block-card-name">Source List</div>
+        <div class="block-card-desc">Research sources with relevance scoring</div>
+        <div class="block-card-type">source-list</div>
+      </div>
+      <div class="block-card">
+        <div class="block-card-name">Script Hook</div>
+        <div class="block-card-desc">Opening hook with iteration count and duration</div>
+        <div class="block-card-type">script-hook</div>
+      </div>
+      <div class="block-card">
+        <div class="block-card-name">Script Sections</div>
+        <div class="block-card-desc">Collapsible content sections with timing</div>
+        <div class="block-card-type">script-sections</div>
+      </div>
+      <div class="block-card">
+        <div class="block-card-name">Tweet Drafts</div>
+        <div class="block-card-desc">Editable variants with char counter and progress bar</div>
+        <div class="block-card-type">tweet-drafts</div>
+      </div>
+      <div class="block-card">
+        <div class="block-card-name">Tone Selector</div>
+        <div class="block-card-desc">Chip-based tone picker (confident, casual, bold...)</div>
+        <div class="block-card-type">tone-selector</div>
+      </div>
+      <div class="block-card">
+        <div class="block-card-name">Text</div>
+        <div class="block-card-desc">Rich text with default, highlight, and quote styles</div>
+        <div class="block-card-type">text</div>
+      </div>
+      <div class="block-card">
+        <div class="block-card-name">Key-Value</div>
+        <div class="block-card-desc">Data table with labeled rows and dividers</div>
+        <div class="block-card-type">key-value</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mood System -->
+  <section class="section">
+    <div class="section-label">Design</div>
+    <h2 class="section-title">7 Color Moods</h2>
+    <p class="section-body">
+      Each agent can have its own color scheme. Claude auto-suggests a mood based on the agent's domain,
+      or users can pick one manually. The mood tints the entire workspace &mdash; signal cards, chart bars,
+      hook backgrounds, metric values, and selection chips all respond to it.
+    </p>
+    <div class="moods">
+      <div class="mood-chip">
+        <div class="mood-dot" style="background: var(--purple);"></div>
+        <span class="mood-label">Default</span>
+        <span class="mood-domain">general</span>
+      </div>
+      <div class="mood-chip">
+        <div class="mood-dot" style="background: var(--ocean);"></div>
+        <span class="mood-label">Ocean</span>
+        <span class="mood-domain">data / finance</span>
+      </div>
+      <div class="mood-chip">
+        <div class="mood-dot" style="background: var(--sunset);"></div>
+        <span class="mood-label">Sunset</span>
+        <span class="mood-domain">news / media</span>
+      </div>
+      <div class="mood-chip">
+        <div class="mood-dot" style="background: var(--forest);"></div>
+        <span class="mood-label">Forest</span>
+        <span class="mood-domain">health / growth</span>
+      </div>
+      <div class="mood-chip">
+        <div class="mood-dot" style="background: var(--lavender);"></div>
+        <span class="mood-label">Lavender</span>
+        <span class="mood-domain">creative</span>
+      </div>
+      <div class="mood-chip">
+        <div class="mood-dot" style="background: var(--ember);"></div>
+        <span class="mood-label">Ember</span>
+        <span class="mood-domain">alerts / urgent</span>
+      </div>
+      <div class="mood-chip">
+        <div class="mood-dot" style="background: var(--slate);"></div>
+        <span class="mood-label">Slate</span>
+        <span class="mood-domain">business</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">What's built</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-name">Conversational Creation</div>
+        <div class="feature-desc">Multi-turn dialogue with Claude to refine your agent. Smart questions with suggested defaults. Build when you're ready.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-name">Versioned Editing</div>
+        <div class="feature-desc">Edit agents in natural language. Each edit creates an immutable version snapshot. Full history, rollback.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-name">Model Selection</div>
+        <div class="feature-desc">Haiku 4.5 (fast), Sonnet 4 (balanced), Opus 4 (powerful). Global default with per-agent override.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-name">Zod Validation</div>
+        <div class="feature-desc">Every Claude API response validated with Zod schemas. Malformed responses caught before they hit the UI.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-name">Offline Detection</div>
+        <div class="feature-desc">Banner shows when you're offline. Prevents wasted API calls and confused users.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-name">Crash Reporting</div>
+        <div class="feature-desc">Sentry integration for production visibility. Disabled in dev, 20% trace sampling.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture -->
+  <section class="section">
+    <div class="section-label">Architecture</div>
+    <h2 class="section-title">How it's built</h2>
+    <div class="arch-diagram"><span class="hl">User</span> describes agent
+  |
+  v
+<span class="hl">Create Screen</span> (conversational or direct)
+  |
+  v
+<span class="hl">Claude API</span> (converse / buildAgent / createAgent)
+  |  30s timeout, Zod validation
+  v
+<span class="hl">Agent</span> { versions[], runs[], schedule, mood }
+  |
+  v
+<span class="hl">BlockRenderer</span> + MoodProvider
+  |  11 block components
+  v
+<span class="hl">Task-Aware Workspace</span></div>
+
+    <div class="tech-row">
+      <span class="tech-pill">React Native 0.81</span>
+      <span class="tech-pill">Expo SDK 54</span>
+      <span class="tech-pill">TypeScript (strict)</span>
+      <span class="tech-pill">Zustand 5</span>
+      <span class="tech-pill">Zod 4</span>
+      <span class="tech-pill">Reanimated 4</span>
+      <span class="tech-pill">Anthropic Messages API</span>
+      <span class="tech-pill">AsyncStorage</span>
+      <span class="tech-pill">SecureStore</span>
+      <span class="tech-pill">Sentry</span>
+      <span class="tech-pill">Jest + jest-expo</span>
+      <span class="tech-pill">ESLint + Prettier</span>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p class="footer-text">
+      Built by <a href="../" class="footer-link">Hyperfocused Engineer</a>
+      &middot; <a href="https://github.com/harshssd/gumball" class="footer-link">GitHub</a>
+    </p>
+  </footer>
+</div>
+</body>
+</html>

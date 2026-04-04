@@ -40,6 +40,8 @@
       --zeroshot-yellow: #EAB308;
       --cortis-violet: #8B5CF6;
       --cortis-indigo: #6366F1;
+      --gumball-purple: #7C5CFC;
+      --gumball-pink: #FF6B9D;
     }
 
     body {
@@ -442,6 +444,7 @@
     .accent-koo { background: linear-gradient(90deg, var(--koo-sky), var(--koo-butter), var(--koo-sky)); }
     .accent-zeroshot { background: linear-gradient(90deg, var(--zeroshot-orange), var(--zeroshot-yellow), var(--zeroshot-orange)); }
     .accent-cortis { background: linear-gradient(90deg, var(--cortis-violet), var(--cortis-indigo), var(--cortis-violet)); }
+    .accent-gumball { background: linear-gradient(90deg, var(--gumball-purple), var(--gumball-pink), var(--gumball-purple)); }
 
     .exhibit-summary {
       font-size: 1rem;
@@ -894,6 +897,15 @@
         <div class="index-card-title">Zeroshot</div>
         <div class="index-card-type">Gamified Coding App</div>
         <p class="index-card-desc">Cyberpunk missions that teach Python, PyTorch, and AI/ML with an AI co-founder.</p>
+        <div class="index-card-status status-dev"><span class="status-dot"></span> MVP</div>
+        <span class="index-card-arrow">&darr;</span>
+      </a>
+      <a href="#exhibit-gumball" class="index-card">
+        <div class="index-accent accent-gumball"></div>
+        <span class="index-card-number">07</span>
+        <div class="index-card-title">Gumball</div>
+        <div class="index-card-type">AI Agent Builder</div>
+        <p class="index-card-desc">Create AI agents with your voice. Each agent gets a custom, task-aware workspace.</p>
         <div class="index-card-status status-dev"><span class="status-dot"></span> MVP</div>
         <span class="index-card-arrow">&darr;</span>
       </a>
@@ -1571,6 +1583,83 @@
             <span class="tech-pill">TypeScript</span>
             <span class="tech-pill">Google Gemini</span>
             <span class="tech-pill">Zustand</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ════ EXHIBIT 07: GUMBALL ════ -->
+    <article class="exhibit" id="exhibit-gumball">
+      <div class="exhibit-inner">
+        <div class="exhibit-meta">
+          <div class="exhibit-number">Exhibit 07</div>
+          <h2 class="exhibit-title">Gumball</h2>
+          <div class="exhibit-type">AI Agent Builder</div>
+          <a href="gumball/" class="exhibit-link">Project details <span class="arrow">&rarr;</span></a>
+        </div>
+
+        <div class="exhibit-content">
+          <div class="exhibit-accent accent-gumball"></div>
+
+          <p class="exhibit-summary">
+            Create AI agents with your voice &mdash; each one gets a custom, task-aware workspace designed for what it does.
+          </p>
+
+          <p class="exhibit-story">
+            <strong>Gumball</strong> is a mobile app where non-technical users describe what they need in plain language,
+            and the app builds a custom workspace for it. Not a chatbot. Not a prompt box. A real, purpose-built UI
+            that adapts to the task &mdash; housing trackers get price charts and signal cards, tweet composers get
+            draft editors and tone pickers, research agents get source lists and metrics tables. The UI is the output.
+          </p>
+
+          <div class="exhibit-highlights">
+            <div class="highlight-card">
+              <div class="highlight-num">11</div>
+              <div class="highlight-label">Block types</div>
+            </div>
+            <div class="highlight-card">
+              <div class="highlight-num">7</div>
+              <div class="highlight-label">Color moods</div>
+            </div>
+            <div class="highlight-card">
+              <div class="highlight-num">44</div>
+              <div class="highlight-label">Tests passing</div>
+            </div>
+          </div>
+
+          <div class="exhibit-features">
+            <div class="feature-item">
+              <div class="feature-name">Task-Aware UI</div>
+              <div class="feature-desc">Claude analyzes your request and picks the right blocks: signal cards, metrics, charts, drafts, sources, scripts. Same app, different workspace every time.</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-name">Mood System</div>
+              <div class="feature-desc">7 color schemes (Ocean, Sunset, Forest, Lavender, Ember, Slate) that tint the entire workspace. Claude auto-suggests based on domain.</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-name">Versioned Editing</div>
+              <div class="feature-desc">Edit agents in natural language. Each edit creates an immutable version snapshot. Browse history, compare changes, roll back.</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-name">Conversational Creation</div>
+              <div class="feature-desc">Multi-turn dialogue with Claude to refine your agent. Smart questions with suggested defaults. Build when ready.</div>
+            </div>
+          </div>
+
+          <div class="exhibit-audience">
+            <span class="audience-tag">Non-Technical Users</span>
+            <span class="audience-tag">Solopreneurs</span>
+            <span class="audience-tag">Content Creators</span>
+            <span class="audience-tag">Researchers</span>
+          </div>
+
+          <div class="exhibit-tech">
+            <span class="tech-pill">React Native (Expo)</span>
+            <span class="tech-pill">Anthropic Claude</span>
+            <span class="tech-pill">Zustand</span>
+            <span class="tech-pill">Zod</span>
+            <span class="tech-pill">Reanimated</span>
+            <span class="tech-pill">TypeScript</span>
           </div>
         </div>
       </div>
