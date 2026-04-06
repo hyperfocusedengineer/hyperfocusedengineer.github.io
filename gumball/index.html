@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gumball — AI Agent Builder with Task-Aware UI</title>
-  <meta name="description" content="Create AI agents with your voice. Each agent gets a custom, task-aware workspace. Built with React Native, Claude, and a candy-shop aesthetic. By Hyperfocused Engineer.">
-  <meta property="og:title" content="Gumball — AI Agent Builder">
-  <meta property="og:description" content="Create AI agents with your voice. Each one gets a custom workspace designed for what it does.">
+  <title>Gumball — Your AI Agents, Your Way</title>
+  <meta name="description" content="Create AI agents by simply describing what you want. Each agent gets a custom workspace designed for its task. No code, no setup, no prompt engineering.">
+  <meta property="og:title" content="Gumball — Your AI Agents, Your Way">
+  <meta property="og:description" content="Describe what you want. Get a custom AI agent with a workspace built around your task.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -14,25 +14,32 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0D0A14;
-      --bg-card: #13101C;
-      --bg-elevated: #1A1526;
-      --text: #F0ECF8;
-      --text-secondary: #A09AAF;
-      --text-muted: #5A5368;
+      --bg: #F9F7FB;
+      --bg-card: #FFFFFF;
+      --bg-elevated: #FFFFFF;
+      --text: #16102B;
+      --text-secondary: #5B5675;
+      --text-muted: #A8A3B8;
       --purple: #7C5CFC;
-      --pink: #FF6B9D;
-      --purple-dim: rgba(124, 92, 252, 0.1);
+      --purple-deep: #6344E5;
+      --pink: #F0509A;
+      --purple-dim: rgba(124, 92, 252, 0.08);
       --purple-ghost: rgba(124, 92, 252, 0.04);
-      --border: rgba(124, 92, 252, 0.08);
-      --border-hover: rgba(124, 92, 252, 0.2);
+      --border: #E8E4F0;
+      --border-hover: rgba(124, 92, 252, 0.25);
       --glow: rgba(124, 92, 252, 0.15);
       --ocean: #0EA5E9;
-      --sunset: #F97316;
+      --sunset: #F59E0B;
       --forest: #10B981;
-      --lavender: #A855F7;
+      --lavender: #8B5CF6;
       --ember: #EF4444;
       --slate: #64748B;
+      --candy-pink: #F0509A;
+      --candy-sky: #0EA5E9;
+      --candy-mint: #10B981;
+      --candy-orange: #F59E0B;
+      --candy-coral: #EF4444;
+      --candy-lemon: #EAB308;
     }
 
     body {
@@ -52,7 +59,7 @@
       right: -10%;
       width: 800px;
       height: 800px;
-      background: radial-gradient(circle, rgba(124,92,252,0.06) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(124,92,252,0.08) 0%, transparent 60%);
       pointer-events: none;
     }
     body::after {
@@ -62,7 +69,7 @@
       left: -10%;
       width: 700px;
       height: 700px;
-      background: radial-gradient(circle, rgba(255,107,157,0.04) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(240,80,154,0.06) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -80,7 +87,7 @@
       letter-spacing: 0.05em;
       transition: color 0.3s;
     }
-    .back-link:hover { color: var(--purple); }
+    .back-link:hover { color: var(--purple-deep); }
 
     /* ── Hero ── */
     .hero {
@@ -104,7 +111,7 @@
     .hero-subtitle {
       font-size: 1.15rem;
       color: var(--text-secondary);
-      max-width: 520px;
+      max-width: 540px;
       margin: 0 auto;
       line-height: 1.7;
     }
@@ -112,37 +119,33 @@
       height: 3px;
       width: 120px;
       margin: 2rem auto 0;
-      background: linear-gradient(90deg, var(--purple), var(--pink));
+      background: linear-gradient(90deg, var(--purple), var(--candy-pink));
       border-radius: 2px;
     }
 
-    /* ── Stats ── */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      margin: 2rem 0 3rem;
-    }
-    .stat {
+    /* ── Origin ── */
+    .origin {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.25rem;
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0 3rem;
       text-align: center;
+      box-shadow: 0 2px 12px rgba(22, 16, 43, 0.06);
     }
-    .stat-num {
+    .origin-quote {
       font-family: 'Fraunces', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--purple);
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 600px;
+      margin: 0 auto;
     }
-    .stat-label {
-      font-size: 0.72rem;
-      font-weight: 500;
+    .origin-credit {
+      font-size: 0.78rem;
       color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-top: 0.25rem;
+      margin-top: 1rem;
     }
 
     /* ── Sections ── */
@@ -171,41 +174,128 @@
       line-height: 1.75;
     }
 
-    /* ── Block Types Grid ── */
-    .blocks-grid {
+    /* ── Feature Cards ── */
+    .features {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 1rem;
       margin-top: 1.25rem;
     }
-    .block-card {
+    .feature {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.25rem;
-      transition: border-color 0.3s, transform 0.2s;
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 2px 12px rgba(22, 16, 43, 0.06);
     }
-    .block-card:hover {
+    .feature:hover {
       border-color: var(--border-hover);
       transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(22, 16, 43, 0.10);
     }
-    .block-card-name {
+    .feature-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .feature-name {
       font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 0.35rem;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
     }
-    .block-card-desc {
+    .feature-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Examples ── */
+    .examples {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .example {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 2px 12px rgba(22, 16, 43, 0.06);
+    }
+    .example:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(22, 16, 43, 0.10);
+    }
+    .example-prompt {
+      font-family: 'Fraunces', serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+    .example-result {
       font-size: 0.78rem;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.6;
     }
-    .block-card-type {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--purple);
-      margin-top: 0.5rem;
-      opacity: 0.7;
+    .example-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 0.4rem;
+      vertical-align: middle;
     }
+
+    /* ── Comparison ── */
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .comparison-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(22, 16, 43, 0.06);
+    }
+    .comparison-card.highlight {
+      border-color: var(--purple);
+      background: linear-gradient(135deg, rgba(124,92,252,0.06) 0%, #FFFFFF 100%);
+      box-shadow: 0 6px 24px rgba(124, 92, 252, 0.12);
+    }
+    .comparison-header {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+    .comparison-header.muted { color: var(--text-muted); }
+    .comparison-header.accent { color: var(--purple); }
+    .comparison-list {
+      list-style: none;
+      padding: 0;
+    }
+    .comparison-list li {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .comparison-list li::before {
+      position: absolute;
+      left: 0;
+      font-size: 0.75rem;
+    }
+    .comparison-list.others li::before { content: '~'; color: var(--text-muted); }
+    .comparison-list.gumball li::before { content: '\2713'; color: var(--purple); font-weight: 600; }
 
     /* ── Mood Palette ── */
     .moods {
@@ -239,63 +329,49 @@
       color: var(--text-muted);
     }
 
-    /* ── Feature Cards ── */
-    .features {
+    /* ── Roadmap ── */
+    .roadmap {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
       margin-top: 1.25rem;
     }
-    .feature {
+    .roadmap-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.5rem;
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 2px 12px rgba(22, 16, 43, 0.06);
     }
-    .feature-name {
-      font-weight: 600;
-      font-size: 0.95rem;
-      margin-bottom: 0.4rem;
-    }
-    .feature-desc {
-      font-size: 0.82rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    /* ── Tech Stack ── */
-    .tech-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-    .tech-pill {
+    .roadmap-status {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      font-weight: 400;
-      color: var(--text-secondary);
-      background: var(--purple-dim);
-      border: 1px solid var(--border);
-      padding: 0.4rem 0.85rem;
+      font-size: 0.65rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      padding: 0.3rem 0.7rem;
       border-radius: 100px;
     }
-
-    /* ── Architecture ── */
-    .arch-diagram {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.5rem;
-      margin-top: 1.25rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      line-height: 1.8;
-      color: var(--text-muted);
-      white-space: pre;
-      overflow-x: auto;
+    .roadmap-status.done {
+      color: var(--forest);
+      background: rgba(16, 185, 129, 0.1);
     }
-    .arch-diagram .hl { color: var(--purple); }
+    .roadmap-status.next {
+      color: var(--purple);
+      background: var(--purple-dim);
+    }
+    .roadmap-status.planned {
+      color: var(--text-muted);
+      background: rgba(90, 83, 104, 0.15);
+    }
+    .roadmap-text {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
 
     /* ── Footer ── */
     .footer {
@@ -316,9 +392,9 @@
 
     /* ── Responsive ── */
     @media (max-width: 600px) {
-      .stats { grid-template-columns: repeat(2, 1fr); }
       .features { grid-template-columns: 1fr; }
-      .blocks-grid { grid-template-columns: 1fr; }
+      .examples { grid-template-columns: 1fr; }
+      .comparison { grid-template-columns: 1fr; }
       .page { padding: 0 1.25rem; }
     }
   </style>
@@ -331,126 +407,140 @@
     <span class="hero-emoji">🍬</span>
     <h1 class="hero-title">gumball<span class="dot">.</span></h1>
     <p class="hero-subtitle">
-      Create AI agents with your voice. Each one gets a custom, task-aware workspace
-      designed for what it does &mdash; not a generic chat window.
+      Describe what you want an AI agent to do. Get a custom workspace
+      built around your task &mdash; not a generic chat window.
     </p>
     <div class="hero-gradient"></div>
   </header>
 
-  <!-- Stats -->
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-num">11</div>
-      <div class="stat-label">Block Types</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">7</div>
-      <div class="stat-label">Color Moods</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">44</div>
-      <div class="stat-label">Tests</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">3</div>
-      <div class="stat-label">Claude Models</div>
-    </div>
+  <!-- Origin Story -->
+  <div class="origin">
+    <p class="origin-quote">
+      &ldquo;Built in 1.5 hours at a hackathon, pitched in 99 seconds.
+      Born from a simple question &mdash; why are AI agents only for developers?&rdquo;
+    </p>
+    <p class="origin-credit">The idea that kept going after the hackathon ended.</p>
   </div>
 
-  <!-- What it does -->
+  <!-- The Problem -->
   <section class="section">
-    <div class="section-label">The Idea</div>
-    <h2 class="section-title">The UI is the output</h2>
+    <div class="section-label">The Problem</div>
+    <h2 class="section-title">AI agents are powerful. But they're not for everyone &mdash; yet.</h2>
     <p class="section-body">
-      Most AI tools give you a chatbot. Gumball gives you a <strong>workspace</strong>.
-      Tell it "track Austin housing for me" and you don't get a text response &mdash; you get a
-      signal card showing buy/wait, a metrics dashboard with median price and mortgage rates,
-      a 20-week price trend chart, and a ranked list of matching properties. All generated by
-      Claude, all rendered as native mobile components.
+      Today's AI agent tools &mdash; Manus, AutoGPT, CrewAI &mdash; are built for developers and power users.
+      They require you to configure workflows, wire up integrations, or think in terms of prompts and pipelines.
+      And no matter what your agent does, you get the same generic interface. A ticket tracker looks the same
+      as a news summarizer looks the same as a content planner.
     </p>
     <p class="section-body" style="margin-top: 1rem;">
-      The key insight: <em>different tasks need different interfaces</em>. A tweet composer needs
-      draft variants, character counts, and tone pickers. A YouTube script needs expandable sections,
-      research sources, and a hook editor. Gumball's block system makes this possible &mdash; Claude
-      picks the right blocks for each agent's job.
+      Content creators, solopreneurs, small business owners, curious people &mdash; they all deserve
+      agents that work for them, without needing to think like an engineer.
     </p>
   </section>
 
-  <!-- Task-Aware UI / Blocks -->
+  <!-- How Gumball is Different -->
   <section class="section">
-    <div class="section-label">Core Concept</div>
-    <h2 class="section-title">Task-Aware UI &mdash; 11 Block Types</h2>
+    <div class="section-label">What Makes Gumball Different</div>
+    <h2 class="section-title">Every agent gets its own workspace</h2>
     <p class="section-body">
-      Each agent's workspace is composed of blocks. Claude selects 3&ndash;6 blocks per agent
-      based on what the agent does. Blocks are self-contained UI components with their own data.
+      Most AI tools give you a chatbot or a blank canvas. Gumball gives you a <strong>workspace</strong>
+      &mdash; custom-built for what your agent actually does. A price tracker gets charts and alerts.
+      A content agent gets drafts and tone controls. A research agent gets structured sources and key metrics.
     </p>
-    <div class="blocks-grid">
-      <div class="block-card">
-        <div class="block-card-name">Signal Card</div>
-        <div class="block-card-desc">Buy/wait/alert indicator with description and date</div>
-        <div class="block-card-type">signal-card</div>
+    <p class="section-body" style="margin-top: 1rem;">
+      That's the whole idea behind the name &mdash; every gumball in the machine looks different.
+      The workspace <em>is</em> the agent.
+    </p>
+
+    <div class="comparison">
+      <div class="comparison-card">
+        <div class="comparison-header muted">Other AI Agent Tools</div>
+        <ul class="comparison-list others">
+          <li>Same interface for every agent</li>
+          <li>Configure workflows manually</li>
+          <li>Output is text in a chat window</li>
+          <li>Built for developers first</li>
+          <li>Prompt engineering required</li>
+        </ul>
       </div>
-      <div class="block-card">
-        <div class="block-card-name">Metrics Table</div>
-        <div class="block-card-desc">Row of stat cards with label, value, and subtitle</div>
-        <div class="block-card-type">metrics-table</div>
-      </div>
-      <div class="block-card">
-        <div class="block-card-name">Price Chart</div>
-        <div class="block-card-desc">Animated bar chart with highlighted recent data</div>
-        <div class="block-card-type">price-chart</div>
-      </div>
-      <div class="block-card">
-        <div class="block-card-name">Top Picks</div>
-        <div class="block-card-desc">Ranked items with match percentage badges</div>
-        <div class="block-card-type">top-picks</div>
-      </div>
-      <div class="block-card">
-        <div class="block-card-name">Source List</div>
-        <div class="block-card-desc">Research sources with relevance scoring</div>
-        <div class="block-card-type">source-list</div>
-      </div>
-      <div class="block-card">
-        <div class="block-card-name">Script Hook</div>
-        <div class="block-card-desc">Opening hook with iteration count and duration</div>
-        <div class="block-card-type">script-hook</div>
-      </div>
-      <div class="block-card">
-        <div class="block-card-name">Script Sections</div>
-        <div class="block-card-desc">Collapsible content sections with timing</div>
-        <div class="block-card-type">script-sections</div>
-      </div>
-      <div class="block-card">
-        <div class="block-card-name">Tweet Drafts</div>
-        <div class="block-card-desc">Editable variants with char counter and progress bar</div>
-        <div class="block-card-type">tweet-drafts</div>
-      </div>
-      <div class="block-card">
-        <div class="block-card-name">Tone Selector</div>
-        <div class="block-card-desc">Chip-based tone picker (confident, casual, bold...)</div>
-        <div class="block-card-type">tone-selector</div>
-      </div>
-      <div class="block-card">
-        <div class="block-card-name">Text</div>
-        <div class="block-card-desc">Rich text with default, highlight, and quote styles</div>
-        <div class="block-card-type">text</div>
-      </div>
-      <div class="block-card">
-        <div class="block-card-name">Key-Value</div>
-        <div class="block-card-desc">Data table with labeled rows and dividers</div>
-        <div class="block-card-type">key-value</div>
+      <div class="comparison-card highlight">
+        <div class="comparison-header accent">Gumball</div>
+        <ul class="comparison-list gumball">
+          <li>Custom workspace per agent</li>
+          <li>Just describe what you want</li>
+          <li>Charts, metrics, drafts, sources</li>
+          <li>Designed for everyone</li>
+          <li>Conversation, not configuration</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- Mood System -->
+  <!-- How It Works -->
   <section class="section">
-    <div class="section-label">Design</div>
-    <h2 class="section-title">7 Color Moods</h2>
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Three steps. No setup required.</h2>
+    <div class="features">
+      <div class="feature">
+        <span class="feature-icon">💬</span>
+        <div class="feature-name">1. Have a conversation</div>
+        <div class="feature-desc">Tell Gumball what you want your agent to do. It asks smart follow-up questions to understand your needs, then builds your agent.</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🎨</span>
+        <div class="feature-name">2. Get a custom workspace</div>
+        <div class="feature-desc">Your agent comes with a workspace designed specifically for its task &mdash; the right mix of charts, data, drafts, and insights.</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🔄</span>
+        <div class="feature-name">3. Run it anytime</div>
+        <div class="feature-desc">Trigger your agent manually or set it on a schedule. Each run delivers fresh, real results to your workspace.</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">✏️</span>
+        <div class="feature-name">4. Refine naturally</div>
+        <div class="feature-desc">Want to change something? Just tell your agent. Every edit creates a new version &mdash; you can always go back.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Examples -->
+  <section class="section">
+    <div class="section-label">Imagine</div>
+    <h2 class="section-title">What would your agent do?</h2>
+    <p class="section-body">Just describe it. Gumball figures out the rest.</p>
+    <div class="examples">
+      <div class="example">
+        <div class="example-prompt">&ldquo;Track Austin housing prices and tell me when to buy&rdquo;</div>
+        <div class="example-result">
+          <span class="example-dot" style="background: var(--ocean);"></span>
+          Buy/wait signals, price trends, top listings, market metrics
+        </div>
+      </div>
+      <div class="example">
+        <div class="example-prompt">&ldquo;Write me 3 tweet ideas every morning about AI news&rdquo;</div>
+        <div class="example-result">
+          <span class="example-dot" style="background: var(--lavender);"></span>
+          Draft variants, tone picker, trending sources, character counts
+        </div>
+      </div>
+      <div class="example">
+        <div class="example-prompt">&ldquo;Find the best freelance gigs in my field every week&rdquo;</div>
+        <div class="example-result">
+          <span class="example-dot" style="background: var(--forest);"></span>
+          Ranked picks, match scores, sources, application tips
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Personality -->
+  <section class="section">
+    <div class="section-label">Personality</div>
+    <h2 class="section-title">Your agents, your colors</h2>
     <p class="section-body">
-      Each agent can have its own color scheme. Claude auto-suggests a mood based on the agent's domain,
-      or users can pick one manually. The mood tints the entire workspace &mdash; signal cards, chart bars,
-      hook backgrounds, metric values, and selection chips all respond to it.
+      Every agent can have its own color mood &mdash; automatically suggested based on what it does,
+      or picked by you. The mood tints the entire workspace, making each agent feel distinct and personal.
     </p>
     <div class="moods">
       <div class="mood-chip">
@@ -491,72 +581,38 @@
     </div>
   </section>
 
-  <!-- Features -->
+  <!-- What's Coming -->
   <section class="section">
-    <div class="section-label">Features</div>
-    <h2 class="section-title">What's built</h2>
-    <div class="features">
-      <div class="feature">
-        <div class="feature-name">Conversational Creation</div>
-        <div class="feature-desc">Multi-turn dialogue with Claude to refine your agent. Smart questions with suggested defaults. Build when you're ready.</div>
+    <div class="section-label">Roadmap</div>
+    <h2 class="section-title">Where it's headed</h2>
+    <p class="section-body">
+      Gumball is actively being built. Here's what's done and what's next.
+    </p>
+    <div class="roadmap">
+      <div class="roadmap-item">
+        <span class="roadmap-status done">Done</span>
+        <span class="roadmap-text">Conversational agent creation &mdash; describe it, Gumball builds it</span>
       </div>
-      <div class="feature">
-        <div class="feature-name">Versioned Editing</div>
-        <div class="feature-desc">Edit agents in natural language. Each edit creates an immutable version snapshot. Full history, rollback.</div>
+      <div class="roadmap-item">
+        <span class="roadmap-status done">Done</span>
+        <span class="roadmap-text">Custom workspaces with task-aware layouts, charts, and data blocks</span>
       </div>
-      <div class="feature">
-        <div class="feature-name">Model Selection</div>
-        <div class="feature-desc">Haiku 4.5 (fast), Sonnet 4 (balanced), Opus 4 (powerful). Global default with per-agent override.</div>
+      <div class="roadmap-item">
+        <span class="roadmap-status done">Done</span>
+        <span class="roadmap-text">Color moods, version history, model selection, templates gallery</span>
       </div>
-      <div class="feature">
-        <div class="feature-name">Zod Validation</div>
-        <div class="feature-desc">Every Claude API response validated with Zod schemas. Malformed responses caught before they hit the UI.</div>
+      <div class="roadmap-item">
+        <span class="roadmap-status next">Next</span>
+        <span class="roadmap-text">Live execution &mdash; agents that search the web and fetch real data</span>
       </div>
-      <div class="feature">
-        <div class="feature-name">Offline Detection</div>
-        <div class="feature-desc">Banner shows when you're offline. Prevents wasted API calls and confused users.</div>
+      <div class="roadmap-item">
+        <span class="roadmap-status planned">Planned</span>
+        <span class="roadmap-text">Scheduled runs &mdash; set it and forget it, get notified when results are ready</span>
       </div>
-      <div class="feature">
-        <div class="feature-name">Crash Reporting</div>
-        <div class="feature-desc">Sentry integration for production visibility. Disabled in dev, 20% trace sampling.</div>
+      <div class="roadmap-item">
+        <span class="roadmap-status planned">Planned</span>
+        <span class="roadmap-text">Integrations &mdash; Gmail, Slack, Google Sheets, and more connected to your agents</span>
       </div>
-    </div>
-  </section>
-
-  <!-- Architecture -->
-  <section class="section">
-    <div class="section-label">Architecture</div>
-    <h2 class="section-title">How it's built</h2>
-    <div class="arch-diagram"><span class="hl">User</span> describes agent
-  |
-  v
-<span class="hl">Create Screen</span> (conversational or direct)
-  |
-  v
-<span class="hl">Claude API</span> (converse / buildAgent / createAgent)
-  |  30s timeout, Zod validation
-  v
-<span class="hl">Agent</span> { versions[], runs[], schedule, mood }
-  |
-  v
-<span class="hl">BlockRenderer</span> + MoodProvider
-  |  11 block components
-  v
-<span class="hl">Task-Aware Workspace</span></div>
-
-    <div class="tech-row">
-      <span class="tech-pill">React Native 0.81</span>
-      <span class="tech-pill">Expo SDK 54</span>
-      <span class="tech-pill">TypeScript (strict)</span>
-      <span class="tech-pill">Zustand 5</span>
-      <span class="tech-pill">Zod 4</span>
-      <span class="tech-pill">Reanimated 4</span>
-      <span class="tech-pill">Anthropic Messages API</span>
-      <span class="tech-pill">AsyncStorage</span>
-      <span class="tech-pill">SecureStore</span>
-      <span class="tech-pill">Sentry</span>
-      <span class="tech-pill">Jest + jest-expo</span>
-      <span class="tech-pill">ESLint + Prettier</span>
     </div>
   </section>
 
