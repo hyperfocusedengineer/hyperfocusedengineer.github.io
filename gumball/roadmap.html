@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gumball -- Product Roadmap</title>
+  <meta name="description" content="Gumball product roadmap: From task-aware UI platform to full autonomous agentic AI runtime.">
+  <meta property="og:title" content="Gumball -- Product Roadmap">
+  <meta property="og:description" content="From task-aware UI platform to full autonomous agentic AI runtime with purpose-built interfaces.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --surface-2: #1a1a26;
+      --border: #2a2a3a;
+      --text: #e8e8f0;
+      --text-muted: #8888a8;
+      --text-dim: #5a5a78;
+
+      --pink: #ff3d8e;
+      --blue: #3d8eff;
+      --green: #3dff8e;
+      --yellow: #ffe03d;
+      --purple: #8e3dff;
+      --orange: #ff8e3d;
+
+      --phase-1: #ff3d8e;
+      --phase-2: #3d8eff;
+      --phase-3: #3dff8e;
+      --phase-4: #ffe03d;
+      --phase-5: #8e3dff;
+      --phase-6: #ff8e3d;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', -apple-system, sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      right: -15%;
+      width: 900px;
+      height: 900px;
+      background: radial-gradient(circle, rgba(142, 61, 255, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -20%;
+      left: -15%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(255, 61, 142, 0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    /* -- Header -- */
+    .header {
+      padding: 3rem 0 2.5rem;
+      text-align: center;
+    }
+    .header-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .header-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+    .header-title .accent { color: var(--pink); }
+    .header-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0.75rem auto 0;
+      line-height: 1.7;
+    }
+    .header-meta {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .header-meta-item {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .header-meta-item span { color: var(--text-muted); }
+    .header-gradient {
+      height: 2px;
+      width: 100px;
+      margin: 2rem auto 0;
+      background: linear-gradient(90deg, var(--pink), var(--purple), var(--blue));
+      border-radius: 2px;
+    }
+
+    /* -- Stats Bar -- */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1.25rem 0;
+      margin: 1rem 0 1.5rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.2rem;
+    }
+
+    /* -- Phase Nav -- */
+    .phase-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 15, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 0;
+      margin: 0 -2rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .phase-nav::-webkit-scrollbar { display: none; }
+    .phase-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+    }
+    .phase-btn:hover {
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+    .phase-btn.active {
+      background: var(--surface-2);
+      color: var(--text);
+      border-color: var(--text-dim);
+    }
+
+    /* -- Phase Sections -- */
+    .phase-section {
+      margin-top: 2.5rem;
+    }
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+    .phase-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .phase-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .phase-timeline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .phase-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+      max-width: 700px;
+    }
+
+    /* -- Task Cards -- */
+    .task-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .task-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+    }
+    .task-card:hover {
+      border-color: rgba(136, 136, 168, 0.3);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    .task-icon {
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+    .task-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.35rem;
+      color: var(--text);
+    }
+    .task-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 0.6rem;
+    }
+    .task-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 100px;
+    }
+    .tag-new {
+      color: var(--green);
+      background: rgba(61, 255, 142, 0.1);
+      border: 1px solid rgba(61, 255, 142, 0.2);
+    }
+    .tag-enhance {
+      color: var(--blue);
+      background: rgba(61, 142, 255, 0.1);
+      border: 1px solid rgba(61, 142, 255, 0.2);
+    }
+    .tag-infra {
+      color: var(--yellow);
+      background: rgba(255, 224, 61, 0.1);
+      border: 1px solid rgba(255, 224, 61, 0.2);
+    }
+    .tag-critical {
+      color: var(--pink);
+      background: rgba(255, 61, 142, 0.1);
+      border: 1px solid rgba(255, 61, 142, 0.2);
+    }
+    .tag-moat {
+      color: var(--purple);
+      background: rgba(142, 61, 255, 0.1);
+      border: 1px solid rgba(142, 61, 255, 0.2);
+    }
+
+    /* -- Footer -- */
+    .footer {
+      padding: 3rem 0 1rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+    .footer-text {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+    .footer-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: var(--text); }
+
+    /* -- Responsive -- */
+    @media (max-width: 640px) {
+      .task-grid { grid-template-columns: 1fr; }
+      .stats-bar { gap: 1.25rem; }
+      .page { padding: 0 1.25rem 3rem; }
+      .phase-nav { margin: 0 -1.25rem; padding-left: 1.25rem; padding-right: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <header class="header">
+    <span class="header-icon">🍬</span>
+    <h1 class="header-title">gumball<span class="accent">.</span> roadmap</h1>
+    <p class="header-subtitle">
+      From task-aware UI platform to full autonomous agentic AI runtime with purpose-built interfaces.
+      The application layer the $185B AI infrastructure buildout is being built to power.
+    </p>
+    <div class="header-meta">
+      <span class="header-meta-item"><span>22 weeks</span> total</span>
+      <span class="header-meta-item"><span>6 phases</span></span>
+      <span class="header-meta-item">target: <span>YC S26</span></span>
+    </div>
+    <div class="header-gradient"></div>
+  </header>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar" id="statsBar"></div>
+
+  <!-- Phase Nav -->
+  <nav class="phase-nav" id="phaseNav"></nav>
+
+  <!-- Content -->
+  <div id="content"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-text">
+      Built by <a href="../" class="footer-link">Hyperfocused Engineer</a>
+      &middot; <a href="index.html" class="footer-link">Gumball Home</a>
+      &middot; <a href="https://github.com/harshssd/gumball" class="footer-link">GitHub</a>
+    </p>
+  </footer>
+</div>
+
+<script>
+const phases = [
+  {
+    id: 1,
+    name: "Agent Persistence & Identity",
+    timeline: "Weeks 1-3",
+    color: "var(--phase-1)",
+    desc: "Give every Gumball workspace a persistent agent that remembers context across sessions. Establish agentic AI positioning from day one.",
+    tasks: [
+      {
+        icon: "🗄️",
+        name: "Agent identity schema in Supabase",
+        desc: "Define the core agent data model: unique IDs, metadata, ownership, and relationships to workspaces in the Supabase backend.",
+        tags: ["infra", "critical"]
+      },
+      {
+        icon: "🧠",
+        name: "Memory store per agent",
+        desc: "Persistent memory layer so each agent retains context, preferences, and learned patterns across sessions and runs.",
+        tags: ["new", "critical"]
+      },
+      {
+        icon: "📋",
+        name: "Execution history log",
+        desc: "Full audit trail of every agent run: inputs, outputs, timestamps, and status. Essential for debugging and user trust.",
+        tags: ["new", "infra"]
+      },
+      {
+        icon: "🔐",
+        name: "Credentials vault per agent",
+        desc: "Secure, encrypted storage for API keys, OAuth tokens, and secrets each agent needs to access external services.",
+        tags: ["new", "infra"]
+      },
+      {
+        icon: "📝",
+        name: "Agent config versioning",
+        desc: "Track every change to an agent's configuration. Roll back to previous versions if a change breaks behavior.",
+        tags: ["enhance"]
+      },
+      {
+        icon: "🔗",
+        name: "Workspace to Agent binding UI",
+        desc: "Visual interface to link agents to workspaces, configure bindings, and manage the agent-workspace relationship.",
+        tags: ["enhance", "moat"]
+      },
+      {
+        icon: "📣",
+        name: "Agentic AI positioning and copy",
+        desc: "Update all marketing copy, App Store/Play Store metadata, and landing page to lead with agentic AI framing. Position Gumball as the application layer for the agentic AI era -- not a chatbot. Add landing page section explaining how $185B+ in AI infrastructure investment validates this product.",
+        tags: ["critical", "moat"]
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: "Background Execution Engine",
+    timeline: "Weeks 3-6",
+    color: "var(--phase-2)",
+    desc: "The headless runtime that lets agents DO things autonomously -- reason through multi-step tasks, write to APIs, send emails -- without a browser tab open.",
+    tasks: [
+      {
+        icon: "⚡",
+        name: "Headless agent runner",
+        desc: "Server-side execution engine that runs agents without a browser. The foundation for background, scheduled, and triggered runs.",
+        tags: ["new", "critical"]
+      },
+      {
+        icon: "🔄",
+        name: "Retry and error recovery",
+        desc: "Automatic retry logic with exponential backoff, error classification, and graceful degradation when external services fail.",
+        tags: ["new", "critical"]
+      },
+      {
+        icon: "🏗️",
+        name: "Sandboxed execution environment",
+        desc: "Isolated runtime per agent run. Prevents cross-contamination, limits resource usage, and ensures security boundaries.",
+        tags: ["new", "infra"]
+      },
+      {
+        icon: "📊",
+        name: "Run status dashboard in workspace",
+        desc: "Real-time visibility into agent runs directly in the workspace. See progress, logs, and results without leaving the UI.",
+        tags: ["new", "moat"]
+      },
+      {
+        icon: "⏱️",
+        name: "Execution timeout and cost guards",
+        desc: "Configurable limits on run duration and API costs. Prevent runaway agents from burning through resources.",
+        tags: ["new", "infra"]
+      },
+      {
+        icon: "🔔",
+        name: "Run completion notifications",
+        desc: "Push notifications, email alerts, or webhook callbacks when agent runs complete. Keep users informed without polling.",
+        tags: ["new", "enhance"]
+      },
+      {
+        icon: "🤖",
+        name: "Claude agentic multi-step reasoning",
+        desc: "Add autonomous multi-step reasoning to workspace generation: Claude plans the workspace structure, builds block layout, validates against the task, then self-corrects. The generation itself is an agentic workflow -- not a single prompt-response.",
+        tags: ["new", "moat", "critical"]
+      },
+      {
+        icon: "💾",
+        name: "Agent memory across iterations",
+        desc: "When users refine workspaces through multi-turn conversation, the agent remembers what worked and what was rejected. Learns preferences across sessions: preferred block types, color moods, data layouts.",
+        tags: ["new", "moat"]
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: "Trigger System",
+    timeline: "Weeks 6-9",
+    color: "var(--phase-3)",
+    desc: "Event-driven execution. Agents that wake up on a schedule, respond to webhooks, react to emails, or chain together.",
+    tasks: [
+      {
+        icon: "⏰",
+        name: "Cron scheduler",
+        desc: "Schedule agent runs with cron expressions. Daily digests, hourly monitors, weekly reports -- all running automatically.",
+        tags: ["new", "critical"]
+      },
+      {
+        icon: "🌐",
+        name: "Webhook endpoints per agent",
+        desc: "Unique webhook URLs for each agent. External services can trigger runs by hitting the endpoint with a payload.",
+        tags: ["new", "critical"]
+      },
+      {
+        icon: "📧",
+        name: "Email trigger (inbound parsing)",
+        desc: "Agents that activate when they receive an email. Parse the content and use it as input for the run.",
+        tags: ["new"]
+      },
+      {
+        icon: "🔍",
+        name: "Polling triggers",
+        desc: "Periodically check external sources for changes. When something new appears, trigger the agent to process it.",
+        tags: ["new"]
+      },
+      {
+        icon: "🎛️",
+        name: "Trigger management UI in workspace",
+        desc: "Configure, enable, disable, and monitor triggers directly from the workspace. Visual feedback on trigger status and history.",
+        tags: ["new", "moat"]
+      },
+      {
+        icon: "🔗",
+        name: "Trigger chaining",
+        desc: "One agent's completion can trigger another agent's run. Build multi-step pipelines without writing orchestration code.",
+        tags: ["new", "enhance"]
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: "Integration Layer",
+    timeline: "Weeks 9-13",
+    color: "var(--phase-4)",
+    desc: "Connect agents to the outside world. MCP servers, HTTP APIs, Claude tool_use, and browser automation -- the full agentic stack.",
+    tasks: [
+      {
+        icon: "🔌",
+        name: "MCP server registry",
+        desc: "Registry of Model Context Protocol servers that agents can connect to. Standardized tool discovery and invocation.",
+        tags: ["new", "critical"]
+      },
+      {
+        icon: "🌍",
+        name: "Generic HTTP API tool",
+        desc: "Universal HTTP client that agents can use to call any REST API. Configurable auth, headers, and response parsing.",
+        tags: ["new", "critical"]
+      },
+      {
+        icon: "🖥️",
+        name: "Browser automation (computer use)",
+        desc: "Agents that can navigate websites, fill forms, click buttons, and extract data. Full browser control for tasks that need it.",
+        tags: ["new"]
+      },
+      {
+        icon: "🎨",
+        name: "Dynamic UI adaptation for integrations",
+        desc: "Workspace blocks that automatically adapt their layout based on connected integrations. A Slack integration adds message previews; a spreadsheet adds data tables.",
+        tags: ["new", "moat", "critical"]
+      },
+      {
+        icon: "🔑",
+        name: "OAuth flow manager",
+        desc: "Guided OAuth setup for common services. Users connect accounts with a few clicks, tokens are stored securely.",
+        tags: ["new", "infra"]
+      },
+      {
+        icon: "💚",
+        name: "Integration health dashboard",
+        desc: "Monitor the status of all connected integrations. See which connections are healthy, which need re-auth, and usage stats.",
+        tags: ["new", "enhance"]
+      },
+      {
+        icon: "📖",
+        name: "Auto-generated API skill docs",
+        desc: "Automatically generate documentation for each integration's capabilities. Help users understand what their agents can do.",
+        tags: ["new", "enhance"]
+      },
+      {
+        icon: "🛠️",
+        name: "Claude tool_use API for live data",
+        desc: "Integrate Claude's native tool_use API so agents can fetch real-time data (web search, API calls, calculations) directly during workspace generation and refinement. Workspaces populated with live data, not static content.",
+        tags: ["new", "critical", "moat"]
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: "Learning & Self-Improvement",
+    timeline: "Weeks 13-17",
+    color: "var(--phase-5)",
+    desc: "Agents that get better over time. Post-run feedback, prompt refinement, and UI evolution -- applied to both agentic behavior AND interface.",
+    tasks: [
+      {
+        icon: "👍",
+        name: "Post-run feedback capture",
+        desc: "Simple thumbs up/down and optional comments after each run. The signal that drives all downstream learning.",
+        tags: ["new", "critical"]
+      },
+      {
+        icon: "🧬",
+        name: "System prompt auto-refinement",
+        desc: "Use feedback data to automatically improve agent system prompts. Better prompts lead to better runs over time.",
+        tags: ["new", "critical"]
+      },
+      {
+        icon: "✨",
+        name: "UI evolution from feedback",
+        desc: "Workspace layouts that improve based on how users interact. Blocks that get used stay prominent; unused ones shrink or disappear.",
+        tags: ["new", "moat", "critical"]
+      },
+      {
+        icon: "📈",
+        name: "Performance analytics per agent",
+        desc: "Track success rates, run times, cost per run, and user satisfaction over time. Data-driven agent improvement.",
+        tags: ["new", "enhance"]
+      },
+      {
+        icon: "🧪",
+        name: "A/B test agent configs",
+        desc: "Run two versions of an agent side by side and compare results. Empirical optimization of prompts, tools, and settings.",
+        tags: ["new"]
+      },
+      {
+        icon: "📦",
+        name: "Exportable agent blueprints",
+        desc: "Package an agent's full configuration as a shareable blueprint. Others can import it and get the same agent instantly.",
+        tags: ["new", "enhance"]
+      },
+      {
+        icon: "🗂️",
+        name: "Agentic workspace templates library",
+        desc: "Pre-built workspace templates seeded by common agentic AI patterns: research agent, monitoring agent, content agent, outreach agent. Each template encodes best-practice block layouts, tool configs, and refinement loops -- giving new users an instant on-ramp to the agentic AI era.",
+        tags: ["new", "moat"]
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: "Platform & Scale",
+    timeline: "Weeks 17-22",
+    color: "var(--phase-6)",
+    desc: "Marketplace, multi-agent orchestration, and the agentic AI positioning work needed for YC S26. Ship the narrative alongside the product.",
+    tasks: [
+      {
+        icon: "🏪",
+        name: "Agent marketplace / template gallery",
+        desc: "Public gallery where users browse, preview, and install community-built agents. Ratings, categories, and featured picks.",
+        tags: ["new", "moat"]
+      },
+      {
+        icon: "🤝",
+        name: "Multi-agent orchestration",
+        desc: "Multiple agents working together on complex tasks. Coordinator agents that delegate subtasks and merge results.",
+        tags: ["new"]
+      },
+      {
+        icon: "👥",
+        name: "Team workspaces",
+        desc: "Shared workspaces for teams. Role-based access, shared agents, and collaborative editing of agent configurations.",
+        tags: ["new"]
+      },
+      {
+        icon: "📱",
+        name: "Mobile agent monitoring",
+        desc: "Check agent status, view run results, and trigger runs from your phone. Stay connected to your agents on the go.",
+        tags: ["new"]
+      },
+      {
+        icon: "🎬",
+        name: "Demo video and YC application polish",
+        desc: "High-quality demo video, refined application narrative, and pitch materials that showcase the agentic AI vision.",
+        tags: ["critical"]
+      },
+      {
+        icon: "💰",
+        name: "Usage analytics and billing infrastructure",
+        desc: "Track usage per user and agent. Metered billing for API calls, compute time, and storage. Stripe integration.",
+        tags: ["infra"]
+      },
+      {
+        icon: "🛡️",
+        name: "SOC 2 readiness / security audit",
+        desc: "Security review, penetration testing, and documentation needed for enterprise customers and investor confidence.",
+        tags: ["infra"]
+      },
+      {
+        icon: "🎯",
+        name: "Agentic AI narrative for YC S26",
+        desc: "Position Gumball in the agentic AI landscape for fundraising: Google's $185B infra spend, Anthropic's $30B run rate with 1000+ enterprise customers, Broadcom-Google TPU deal optimized for agentic workloads. Gumball is the democratization layer that justifies this infrastructure investment. Prepare pitch deck, one-pager, and competitive landscape.",
+        tags: ["critical", "moat"]
+      }
+    ]
+  }
+];
+
+// --- Render ---
+
+function renderStats() {
+  const statsBar = document.getElementById('statsBar');
+  let totalTasks = 0;
+  let newCount = 0;
+  let criticalCount = 0;
+  let moatCount = 0;
+
+  phases.forEach(phase => {
+    phase.tasks.forEach(task => {
+      totalTasks++;
+      if (task.tags.includes('new')) newCount++;
+      if (task.tags.includes('critical')) criticalCount++;
+      if (task.tags.includes('moat')) moatCount++;
+    });
+  });
+
+  statsBar.innerHTML = `
+    <div class="stat">
+      <div class="stat-value">${totalTasks}</div>
+      <div class="stat-label">Total Tasks</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">${newCount}</div>
+      <div class="stat-label">New Capabilities</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">${criticalCount}</div>
+      <div class="stat-label">Critical Path</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">${moatCount}</div>
+      <div class="stat-label">Moat Tasks</div>
+    </div>
+  `;
+}
+
+function renderNav() {
+  const nav = document.getElementById('phaseNav');
+  let html = '<button class="phase-btn active" data-phase="all">All Phases</button>';
+  phases.forEach(phase => {
+    html += `<button class="phase-btn" data-phase="${phase.id}">P${phase.id}: ${phase.name}</button>`;
+  });
+  nav.innerHTML = html;
+
+  nav.querySelectorAll('.phase-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      nav.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-phase');
+      renderContent(filter);
+    });
+  });
+}
+
+function renderContent(filter) {
+  const content = document.getElementById('content');
+  const filtered = filter === 'all' ? phases : phases.filter(p => p.id === parseInt(filter));
+  let html = '';
+
+  filtered.forEach(phase => {
+    html += `
+      <section class="phase-section" id="phase-${phase.id}">
+        <div class="phase-header">
+          <span class="phase-badge" style="color: ${phase.color}; background: ${phase.color}18; border: 1px solid ${phase.color}33;">Phase ${phase.id}</span>
+          <h2 class="phase-title">${phase.name}</h2>
+        </div>
+        <div class="phase-timeline">${phase.timeline}</div>
+        <p class="phase-desc">${phase.desc}</p>
+        <div class="task-grid">
+          ${phase.tasks.map(task => `
+            <div class="task-card">
+              <span class="task-icon">${task.icon}</span>
+              <div class="task-name">${task.name}</div>
+              <div class="task-desc">${task.desc}</div>
+              <div class="task-tags">
+                ${task.tags.map(tag => `<span class="tag tag-${tag}">${tag}</span>`).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+    `;
+  });
+
+  content.innerHTML = html;
+}
+
+// Init
+renderStats();
+renderNav();
+renderContent('all');
+</script>
+</body>
+</html>
