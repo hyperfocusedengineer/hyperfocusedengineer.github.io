@@ -352,6 +352,50 @@
     .story-card strong { color: var(--text); font-weight: 500; }
 
     /* ═══════════════
+       INTERVIEW PREP STEPS
+       ═══════════════ */
+    .prep-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .prep-step {
+      background: var(--bg);
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 1rem;
+      padding: 1.5rem;
+      transition: background 0.3s;
+    }
+    .prep-step:hover { background: var(--bg-card); }
+
+    .prep-num {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.85rem;
+      color: var(--cyan);
+      text-shadow: 0 0 10px rgba(0, 229, 208, 0.3);
+      padding-top: 0.1rem;
+    }
+
+    .prep-body h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+
+    .prep-body p {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ═══════════════
        FEATURES
        ═══════════════ */
     .features-grid {
@@ -469,6 +513,8 @@
       .content-section { padding: 0.5rem 1.25rem 3rem; }
       .features-grid { grid-template-columns: 1fr; }
       .gallery-frame { width: 140px; height: 248px; }
+      .prep-step { grid-template-columns: 48px 1fr; padding: 1.25rem; gap: 0.75rem; }
+      .prep-num { font-size: 0.72rem; }
     }
   </style>
 </head>
@@ -493,8 +539,8 @@
     </p>
 
     <div class="hero-actions">
-      <a href="https://testflight.apple.com/join/WsmzQYpK" class="store-link"><span class="si">&#63743;</span> TestFlight (iOS)</a>
-      <a href="https://play.google.com/apps/testing/com.hyperfocused.systemdesignarcade" class="store-link"><span class="si">&#9654;</span> Play Store (Android)</a>
+      <a href="https://apps.apple.com/us/app/system-design-arcade/id6759821733" class="store-link"><span class="si">&#63743;</span> Download &mdash; App Store</a>
+      <a href="https://play.google.com/store/apps/details?id=com.hyperfocused.systemdesignarcade" class="store-link"><span class="si">&#9654;</span> Download &mdash; Google Play</a>
     </div>
 
     <p class="hero-by">by Hyperfocused Engineer</p>
@@ -538,10 +584,64 @@
         decisions, see consequences, and build intuition through gameplay.
       </p>
       <p>
-        Play as a guest with <strong>zero data collection</strong>, or sign in with
-        Google or Apple to sync your progress across devices. No ads, no tracking,
-        no analytics. Just learning.
+        Play as a guest, or sign in with Google or Apple to sync your progress
+        across devices. <strong>No ads. No paywalls. Free on iOS and Android.</strong>
       </p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-dot"></div></div>
+
+  <!-- ─── HOW TO USE FOR INTERVIEW PREP ─── -->
+  <section class="content-section">
+    <div class="section-header">
+      <h2>INTERVIEW PREP</h2>
+      <span class="sub">How to use SDA for your next interview</span>
+    </div>
+
+    <div class="prep-steps">
+      <div class="prep-step">
+        <div class="prep-num">01</div>
+        <div class="prep-body">
+          <h3>Follow the Study Plan</h3>
+          <p>Curated, chapter-based path from fundamentals to real systems. No guessing what to learn next &mdash; just press Continue.</p>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num">02</div>
+        <div class="prep-body">
+          <h3>Lock in building blocks in Concept Arcade</h3>
+          <p>21 games on caching, databases, sharding, CAP, replication, load balancing, rate limiting, consistent hashing, and more.</p>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num">03</div>
+        <div class="prep-body">
+          <h3>Design real systems in Problem Arcade</h3>
+          <p>17 classic interview problems &mdash; URL Shortener, Chat System, Instagram, YouTube, Uber, Ticketmaster, Dropbox, and more.</p>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num">04</div>
+        <div class="prep-body">
+          <h3>Go deep in Tool Arcade</h3>
+          <p>10 tool deep-dives &mdash; Redis, Kafka, PostgreSQL, Elasticsearch, Kubernetes, Docker, Temporal, Zookeeper, Cloudflare, Grafana.</p>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num">05</div>
+        <div class="prep-body">
+          <h3>Run Story Mode as a mock interview</h3>
+          <p>Capstone narratives &mdash; design a full system end-to-end from requirements to tradeoffs, the way an interview actually flows.</p>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num">06</div>
+        <div class="prep-body">
+          <h3>Stay sharp with the Daily Challenge</h3>
+          <p>One fresh question every day. Keep your streak alive between study sessions.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -556,20 +656,81 @@
 
     <div class="features-grid">
       <div class="feature-card">
-        <h3>Learn by Playing</h3>
-        <p>Interactive arcade-style games that teach system design concepts through decision-making and consequences.</p>
+        <h3>50+ Arcade Games</h3>
+        <p>Four tracks &mdash; Concept, Problem, Tool, and Story &mdash; covering the full system design interview surface area.</p>
       </div>
       <div class="feature-card">
-        <h3>Zero-Friction Start</h3>
-        <p>Play immediately as a guest. No sign-up required. All progress stored locally on your device.</p>
+        <h3>Interview Prep Study Plan</h3>
+        <p>A chapter-by-chapter curated path. Fundamentals first, then real systems, then capstones.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Daily Challenge</h3>
+        <p>One fresh challenge every day. Build a streak, keep concepts top of mind between sessions.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Story Mode Capstones</h3>
+        <p>End-to-end narrative design games. Walk through requirements, tradeoffs, and architecture like a real interview.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Scenario-Why Challenges</h3>
+        <p>Train <em>reasoning</em>, not just recall. Every level asks you to justify the choice behind the choice.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Architecture Builder</h3>
+        <p>Interactive diagrams. Snap together clients, servers, caches, queues, and databases to prove you understand the flow.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Theme Lab</h3>
+        <p>Five dials to tune the look &mdash; background mode, glow intensity, gradients, and fonts. Dark neon by default.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Read Aloud</h3>
+        <p>Text-to-speech on every explanation. Learn while commuting, walking, or on the treadmill.</p>
       </div>
       <div class="feature-card">
         <h3>Cloud Sync</h3>
-        <p>Sign in with Google or Apple to sync scores and progress across all your devices.</p>
+        <p>Sign in with Google or Apple to sync scores and progress across every device. Play guest-only if you prefer.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Tablet-Ready</h3>
+        <p>First-class layouts for iPad and Android tablets. Study at a desk, not squinting at a phone.</p>
       </div>
       <div class="feature-card">
         <h3>Privacy-First</h3>
-        <p>No ads, no tracking, no analytics, no third-party data collection. Just the game.</p>
+        <p>No ads, no third-party trackers. Minimal anonymous analytics for crash reporting, full account deletion in Settings.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Free</h3>
+        <p>Zero cost. No paywalls, no subscriptions, no &ldquo;premium track.&rdquo; Just open it and learn.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-dot"></div></div>
+
+  <!-- ─── COMING SOON ─── -->
+  <section class="content-section">
+    <div class="section-header">
+      <h2>COMING SOON</h2>
+      <span class="sub">On the roadmap</span>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>More Story Mode Capstones</h3>
+        <p>Additional end-to-end design narratives for popular interview problems. The current three are just the start.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Mock Interview Mode</h3>
+        <p>Timed, multi-round runs that simulate the pressure of a real 45-minute interview slot.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Deeper Tool Tracks</h3>
+        <p>Level 2&ndash;5 expansions for the existing tool games, plus new deep-dives on widely-used infrastructure.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Shareable Designs</h3>
+        <p>Export your architecture-builder solutions as images to share, review, or post.</p>
       </div>
     </div>
   </section>
@@ -587,12 +748,26 @@
       <span class="topic-tag">Caching</span>
       <span class="topic-tag">Databases</span>
       <span class="topic-tag">Sharding</span>
+      <span class="topic-tag">Replication</span>
       <span class="topic-tag">Load Balancing</span>
       <span class="topic-tag">CAP Theorem</span>
-      <span class="topic-tag">Message Queues</span>
-      <span class="topic-tag">Replication</span>
-      <span class="topic-tag">Rate Limiting</span>
       <span class="topic-tag">Consistent Hashing</span>
+      <span class="topic-tag">Rate Limiting</span>
+      <span class="topic-tag">Message Queues</span>
+      <span class="topic-tag">Async Processing</span>
+      <span class="topic-tag">API Design</span>
+      <span class="topic-tag">Networking</span>
+      <span class="topic-tag">DNS &amp; CDN</span>
+      <span class="topic-tag">Leader Election</span>
+      <span class="topic-tag">Distributed Transactions</span>
+      <span class="topic-tag">Fault Tolerance</span>
+      <span class="topic-tag">Observability</span>
+      <span class="topic-tag">Security</span>
+      <span class="topic-tag">Read Scaling</span>
+      <span class="topic-tag">Estimation</span>
+      <span class="topic-tag">Proximity Services</span>
+      <span class="topic-tag">Data Pipelines</span>
+      <span class="topic-tag">Service Communication</span>
     </div>
   </section>
 
