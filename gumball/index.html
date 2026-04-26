@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gumball — Your AI Agents, Your Way</title>
-  <meta name="description" content="Create AI agents by simply describing what you want. Each agent gets a custom workspace designed for its task. No code, no setup, no prompt engineering.">
-  <meta property="og:title" content="Gumball — Your AI Agents, Your Way">
-  <meta property="og:description" content="Describe what you want. Get a custom AI agent with a workspace built around your task.">
+  <title>Gumball — Personal AI agents, for everyone</title>
+  <meta name="description" content="Describe what you want. Gumball builds you an AI agent with its own workspace. Share knowledge across agents with Brains. No prompt engineering.">
+  <meta property="og:title" content="Gumball — Personal AI agents, for everyone">
+  <meta property="og:description" content="Describe it. Build it. Run it. Now with Canvas + Brains — one source of truth, every agent reads from it.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -121,6 +121,91 @@
       margin: 2rem auto 0;
       background: linear-gradient(90deg, var(--purple), var(--candy-pink));
       border-radius: 2px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--purple);
+      background: var(--purple-dim);
+      border: 1px solid var(--border-hover);
+      padding: 0.4rem 0.85rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--purple);
+      box-shadow: 0 0 0 4px var(--purple-dim);
+    }
+
+    /* ── Canvas + Brains spotlight ── */
+    .canvas-section {
+      background: linear-gradient(135deg, rgba(124,92,252,0.06) 0%, rgba(240,80,154,0.04) 100%);
+      border: 1px solid var(--border-hover);
+      border-radius: 22px;
+      padding: 2.5rem;
+      margin-top: 1.25rem;
+    }
+    .canvas-section .canvas-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--purple);
+      margin-bottom: 0.75rem;
+    }
+    .canvas-section h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+    .canvas-section .canvas-lead {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .canvas-bullets {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .canvas-bullet {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+    }
+    .canvas-bullet-label {
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .canvas-bullet-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    @media (max-width: 600px) {
+      .canvas-bullets { grid-template-columns: 1fr; }
+      .canvas-section { padding: 1.75rem; }
     }
 
     /* ── Origin ── */
@@ -405,10 +490,15 @@
 
   <header class="hero">
     <span class="hero-emoji">🍬</span>
+    <span class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      New &middot; Canvas + Brains is live
+    </span>
     <h1 class="hero-title">gumball<span class="dot">.</span></h1>
     <p class="hero-subtitle">
       Describe what you want an AI agent to do. Get a custom workspace
-      built around your task &mdash; not a generic chat window.
+      built around your task &mdash; not a generic chat window. Now share
+      knowledge across agents with Brains.
     </p>
     <div class="hero-gradient"></div>
   </header>
@@ -472,6 +562,48 @@
           <li>Designed for everyone</li>
           <li>Conversation, not configuration</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Canvas + Brains -->
+  <section class="section">
+    <div class="section-label">Just Launched</div>
+    <h2 class="section-title">Agents that actually know what you know.</h2>
+    <p class="section-body">
+      Most chatbots forget you the moment you close the window. Gumball
+      doesn&rsquo;t. Write your thesis, your voice, your rules once as a
+      <strong>Brain</strong> &mdash; every agent that&rsquo;s attached reads
+      from it on every run.
+    </p>
+    <div class="canvas-section">
+      <div class="canvas-header">
+        <span class="hero-badge-dot"></span>
+        Canvas + Brains
+      </div>
+      <h3>Your knowledge, shared across every agent that needs it.</h3>
+      <p class="canvas-lead">
+        Update once, every agent picks it up. See the whole graph of agents
+        and the knowledge they share on the new Canvas tab. It feels like
+        a mood board, not a workflow editor &mdash; consumer, not ops.
+      </p>
+      <div class="canvas-bullets">
+        <div class="canvas-bullet">
+          <div class="canvas-bullet-label">Write the thesis once</div>
+          <div class="canvas-bullet-desc">Markdown, key facts, persona &mdash; whatever shapes how your agents think.</div>
+        </div>
+        <div class="canvas-bullet">
+          <div class="canvas-bullet-label">Update &rarr; every agent updates</div>
+          <div class="canvas-bullet-desc">Edit the Brain, every attached agent reads the new version on its next run.</div>
+        </div>
+        <div class="canvas-bullet">
+          <div class="canvas-bullet-label">Long-press to attach</div>
+          <div class="canvas-bullet-desc">Drag a Brain onto an agent on the Canvas. No menus, no settings panels.</div>
+        </div>
+        <div class="canvas-bullet">
+          <div class="canvas-bullet-label">Visual, not a DAG editor</div>
+          <div class="canvas-bullet-desc">Agents and Brains laid out like a constellation. You can see at a glance what each one knows.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -600,6 +732,14 @@
       <div class="roadmap-item">
         <span class="roadmap-status done">Done</span>
         <span class="roadmap-text">Color moods, version history, model selection, templates gallery</span>
+      </div>
+      <div class="roadmap-item">
+        <span class="roadmap-status done">Done</span>
+        <span class="roadmap-text">Canvas + Brains &mdash; shared knowledge across agents, visual graph view</span>
+      </div>
+      <div class="roadmap-item">
+        <span class="roadmap-status done">Done</span>
+        <span class="roadmap-text">Free tier and bring-your-own-key &mdash; pick Anthropic, Groq, OpenAI, or run on Gumball Cloud for free</span>
       </div>
       <div class="roadmap-item">
         <span class="roadmap-status next">Next</span>
