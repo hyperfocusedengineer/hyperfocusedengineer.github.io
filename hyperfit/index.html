@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HyperFit — Next-Gen Training OS</title>
+  <meta name="description" content="Strength tracker with anatomy-aware muscle heatmaps, share-ready session cards, and a brutally honest mirror of every set you log. iOS TestFlight beta now open.">
+  <meta property="og:title" content="HyperFit — Next-Gen Training OS">
+  <meta property="og:description" content="Anthracite-and-orange strength tracker. Log sets, watch a recruitment-weighted body heatmap fill in, share workout cards. iOS TestFlight beta open.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hyperfocusedengineer.github.io/hyperfit/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      /* HyperFit palette — see HyperFit/src/styles/theme.ts */
+      --bg:            #0a0a0a;
+      --bg-hero-tint:  #1a0f0a;
+      --surface:       #18181b;
+      --surface-alt:   #27272a;
+      --border-subtle: #18181b;
+      --border-strong: #27272a;
+
+      --text-primary:    #ffffff;
+      --text-secondary:  #d4d4d8;
+      --text-tertiary:   #a1a1aa;
+      --text-quaternary: #71717a;
+      --text-disabled:   #3f3f46;
+
+      --lift:        #fc4c02;
+      --lift-bright: #ff6a2b;
+      --lift-dim:    rgba(252, 76, 2, 0.18);
+      --lift-ghost:  rgba(252, 76, 2, 0.06);
+
+      --session-up:  #00d68f;
+      --regression:  #ef4444;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-secondary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      font-feature-settings: 'tnum' on;
+    }
+
+    /* Subtle film-grain overlay — keeps the anthracite from feeling flat */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.18;
+      filter: url(#grain);
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: overlay;
+    }
+
+    .svg-filters { position: absolute; width: 0; height: 0; }
+
+    a { color: inherit; }
+
+    /* ══════════════════════════
+       BACK LINK
+       ══════════════════════════ */
+    .back-link {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-quaternary);
+      text-decoration: none;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      z-index: 10;
+    }
+    .back-link:hover { color: var(--lift); }
+
+    /* ══════════════════════════
+       HERO
+       ══════════════════════════ */
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Hero radial: orange origin top-left, green origin bottom-right.
+       Mirrors the in-app hero gradient described in DESIGN.md. */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 40% at 25% 30%, rgba(252,76,2,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 35% at 80% 80%, rgba(0,214,143,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--lift);
+      margin-bottom: 1.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--lift);
+      box-shadow: 0 0 12px var(--lift);
+      animation: pulse 2s ease infinite;
+    }
+
+    .hero-title {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(3rem, 10vw, 7.5rem);
+      font-weight: 900;
+      color: var(--text-primary);
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title-mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--lift);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-rule {
+      width: 64px;
+      height: 2px;
+      background: var(--lift);
+      margin: 1.5rem auto 2rem;
+      box-shadow: 0 0 16px rgba(252,76,2,0.5);
+    }
+
+    .hero-tagline {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: var(--text-tertiary);
+      max-width: 580px;
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--lift);
+      padding: 1rem 1.6rem;
+      text-decoration: none;
+      border: 1px solid var(--lift);
+      transition: all 0.25s;
+      position: relative;
+    }
+    .cta-primary:hover {
+      background: var(--lift-bright);
+      border-color: var(--lift-bright);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(252,76,2,0.35);
+    }
+
+    .cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      background: transparent;
+      padding: 1rem 1.6rem;
+      text-decoration: none;
+      border: 1px solid var(--border-strong);
+      transition: all 0.25s;
+    }
+    .cta-secondary:hover {
+      color: var(--text-primary);
+      border-color: var(--text-quaternary);
+    }
+
+    /* ══════════════════════════
+       STAT STRIP
+       ══════════════════════════ */
+    .stat-strip {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border-strong);
+      border: 1px solid var(--border-strong);
+    }
+
+    .stat-cell {
+      background: var(--bg);
+      padding: 1.5rem 1.25rem;
+      text-align: left;
+    }
+
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-quaternary);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .stat-value .accent { color: var(--lift); }
+    .stat-value .green { color: var(--session-up); }
+
+    /* ══════════════════════════
+       SECTION
+       ══════════════════════════ */
+    .section {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--lift);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+      max-width: 720px;
+    }
+
+    .section-lead {
+      font-size: 1.05rem;
+      color: var(--text-tertiary);
+      font-weight: 300;
+      max-width: 620px;
+      line-height: 1.7;
+    }
+
+    /* ══════════════════════════
+       FEATURES
+       ══════════════════════════ */
+    .feature-grid {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-strong);
+      border: 1px solid var(--border-strong);
+    }
+
+    .feature {
+      background: var(--bg);
+      padding: 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      transition: background 0.3s;
+    }
+    .feature:hover { background: var(--surface); }
+
+    .feature-marker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      color: var(--lift);
+      text-transform: uppercase;
+    }
+
+    .feature-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .feature-desc {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--text-tertiary);
+      line-height: 1.6;
+    }
+
+    /* ══════════════════════════
+       TESTFLIGHT CALLOUT
+       ══════════════════════════ */
+    .testflight {
+      max-width: 1060px;
+      margin: 2rem auto 0;
+      padding: 0 2rem;
+    }
+
+    .tf-card {
+      background:
+        radial-gradient(ellipse at top left, rgba(252,76,2,0.08) 0%, transparent 50%),
+        var(--surface);
+      border: 1px solid var(--border-strong);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tf-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--lift);
+    }
+
+    .tf-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--session-up);
+      margin-bottom: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tf-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--session-up);
+      box-shadow: 0 0 10px var(--session-up);
+    }
+
+    .tf-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+    }
+
+    .tf-lead {
+      font-size: 0.98rem;
+      font-weight: 300;
+      color: var(--text-tertiary);
+      max-width: 580px;
+      margin-bottom: 1.75rem;
+      line-height: 1.7;
+    }
+
+    .tf-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-strong);
+      border: 1px solid var(--border-strong);
+      margin-bottom: 1.75rem;
+    }
+
+    .tf-step {
+      background: var(--bg);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .tf-step-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--lift);
+      line-height: 1;
+    }
+
+    .tf-step-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-top: 0.4rem;
+    }
+
+    .tf-step-desc {
+      font-size: 0.82rem;
+      color: var(--text-tertiary);
+      line-height: 1.55;
+      font-weight: 300;
+    }
+
+    .tf-step-desc code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      background: var(--surface-alt);
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+    }
+
+    .tf-fineprint {
+      margin-top: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-quaternary);
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+    }
+    .tf-fineprint a { color: var(--lift); text-decoration: none; }
+    .tf-fineprint a:hover { color: var(--lift-bright); }
+
+    /* ══════════════════════════
+       TECH PILLS
+       ══════════════════════════ */
+    .tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .tech-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 400;
+      color: var(--text-quaternary);
+      padding: 0.4rem 0.85rem;
+      border: 1px solid var(--border-strong);
+      letter-spacing: 0.04em;
+      transition: all 0.25s;
+    }
+    .tech-pill:hover { color: var(--text-secondary); border-color: var(--text-quaternary); }
+
+    /* ══════════════════════════
+       FOOTER
+       ══════════════════════════ */
+    .footer {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 3rem 2rem 2.5rem;
+      border-top: 1px solid var(--border-strong);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-quaternary);
+    }
+    .footer-brand .accent { color: var(--lift); }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-quaternary);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .footer-link:hover { color: var(--lift); }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* ══════════════════════════
+       RESPONSIVE
+       ══════════════════════════ */
+    @media (max-width: 768px) {
+      .stat-strip { grid-template-columns: 1fr 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .tf-steps { grid-template-columns: 1fr; }
+      .tf-card { padding: 1.75rem; }
+      .section { padding: 3.5rem 1.5rem; }
+      .hero { padding: 5rem 1.5rem 3rem; min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <svg class="svg-filters">
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </svg>
+
+  <a href="../" class="back-link">&larr; All Projects</a>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <p class="hero-eyebrow">Now in TestFlight Beta</p>
+    <h1 class="hero-title">
+      Hyper<span class="hero-title-mono">Fit</span>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-tagline">
+      An honest mirror for strength training. Log every set, watch a recruitment-weighted
+      body heatmap fill in, and share post-workout cards that look like trophies. No streaks.
+      No gamified noise. Just the work.
+    </p>
+    <div class="hero-cta">
+      <a href="https://testflight.apple.com/join/jwQZDmDc" class="cta-primary" target="_blank" rel="noopener">
+        Join TestFlight &rarr;
+      </a>
+      <a href="https://github.com/harshssd/HyperFit" class="cta-secondary" target="_blank" rel="noopener">
+        Source on GitHub
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── STAT STRIP ─── -->
+  <div class="stat-strip">
+    <div class="stat-cell">
+      <div class="stat-label">Platform</div>
+      <div class="stat-value">iOS</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Version</div>
+      <div class="stat-value">2.1.0</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Status</div>
+      <div class="stat-value"><span class="green">Beta</span></div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Price</div>
+      <div class="stat-value"><span class="accent">Free</span></div>
+    </div>
+  </div>
+
+  <!-- ─── TESTFLIGHT CALLOUT ─── -->
+  <div class="testflight">
+    <div class="tf-card">
+      <div class="tf-eyebrow">Public Beta Open</div>
+      <h2 class="tf-title">Three steps to your first workout</h2>
+      <p class="tf-lead">
+        HyperFit is iOS-only during the beta. You'll need an iPhone running iOS 16+ and the free
+        Apple TestFlight app. The whole flow takes under two minutes.
+      </p>
+
+      <div class="tf-steps">
+        <div class="tf-step">
+          <div class="tf-step-num">01</div>
+          <div class="tf-step-title">Install TestFlight</div>
+          <div class="tf-step-desc">
+            Grab the free <strong>TestFlight</strong> app from Apple's App Store on your iPhone if you don't already have it.
+          </div>
+        </div>
+        <div class="tf-step">
+          <div class="tf-step-num">02</div>
+          <div class="tf-step-title">Tap the invite link</div>
+          <div class="tf-step-desc">
+            Open the TestFlight invite on the same iPhone &mdash; it auto-opens TestFlight and surfaces an <code>Accept</code> button for HyperFit.
+          </div>
+        </div>
+        <div class="tf-step">
+          <div class="tf-step-num">03</div>
+          <div class="tf-step-title">Install &amp; lift</div>
+          <div class="tf-step-desc">
+            Tap <code>Install</code>, sign in with email or Google, log your first set. Updates push automatically as new builds ship.
+          </div>
+        </div>
+      </div>
+
+      <p class="tf-fineprint">
+        Hit a bug? Shake your phone in TestFlight to send feedback &mdash; or
+        <a href="mailto:hyperfocusedengineer@gmail.com">email us directly</a>.
+        Beta is capped at 10,000 testers; if the link is full,
+        <a href="https://github.com/harshssd/HyperFit/issues/new">open a GitHub issue</a> and we'll add a slot.
+      </p>
+    </div>
+  </div>
+
+  <!-- ─── FEATURES ─── -->
+  <section class="section">
+    <div class="section-label">What's in the build</div>
+    <h2 class="section-title">Strength tracking, designed like Strava and Robinhood had a kid.</h2>
+    <p class="section-lead">
+      Anthracite base, strava-orange for the active set, robinhood-green when your session
+      volume beats the last one. Mono numerics with tabular figures so every readout lines up.
+      Every screen is built around one question: did the work happen, yes or no?
+    </p>
+
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="feature-marker">— 01</div>
+        <div class="feature-title">Anatomy-aware muscle heatmap</div>
+        <div class="feature-desc">
+          Recruitment-weighted volume per muscle, rendered onto a front/back silhouette.
+          Toggle between volume mode and a recovery-decay model that shows what's actually fresh today.
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-marker">— 02</div>
+        <div class="feature-title">Plan creator + active-plan rail</div>
+        <div class="feature-desc">
+          Build a multi-day split, assign sessions to days of the week, and the app
+          schedules from there. One plan active at a time &mdash; no clutter.
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-marker">— 03</div>
+        <div class="feature-title">Shareable workout cards</div>
+        <div class="feature-desc">
+          Every finished session generates a 1080&times;1350 card with your silhouette,
+          top muscles, and PR badges &mdash; ready for stories. Re-share past sessions from history too.
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-marker">— 04</div>
+        <div class="feature-title">PR detection</div>
+        <div class="feature-desc">
+          Per-exercise weight PRs detected the moment you log them. The 🔥 chip
+          on the post-session screen and share card means it actually happened.
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-marker">— 05</div>
+        <div class="feature-title">Ghost-value last-session inputs</div>
+        <div class="feature-desc">
+          Set fields pre-fill with what you lifted last time as faded placeholder text.
+          No tap-to-clone &mdash; just a target you can beat or match without re-typing.
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-marker">— 06</div>
+        <div class="feature-title">Real session history</div>
+        <div class="feature-desc">
+          Calendar deep-links into a session detail view with grouped sets per exercise,
+          duration, total volume, and a share button that works months after the lift.
+        </div>
+      </div>
+    </div>
+
+    <div class="tech-row">
+      <span class="tech-pill">React Native</span>
+      <span class="tech-pill">Expo SDK 54</span>
+      <span class="tech-pill">React 19</span>
+      <span class="tech-pill">TypeScript</span>
+      <span class="tech-pill">Supabase</span>
+      <span class="tech-pill">React Navigation 7</span>
+      <span class="tech-pill">react-native-svg</span>
+      <span class="tech-pill">react-native-view-shot</span>
+      <span class="tech-pill">Reanimated</span>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="footer">
+    <div class="footer-brand">Hyper<span class="accent">Fit</span> &mdash; Hyperfocused Engineer</div>
+    <div class="footer-links">
+      <a href="../" class="footer-link">All Projects</a>
+      <a href="https://github.com/harshssd/HyperFit" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.youtube.com/@hyperfocusedengineer" class="footer-link" target="_blank" rel="noopener">YouTube</a>
+      <a href="mailto:hyperfocusedengineer@gmail.com" class="footer-link">Contact</a>
+    </div>
+  </footer>
+</body>
+</html>

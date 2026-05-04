@@ -42,6 +42,8 @@
       --cortis-indigo: #6366F1;
       --gumball-purple: #7C5CFC;
       --gumball-pink: #FF6B9D;
+      --hyperfit-orange: #FC4C02;
+      --hyperfit-green: #00D68F;
     }
 
     body {
@@ -283,6 +285,8 @@
     .status-shipped .status-dot { background: #10B981; }
     .status-dev { color: var(--text-muted); }
     .status-dev .status-dot { background: var(--accent); animation: pulse 2s ease infinite; }
+    .status-beta { color: #FC4C02; }
+    .status-beta .status-dot { background: #FC4C02; animation: pulse 2s ease infinite; }
 
     @keyframes pulse {
       0%, 100% { opacity: 0.3; }
@@ -445,6 +449,7 @@
     .accent-zeroshot { background: linear-gradient(90deg, var(--zeroshot-orange), var(--zeroshot-yellow), var(--zeroshot-orange)); }
     .accent-cortis { background: linear-gradient(90deg, var(--cortis-violet), var(--cortis-indigo), var(--cortis-violet)); }
     .accent-gumball { background: linear-gradient(90deg, var(--gumball-purple), var(--gumball-pink), var(--gumball-purple)); }
+    .accent-hyperfit { background: linear-gradient(90deg, var(--hyperfit-orange), var(--hyperfit-green), var(--hyperfit-orange)); }
 
     .exhibit-summary {
       font-size: 1rem;
@@ -828,7 +833,7 @@
     </p>
     <div class="hero-stats">
       <div class="hero-stat">
-        <span class="hero-stat-num">6</span>
+        <span class="hero-stat-num">8</span>
         <span class="hero-stat-label">Projects</span>
       </div>
       <div class="hero-stat">
@@ -836,7 +841,11 @@
         <span class="hero-stat-label">Shipped</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-num">5</span>
+        <span class="hero-stat-num">1</span>
+        <span class="hero-stat-label">In Beta</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">6</span>
         <span class="hero-stat-label">In Development</span>
       </div>
     </div>
@@ -907,6 +916,15 @@
         <div class="index-card-type">AI Agent Builder</div>
         <p class="index-card-desc">Create AI agents with your voice. Each agent gets a custom, task-aware workspace.</p>
         <div class="index-card-status status-dev"><span class="status-dot"></span> MVP</div>
+        <span class="index-card-arrow">&darr;</span>
+      </a>
+      <a href="#exhibit-hyperfit" class="index-card">
+        <div class="index-accent accent-hyperfit"></div>
+        <span class="index-card-number">08</span>
+        <div class="index-card-title">HyperFit</div>
+        <div class="index-card-type">Strength Training OS</div>
+        <p class="index-card-desc">Anatomy-aware muscle heatmap, share-ready session cards, PR detection. iOS TestFlight beta open.</p>
+        <div class="index-card-status status-beta"><span class="status-dot"></span> TestFlight Beta</div>
         <span class="index-card-arrow">&darr;</span>
       </a>
     </div>
@@ -1659,6 +1677,125 @@
             <span class="tech-pill">Zod</span>
             <span class="tech-pill">Reanimated</span>
             <span class="tech-pill">TypeScript</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ════ EXHIBIT 08: HYPERFIT ════ -->
+    <article class="exhibit" id="exhibit-hyperfit">
+      <div class="exhibit-inner">
+        <div class="exhibit-meta">
+          <div class="exhibit-number">Exhibit 08</div>
+          <h2 class="exhibit-title">HyperFit</h2>
+          <div class="exhibit-type">Strength Training OS</div>
+          <a href="hyperfit/" class="exhibit-link">Project details &amp; TestFlight <span class="arrow">&rarr;</span></a>
+          <div class="store-links">
+            <a href="https://testflight.apple.com/join/jwQZDmDc" class="store-link" target="_blank" rel="noopener">
+              <span class="store-icon">&#63743;</span> TestFlight Beta
+            </a>
+            <a href="https://github.com/harshssd/HyperFit" class="store-link" target="_blank" rel="noopener">
+              <span class="store-icon">&lt;/&gt;</span> Source Code
+            </a>
+          </div>
+        </div>
+
+        <div class="exhibit-content">
+          <div class="exhibit-accent accent-hyperfit"></div>
+
+          <p class="exhibit-summary">
+            An honest mirror for strength training &mdash; recruitment-weighted muscle heatmap,
+            share-ready session cards, PR detection. No streaks, no gamified noise.
+            <a href="hyperfit/">&rarr; Details &amp; TestFlight</a>
+          </p>
+
+          <p class="exhibit-story">
+            Most lifting apps either copy guided-workout patterns (one set at a time, hidden
+            inputs) or pile on streaks and badges to keep you swiping. <strong>HyperFit</strong>
+            does neither: every set's weight and reps fields are visible at once, ghost-value
+            placeholders show what you lifted last time, and the only "celebration" is a
+            <strong>recruitment-weighted body silhouette</strong> filling in across front and
+            back as you log. Anthracite base, strava-orange for active lifts,
+            robinhood-green for session-volume gains.
+          </p>
+
+          <div class="exhibit-highlights">
+            <div class="highlight">
+              <div class="highlight-label">Platform</div>
+              <div class="highlight-value">iOS Beta</div>
+            </div>
+            <div class="highlight">
+              <div class="highlight-label">Heatmap</div>
+              <div class="highlight-value">Vol + Recovery</div>
+            </div>
+            <div class="highlight">
+              <div class="highlight-label">Share Card</div>
+              <div class="highlight-value">1080&times;1350</div>
+            </div>
+          </div>
+
+          <div class="exhibit-features">
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Anatomy-Aware Heatmap</strong>
+                Per-muscle volume on a front/back silhouette; toggle to a recovery-decay model
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Plan Creator</strong>
+                Multi-day splits, day-of-week scheduling, single-active enforcement
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Shareable Workout Cards</strong>
+                Off-screen 1080&times;1350 capture with top muscles, PR badges, brand watermark
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Personal Record Detection</strong>
+                Per-exercise weight PRs flagged on the post-session screen and share card
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Ghost Last-Session Inputs</strong>
+                Set fields pre-fill as faded placeholders &mdash; a target, not a tap-to-clone
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Calendar &amp; History Deep-Links</strong>
+                Tap any date to read a session detail with grouped sets and a re-share button
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit-audience">
+            <span class="audience-tag">Lifters</span>
+            <span class="audience-tag">Hypertrophy Nerds</span>
+            <span class="audience-tag">Coaches</span>
+            <span class="audience-tag">Build-in-Public Followers</span>
+          </div>
+
+          <div class="exhibit-tech">
+            <span class="tech-pill">React Native</span>
+            <span class="tech-pill">Expo SDK 54</span>
+            <span class="tech-pill">React 19</span>
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Supabase</span>
+            <span class="tech-pill">React Navigation 7</span>
+            <span class="tech-pill">react-native-svg</span>
+            <span class="tech-pill">react-native-view-shot</span>
+            <span class="tech-pill">Reanimated</span>
           </div>
         </div>
       </div>
