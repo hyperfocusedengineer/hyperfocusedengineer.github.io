@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HyperFit — Next-Gen Training OS</title>
-  <meta name="description" content="Strength tracker with anatomy-aware muscle heatmaps, share-ready session cards, and a brutally honest mirror of every set you log. iOS TestFlight beta now open.">
+  <meta name="description" content="Strength + nutrition tracker with anatomy-aware muscle heatmaps, share-ready session cards, and a brutally honest mirror of every set you log. iOS TestFlight beta now open.">
   <meta property="og:title" content="HyperFit — Next-Gen Training OS">
-  <meta property="og:description" content="Anthracite-and-orange strength tracker. Log sets, watch a recruitment-weighted body heatmap fill in, share workout cards. iOS TestFlight beta open.">
+  <meta property="og:description" content="Anthracite-and-orange strength + nutrition tracker. Log sets, watch a recruitment-weighted body heatmap fill in, share workout cards. iOS TestFlight beta open.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://hyperfocusedengineer.github.io/hyperfit/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -326,6 +326,12 @@
       text-transform: uppercase;
     }
 
+    /* Nutrition / hydration features get the green session-up tint;
+       lifting features keep the strava-orange lift tint. */
+    .feature.nutrition .feature-marker { color: var(--session-up); }
+    .feature.nutrition:hover { background: rgba(0, 214, 143, 0.04); }
+    .feature.lift:hover { background: rgba(252, 76, 2, 0.04); }
+
     .feature-title {
       font-size: 1.05rem;
       font-weight: 600;
@@ -529,6 +535,61 @@
     }
     .footer-link:hover { color: var(--lift); }
 
+    /* ══════════════════════════
+       STORY
+       ══════════════════════════ */
+    .story {
+      max-width: 760px;
+      margin: 2rem auto 0;
+      padding: 5rem 2rem 4rem;
+      border-top: 1px solid var(--border-strong);
+    }
+    .story-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--lift);
+      margin-bottom: 1rem;
+    }
+    .story-title {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+    .story p {
+      font-size: 1.02rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      font-weight: 300;
+      margin-bottom: 1.4rem;
+    }
+    .story p:first-letter {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--lift);
+      font-size: 1.4rem;
+    }
+    .story a.inline {
+      color: var(--lift);
+      text-decoration: none;
+      border-bottom: 1px solid var(--lift-dim);
+      transition: border-color 0.25s;
+    }
+    .story a.inline:hover { border-color: var(--lift); }
+    .story-sig {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-quaternary);
+      margin-top: 2.5rem;
+    }
+
     @keyframes pulse {
       0%, 100% { opacity: 0.5; }
       50% { opacity: 1; }
@@ -565,16 +626,17 @@
     </h1>
     <div class="hero-rule"></div>
     <p class="hero-tagline">
-      An honest mirror for strength training. Log every set, watch a recruitment-weighted
-      body heatmap fill in, and share post-workout cards that look like trophies. No streaks.
-      No gamified noise. Just the work.
+      An honest mirror for lifting, eating, and hydrating. Log every set, every meal, and
+      every glass of water; watch a recruitment-weighted body heatmap fill in; then share
+      a post-workout card that looks like a trophy or hand off your plan with a single code.
+      No streaks. No gamified noise. Just the work.
     </p>
     <div class="hero-cta">
       <a href="https://testflight.apple.com/join/jwQZDmDc" class="cta-primary" target="_blank" rel="noopener">
         Join TestFlight &rarr;
       </a>
-      <a href="https://github.com/harshssd/HyperFit" class="cta-secondary" target="_blank" rel="noopener">
-        Source on GitHub
+      <a href="#features" class="cta-secondary">
+        See What&rsquo;s Inside
       </a>
     </div>
   </section>
@@ -587,7 +649,7 @@
     </div>
     <div class="stat-cell">
       <div class="stat-label">Version</div>
-      <div class="stat-value">2.1.0</div>
+      <div class="stat-value">2.2.0</div>
     </div>
     <div class="stat-cell">
       <div class="stat-label">Status</div>
@@ -637,15 +699,15 @@
         Hit a bug? Shake your phone in TestFlight to send feedback &mdash; or
         <a href="mailto:hyperfocusedengineer@gmail.com">email us directly</a>.
         Beta is capped at 10,000 testers; if the link is full,
-        <a href="https://github.com/harshssd/HyperFit/issues/new">open a GitHub issue</a> and we'll add a slot.
+        <a href="mailto:hyperfocusedengineer@gmail.com?subject=HyperFit%20beta%20slot">drop us a line</a> and we'll add a slot.
       </p>
     </div>
   </div>
 
   <!-- ─── FEATURES ─── -->
-  <section class="section">
+  <section class="section" id="features">
     <div class="section-label">What's in the build</div>
-    <h2 class="section-title">Strength tracking, designed like Strava and Robinhood had a kid.</h2>
+    <h2 class="section-title">Strength &amp; nutrition tracking, designed like Strava and Robinhood had a kid.</h2>
     <p class="section-lead">
       Anthracite base, strava-orange for the active set, robinhood-green when your session
       volume beats the last one. Mono numerics with tabular figures so every readout lines up.
@@ -653,7 +715,7 @@
     </p>
 
     <div class="feature-grid">
-      <div class="feature">
+      <div class="feature lift">
         <div class="feature-marker">— 01</div>
         <div class="feature-title">Anatomy-aware muscle heatmap</div>
         <div class="feature-desc">
@@ -661,7 +723,7 @@
           Toggle between volume mode and a recovery-decay model that shows what's actually fresh today.
         </div>
       </div>
-      <div class="feature">
+      <div class="feature lift">
         <div class="feature-marker">— 02</div>
         <div class="feature-title">Plan creator + active-plan rail</div>
         <div class="feature-desc">
@@ -669,7 +731,7 @@
           schedules from there. One plan active at a time &mdash; no clutter.
         </div>
       </div>
-      <div class="feature">
+      <div class="feature lift">
         <div class="feature-marker">— 03</div>
         <div class="feature-title">Shareable workout cards</div>
         <div class="feature-desc">
@@ -677,7 +739,7 @@
           top muscles, and PR badges &mdash; ready for stories. Re-share past sessions from history too.
         </div>
       </div>
-      <div class="feature">
+      <div class="feature lift">
         <div class="feature-marker">— 04</div>
         <div class="feature-title">PR detection</div>
         <div class="feature-desc">
@@ -685,7 +747,7 @@
           on the post-session screen and share card means it actually happened.
         </div>
       </div>
-      <div class="feature">
+      <div class="feature lift">
         <div class="feature-marker">— 05</div>
         <div class="feature-title">Ghost-value last-session inputs</div>
         <div class="feature-desc">
@@ -693,12 +755,124 @@
           No tap-to-clone &mdash; just a target you can beat or match without re-typing.
         </div>
       </div>
-      <div class="feature">
+      <div class="feature lift">
         <div class="feature-marker">— 06</div>
-        <div class="feature-title">Real session history</div>
+        <div class="feature-title">Editable session history</div>
         <div class="feature-desc">
           Calendar deep-links into a session detail view with grouped sets per exercise,
-          duration, total volume, and a share button that works months after the lift.
+          duration, total volume, and a share button that works months later. Tap the pencil
+          to fix a typo&rsquo;d weight or rep without re-logging.
+        </div>
+      </div>
+      <div class="feature nutrition">
+        <div class="feature-marker">— 07</div>
+        <div class="feature-title">Nutrition tracking</div>
+        <div class="feature-desc">
+          Per-day macro pills, meal entries with slot (breakfast / lunch / dinner / snack)
+          and a free-text label like &ldquo;Pre-workout.&rdquo; Cheat-day toggle that
+          doesn&rsquo;t pretend the meal didn&rsquo;t happen. The This Week card folds
+          nutrition + lifting into one signal.
+        </div>
+      </div>
+      <div class="feature nutrition">
+        <div class="feature-marker">— 08</div>
+        <div class="feature-title">Water intake, the way you actually drink</div>
+        <div class="feature-desc">
+          One-tap CUP or BOTTLE presets plus a CUSTOM AMOUNT field. Stored in ml, displayed
+          in ml or oz per your setting. Water is the rare metric where more is unambiguously
+          better, so it gets robinhood-green every time you log a tap.
+        </div>
+      </div>
+      <div class="feature lift">
+        <div class="feature-marker">— 09</div>
+        <div class="feature-title">Social shareable plans &amp; cards</div>
+        <div class="feature-desc">
+          Flip a plan to shareable to mint a code; anyone with it lands on a public preview
+          page with the muscle silhouette already lit up by intensity. Workout cards drop
+          straight into Instagram / Stories / iMessage at 1080&times;1350. Rotate or revoke
+          a share code anytime.
+        </div>
+      </div>
+      <div class="feature lift">
+        <div class="feature-marker">— 10</div>
+        <div class="feature-title">Onboarding that respects your time</div>
+        <div class="feature-desc">
+          Three screens: name + units, goal (BUILD / CUT / MAINTAIN / JUST TRACK), and pick
+          a starter plan. Forward-only, kill-safe, under sixty seconds before your first set.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top: 4rem;">Where it&rsquo;s going next</div>
+    <h2 class="section-title">The roadmap, in plain language.</h2>
+    <p class="section-lead">
+      The beta cadence is weekly. The shipped list is what&rsquo;s in your hands today; the
+      below is what we&rsquo;re actively building or have queued up next.
+    </p>
+
+    <div class="feature-grid">
+      <div class="feature lift">
+        <div class="feature-marker">— NEXT</div>
+        <div class="feature-title">Apple sign-in</div>
+        <div class="feature-desc">
+          Required by App Store guideline 4.8 since Google OAuth ships. Lands before the
+          public App Store submission, alongside email and Google as a first-class option.
+        </div>
+      </div>
+      <div class="feature lift">
+        <div class="feature-marker">— NEXT</div>
+        <div class="feature-title">Public App Store launch</div>
+        <div class="feature-desc">
+          Coming out of TestFlight and onto the open App Store. Free, no paywall on the
+          honest-mirror loop &mdash; if a tier ever shows up, it&rsquo;s on top, not in front.
+        </div>
+      </div>
+      <div class="feature lift">
+        <div class="feature-marker">— SOON</div>
+        <div class="feature-title">Android via the same Expo build</div>
+        <div class="feature-desc">
+          The codebase is already cross-platform; the work is store assets, signing,
+          and a real device pass. Targeting after the iOS public launch stabilizes.
+        </div>
+      </div>
+      <div class="feature lift">
+        <div class="feature-marker">— SOON</div>
+        <div class="feature-title">Realtime sync across devices</div>
+        <div class="feature-desc">
+          Subscribe-per-table on workout sessions, plans, and nutrition entries so the iPad
+          on the rack and the iPhone on the bench stay in lockstep mid-session.
+        </div>
+      </div>
+      <div class="feature lift">
+        <div class="feature-marker">— LATER</div>
+        <div class="feature-title">Form Coach integration</div>
+        <div class="feature-desc">
+          Computer-vision form check on key compounds, surfaced as an optional layer next
+          to the set log &mdash; not a replacement for it.
+        </div>
+      </div>
+      <div class="feature lift">
+        <div class="feature-marker">— LATER</div>
+        <div class="feature-title">Recovery + readiness</div>
+        <div class="feature-desc">
+          The recruitment-weighted heatmap already knows what you trained. Next is layering
+          sleep and HRV signal on top so &ldquo;train or rest&rdquo; stops being a vibe call.
+        </div>
+      </div>
+      <div class="feature nutrition">
+        <div class="feature-marker">— SOON</div>
+        <div class="feature-title">Barcode + photo meal logging</div>
+        <div class="feature-desc">
+          Scan the back of the protein tub, snap the plate, get macros without typing.
+          Saved meals and recipes so the same Tuesday lunch logs in one tap forever after.
+        </div>
+      </div>
+      <div class="feature nutrition">
+        <div class="feature-marker">— LATER</div>
+        <div class="feature-title">Hydration reminders that earn the buzz</div>
+        <div class="feature-desc">
+          Smart nudges based on the day&rsquo;s training load and how far behind your water
+          target you are &mdash; not a dumb hourly timer. Silenced automatically after you tap.
         </div>
       </div>
     </div>
@@ -716,12 +890,92 @@
     </div>
   </section>
 
+  <!-- ─── STORY ─── -->
+  <section class="story">
+    <div class="story-eyebrow">— Why this exists</div>
+    <h2 class="story-title">A short story about an honest mirror.</h2>
+
+    <p>
+      The first gym I ever walked into smelled like chalk and old rubber. I was nineteen,
+      skinny in a way that wasn&rsquo;t flattering, and I&rsquo;d downloaded six different
+      tracker apps in the parking lot before going inside. By the third set of the day I
+      had abandoned all of them. One wanted me to rate my mood. One was begging me not to
+      break my streak. One had a coach avatar named &ldquo;Brent&rdquo; who clapped at me
+      every time I tapped a checkbox. I didn&rsquo;t need Brent. I needed to know whether
+      I&rsquo;d gotten stronger than last Tuesday.
+    </p>
+
+    <p>
+      Years later, after a long detour through cricket, chess engines, and a brief obsession
+      with options chains, I came back to the same problem with sharper tools. I had become
+      the kind of engineer who builds for himself first and the kind of lifter who actually
+      cared about hypertrophy distribution across muscle groups. So I started building
+      <a href="https://hyperfocusedengineer.github.io/hyperfit/" class="inline">HyperFit</a>
+      &mdash; the app I wished had been on my phone in that first parking lot.
+    </p>
+
+    <p>
+      The rule was simple from day one: no streaks, no Brent, no gamified glitter. Just an
+      honest mirror. Anthracite base because gyms are dim and your phone shouldn&rsquo;t
+      blow your pupils out between sets. Strava-orange for the active lift, because that&rsquo;s
+      the language your eyes already speak. Robinhood-green only when the session volume
+      actually beat the last one &mdash; the green is earned, never decorative.
+    </p>
+
+    <p>
+      Today the build does a lot. On the lifting side, it logs every set with ghost values
+      from your last session pre-filled in the input as a target you can match or beat. It
+      detects PRs the moment you tap save and stamps a 🔥 on the post-session card. It
+      renders a recruitment-weighted muscle heatmap on a body silhouette that shows what
+      you&rsquo;ve actually trained, not what you said you were going to train. You can fix
+      a typo&rsquo;d weight from three months ago without losing the session.
+    </p>
+
+    <p>
+      On the fueling side, it runs a full nutrition vertical &mdash; macro pills, per-meal
+      entries you can label freely (&ldquo;Pre-workout,&rdquo; &ldquo;3 a.m. raid,&rdquo;
+      whatever), and a cheat-day toggle that doesn&rsquo;t pretend the meal didn&rsquo;t
+      happen. Hydration gets its own first-class surface: one tap for a CUP, one tap for a
+      BOTTLE, a custom field for everything else, all stored in ml and rendered in your unit.
+      Water is the rare metric where more is unambiguously better, so it gets robinhood-green
+      every single time. The This Week card folds nutrition and lifting into one honest signal.
+    </p>
+
+    <p>
+      And it&rsquo;s social, in a way that doesn&rsquo;t require yet another feed. Every
+      finished session generates a 1080&times;1350 share card &mdash; silhouette, top
+      exercises, PR badges &mdash; that drops straight into Instagram, Stories, or iMessage
+      and looks like a trophy, not a screenshot. Plans are shareable too: flip a switch,
+      mint a code, and anyone with the code lands on a public preview page where the
+      muscle silhouette is already lit up by intensity before they pick up a barbell. Rotate
+      or revoke the code anytime. You can hand the whole thing to a friend in a
+      sixty-second onboarding flow.
+    </p>
+
+    <p>
+      The next chapter is already in motion. Apple sign-in is queued for the public App Store
+      submission, and Android is around the corner once iOS stabilizes. Realtime sync between
+      devices is on deck, so the iPad on the rack and the iPhone on the bench finally agree.
+      A Form Coach computer-vision layer will sit next to the set log &mdash; never in front
+      of it &mdash; for the lifts where technique is the whole game. And eventually,
+      recovery and readiness signal from sleep and HRV will join the heatmap so the app
+      can answer &ldquo;train or rest&rdquo; with data instead of a vibe.
+    </p>
+
+    <p>
+      But the spine doesn&rsquo;t change. HyperFit will always answer one question first: did
+      the work happen, yes or no. Everything else is interest on that principal.
+    </p>
+
+    <p class="story-sig">&mdash; The Hyperfocused Engineer</p>
+  </section>
+
   <!-- ─── FOOTER ─── -->
   <footer class="footer">
     <div class="footer-brand">Hyper<span class="accent">Fit</span> &mdash; Hyperfocused Engineer</div>
     <div class="footer-links">
       <a href="../" class="footer-link">All Projects</a>
-      <a href="https://github.com/harshssd/HyperFit" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://testflight.apple.com/join/jwQZDmDc" class="footer-link" target="_blank" rel="noopener">TestFlight</a>
       <a href="https://www.youtube.com/@hyperfocusedengineer" class="footer-link" target="_blank" rel="noopener">YouTube</a>
       <a href="mailto:hyperfocusedengineer@gmail.com" class="footer-link">Contact</a>
     </div>
