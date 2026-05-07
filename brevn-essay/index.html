@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>On building a focus timer that doesn't lie — Brevn</title>
+  <meta name="description" content="Most productivity tools count time. The interesting ones measure attention. Almost none measure whether you actually focused.">
+  <meta name="author" content="Harsha Hassan Somashekara">
+  <meta property="og:title" content="On building a focus timer that doesn't lie">
+  <meta property="og:description" content="Most productivity tools count time. The interesting ones measure attention. Almost none measure whether you actually focused.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://hyperfocusedengineer.github.io/brevn-essay/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@Hyperfocusedeng">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --paper: #fafaf9;
+      --ink: #18181b;
+      --mute: #52525b;
+      --quiet: #a1a1aa;
+      --rule: #e4e4e7;
+      --cobalt: #2563eb;
+    }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-optical-sizing: auto;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 6rem;
+    }
+    .kicker {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--cobalt);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-family: 'Source Serif 4', serif;
+      font-size: clamp(1.85rem, 5vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .byline {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: var(--quiet);
+      margin-bottom: 3rem;
+    }
+    .byline a { color: var(--cobalt); text-decoration: none; }
+    .byline a:hover { text-decoration: underline; }
+    h2 {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      margin-bottom: 1.1rem;
+      color: var(--ink);
+      font-size: 1.05rem;
+    }
+    a { color: var(--cobalt); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s; }
+    a:hover { border-bottom-color: var(--cobalt); }
+    strong { font-weight: 800; }
+    em { font-style: italic; color: var(--mute); }
+    hr {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 3rem 0 2rem;
+    }
+    .footer-meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: var(--mute);
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .footer-meta a { color: var(--cobalt); }
+    .home-link {
+      display: inline-block;
+      margin-top: 4rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--quiet);
+    }
+    .home-link:hover { color: var(--cobalt); }
+  </style>
+</head>
+<body>
+  <article class="wrap">
+    <div class="kicker">Brevn · Essay</div>
+    <h1>On building a focus timer that doesn't lie</h1>
+    <p class="byline">By <a href="https://x.com/Hyperfocusedeng">Harsha Hassan Somashekara</a> · May 2026</p>
+
+    <p>The average focus session in 2026 is <strong>13 minutes and 7 seconds</strong>. That's a <a href="https://hrexecutive.com/focus-time-hit-a-three-year-low-the-hidden-costs-of-your-workplace-ai-rollout/">recent measurement</a>, and it's a three-year low.</p>
+
+    <p>The first thing that struck me about that number wasn't how short it was. It was that I had no idea where mine fell.</p>
+
+    <p>I'd been using a Pomodoro timer for years. I'd "completed" thousands of 25-minute blocks. By that timer's accounting, I had focused for thousands of hours. By any honest accounting — what I produced, what I remembered, how sharp I felt at the end — a meaningful fraction of those sessions were fake. I sat through them. I didn't focus through them.</p>
+
+    <p>The timer didn't know the difference. The timer didn't <em>care</em> about the difference. The timer's job was to count down from 25 to 0 and reward me for being there.</p>
+
+    <p>This essay is about why that's the wrong job, and what happens when you give the timer a different one.</p>
+
+    <h2>The category problem</h2>
+
+    <p>There are roughly four kinds of tools that claim to help with focus, and the trick to seeing them clearly is asking what each one actually measures.</p>
+
+    <p><strong>Pomodoro timers</strong> measure elapsed time. They reward presence. <em>Did you sit through 25 minutes? You completed a session.</em> The implicit claim is that presence equals focus, which is the same claim a school takes attendance against, and we all remember how reliable that was.</p>
+
+    <p><strong>Gamified focus apps</strong> — Forest is the canonical one — measure presence with prettier consequences. Don't leave the app and a tree grows. Leave the app and the tree dies. The mechanism is shame, not measurement. The app doesn't know whether you focused. It knows whether you stayed in the app.</p>
+
+    <p><strong>Activity trackers</strong> like RescueTime measure what's on your screen. They report back what fraction of your day was "productive" based on which apps were foregrounded. This is closer to honest, but it's a category error: looking at a code editor isn't focusing on code. I have spent thirty minutes staring at a function and thinking about lunch, and RescueTime would have logged thirty minutes of "very productive" deep work.</p>
+
+    <p><strong>Surveillance tools</strong> at the workplace — keystroke counters, webcam trackers — at least try to measure something physical, but they measure the wrong thing physically. Keystrokes track output, not attention. Cameras track sitting, not thinking. And they bring the second problem: they're built to convince a manager, not the person doing the work.</p>
+
+    <p>What none of these tools measure is the only thing that matters: <strong>was your brain actually on</strong>.</p>
+
+    <h2>The thing nobody measures</h2>
+
+    <p>Cognitive scientists have a small, boring, well-validated way to measure attention. It's called <a href="https://en.wikipedia.org/wiki/Psychomotor_vigilance_task">psychomotor vigilance</a>. The setup is: a stimulus appears at random intervals; you respond as fast as you can; the test averages your reaction times.</p>
+
+    <p>A sharp brain reacts in 250–300 ms. A fatigued, distracted, or sleep-deprived brain reacts in 350–500 ms, and produces more lapses (responses over 500 ms or missed entirely). The test takes thirty seconds. It is one of the few cognitive measurements that translates cleanly from a sleep lab to a phone screen.</p>
+
+    <p>The reason most productivity apps don't include this is not technical. The technical work is trivial — flash a green dot, time the tap, average five samples. The reason is commercial. Productivity apps sell a story about discipline, and discipline is a story you tell about yourself. You don't want a thirty-second test before each session that might tell you the story is wrong today.</p>
+
+    <p>This is the gap I wanted to close.</p>
+
+    <h2>The bravery problem</h2>
+
+    <p>The deeper reason productivity tools dodge measurement is that measurement is uncomfortable.</p>
+
+    <p>Consider what an honest focus tool actually does. Before each session, it tests how sharp you are. After the session, it tests again. Then it shows you the delta. Some sessions, the delta is positive — you finished sharper than you started, the rare and precious thing that proves the work cohered. Some sessions, the delta is negative — you finished slower than you started, the work cost you something, and the timer would not have known.</p>
+
+    <p>Most days, the honest answer is <em>less productive than I felt.</em> That's a hard thing to absorb session after session. It's much easier to grow a tree.</p>
+
+    <p>But I think one should be brave to come back and focus and improve rather than using shortcuts to succeed. The shortcut tools are popular because they're kind. They're also why the average focus session is 13 minutes long. The kind tool didn't help.</p>
+
+    <p>The brave tool starts with the data and lets the user decide what to do with it. Some users will decide that they're sharpest at 6 AM and rearrange their day. Some will decide that 25 minutes is too short for them and 50 is the sweet spot. Some will decide, looking at six months of their own honest data, that they actually do their best work in the afternoon despite years of telling themselves they were a morning person. None of these decisions are available to someone whose tool only ever counts down from 25.</p>
+
+    <h2>What measurement actually requires</h2>
+
+    <p>I built the timer with five components, and the order matters.</p>
+
+    <p><strong>A pre-session reading.</strong> Five reaction-time taps, then a one-tap alertness scale (1 = foggy, 5 = sharp). Total time: thirty seconds. This is the baseline. Nothing about the session can be interpreted without it.</p>
+
+    <p><strong>The session itself.</strong> A timer, austere on purpose. 25, 50, or 90 minutes. One pill on the screen says <em>I got distracted</em>. Tapping it logs without breaking the timer — distraction is data, not failure. Movement breaks happen at fixed intervals: sixty seconds, optional, measured.</p>
+
+    <p><strong>A post-session reading.</strong> Same five reaction taps, same alertness scale.</p>
+
+    <p><strong>The delta.</strong> Pre minus post, on both reaction time and alertness, plus a quality score from 0 to 100 that combines completion, alertness shift, and reaction time shift. Then a single line of honest English: <em>Sharper after than before. Mixed signal — improved on one measure, not both. You finished, but you were sharper before. Worth noting why.</em></p>
+
+    <p><strong>The trends.</strong> After three sessions, your personal patterns surface. Your sharpest hour. Your sweet-spot duration. Whether breaks help <em>you</em>. No stranger's averages. No streaks. No leaderboard. The only person you're being measured against is yourself, three weeks ago.</p>
+
+    <p>The thing this combination produces, over time, is something you cannot get from any tool that doesn't bookend its sessions: a chart of when <em>you</em> are actually capable of deep work, and how that changes with sleep, season, age, caffeine, exercise, and life. You stop guessing about your own brain.</p>
+
+    <h2>What you find when you measure honestly</h2>
+
+    <p>I'll describe two findings from the early data, mine and a small group of friends running the beta, with the caveat that n is small and the inference is informal.</p>
+
+    <p>The first is that nearly everyone overestimates their morning. The folk wisdom that "I'm a morning person" turns out to mean, in the data, "I prefer mornings socially." The actual reaction-time peak for many people in the sample is between 10 AM and 1 PM. The 6 AM session that everyone romanticizes is, on average, slightly slower than baseline.</p>
+
+    <p>The second is that breaks are wildly variable in their effect. Some people genuinely come back sharper from a 60-second movement break in the middle of a 50-minute session. Others come back slower, every time. The standard productivity advice ("take regular breaks") averages over a population that contains both types, and helps neither. The personal data tells you which type you are.</p>
+
+    <p>These are not Earth-shattering findings. The point is that they are <em>yours</em>. You stop having to take any productivity influencer's word for anything. You have a small dataset of you.</p>
+
+    <h2>What I built</h2>
+
+    <p>The product is called <strong>Brevn</strong>. It's an iOS app, currently in TestFlight, going to the App Store shortly. The name is from <em>brevity</em> and <em>brave</em> — brevity because the truth doesn't need decoration, brave because the data sometimes stings.</p>
+
+    <p>The whole app is built around the five-component loop above. There are no streaks. There are no celebration animations. The interface is calm on purpose. Color is a signal, not decoration: cobalt for active focus, sage for improvement, clay for decline, no more than three colors visible at any time. Mono numerics on every measurement, so the data lines up. Sessions live on your device — sign out anytime, the data remains. We don't sell it, share it, or train on it.</p>
+
+    <p>The TestFlight link is <a href="https://testflight.apple.com/join/TT9p26gF">testflight.apple.com/join/TT9p26gF</a>.</p>
+
+    <h2>The wider point</h2>
+
+    <p>The category most productivity tools belong to is <em>self-help</em>, even when they call themselves productivity. Self-help sells reassurance. The honest version of the category is closer to <em>instrumentation</em> — a thermometer, a scale, a glucose monitor. The thermometer doesn't celebrate when you're well and doesn't shame you when you're not. It tells you your temperature.</p>
+
+    <p>There's a small movement in this direction across consumer software now. Sleep apps that report HRV and sleep stages instead of "8 hours, great job!" Glucose monitors used by people who aren't diabetic. Heart rate variability tracking. The unifying thesis is that <strong>measurement is more useful than encouragement</strong>, and that adults can handle their own data if you give it to them straight.</p>
+
+    <p>Brevn is one tool in that direction, for one variable — focus — that has been particularly badly served by the encouragement-first paradigm. There will be more tools, more variables, more honest mirrors. They're all built on the same idea, which is that the kindest thing you can do for someone trying to improve is to tell them, accurately, where they are.</p>
+
+    <p>The cheerleader is everywhere. The meter is rare.</p>
+
+    <p>That's what I'm trying to build.</p>
+
+    <hr>
+
+    <p class="footer-meta">Brevn is in TestFlight beta now. The App Store version follows in a few weeks.</p>
+
+    <p class="footer-meta">If you build in a related direction — honest instrumentation, n=1 quantified self, sleep, attention, anything in this neighborhood — I'd genuinely like to hear from you. <a href="https://x.com/Hyperfocusedeng">@Hyperfocusedeng</a> on X, or <a href="https://hyperfocusedengineer.github.io">hyperfocusedengineer.github.io</a>.</p>
+
+    <a href="/" class="home-link">← Hyperfocused Engineer</a>
+  </article>
+</body>
+</html>
