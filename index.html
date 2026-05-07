@@ -44,6 +44,8 @@
       --gumball-pink: #FF6B9D;
       --hyperfit-orange: #FC4C02;
       --hyperfit-green: #00D68F;
+      --brevn-cobalt: #2563EB;
+      --brevn-graphite: #18181B;
     }
 
     body {
@@ -450,6 +452,7 @@
     .accent-cortis { background: linear-gradient(90deg, var(--cortis-violet), var(--cortis-indigo), var(--cortis-violet)); }
     .accent-gumball { background: linear-gradient(90deg, var(--gumball-purple), var(--gumball-pink), var(--gumball-purple)); }
     .accent-hyperfit { background: linear-gradient(90deg, var(--hyperfit-orange), var(--hyperfit-green), var(--hyperfit-orange)); }
+    .accent-brevn { background: linear-gradient(90deg, var(--brevn-cobalt), var(--brevn-graphite), var(--brevn-cobalt)); }
 
     .exhibit-summary {
       font-size: 1rem;
@@ -924,6 +927,15 @@
         <div class="index-card-title">HyperFit</div>
         <div class="index-card-type">Strength Training OS</div>
         <p class="index-card-desc">Anatomy-aware muscle heatmap, share-ready session cards, PR detection. iOS TestFlight beta open.</p>
+        <div class="index-card-status status-beta"><span class="status-dot"></span> TestFlight Beta</div>
+        <span class="index-card-arrow">&darr;</span>
+      </a>
+      <a href="#exhibit-brevn" class="index-card">
+        <div class="index-accent accent-brevn"></div>
+        <span class="index-card-number">09</span>
+        <div class="index-card-title">Brevn</div>
+        <div class="index-card-type">Focus Measurement</div>
+        <p class="index-card-desc">A deep-work timer that measures whether you actually focused. Reaction-time bookends, pre/post deltas, n=1 trends.</p>
         <div class="index-card-status status-beta"><span class="status-dot"></span> TestFlight Beta</div>
         <span class="index-card-arrow">&darr;</span>
       </a>
@@ -1796,6 +1808,128 @@
             <span class="tech-pill">react-native-svg</span>
             <span class="tech-pill">react-native-view-shot</span>
             <span class="tech-pill">Reanimated</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ════ EXHIBIT 09: BREVN ════ -->
+    <article class="exhibit" id="exhibit-brevn">
+      <div class="exhibit-inner">
+        <div class="exhibit-meta">
+          <div class="exhibit-number">Exhibit 09</div>
+          <h2 class="exhibit-title">Brevn</h2>
+          <div class="exhibit-type">Focus you can measure</div>
+          <a href="https://testflight.apple.com/join/TT9p26gF" class="exhibit-link" target="_blank" rel="noopener">Public TestFlight <span class="arrow">&rarr;</span></a>
+          <div class="store-links">
+            <a href="https://testflight.apple.com/join/TT9p26gF" class="store-link" target="_blank" rel="noopener">
+              <span class="store-icon">&#63743;</span> TestFlight Beta
+            </a>
+            <a href="https://github.com/harshssd/cusp" class="store-link" target="_blank" rel="noopener">
+              <span class="store-icon">&lt;/&gt;</span> Source Code
+            </a>
+          </div>
+        </div>
+
+        <div class="exhibit-content">
+          <div class="exhibit-accent accent-brevn"></div>
+
+          <p class="exhibit-summary">
+            A deep-work timer that doesn't lie about whether you focused.
+            Five reaction-time taps before, five after &mdash; the chart tells the truth.
+            No streaks. No celebration. Just the meter.
+          </p>
+
+          <p class="exhibit-story">
+            The average focus session in 2026 is <strong>13 minutes 7 seconds</strong> &mdash; a
+            three-year low. Most timers count minutes and reward presence. <strong>Brevn</strong>
+            measures whether your brain was actually on. Each session is bookended by a thirty-second
+            psychomotor-vigilance check (five reaction taps + a 1&ndash;5 alertness scale). The result
+            screen shows the pre/post delta, a 0&ndash;100 quality score, and a one-line read in
+            honest English: <em>&ldquo;Sharper after than before.&rdquo;</em>
+            <em>&ldquo;Mixed signal &mdash; improved on one measure, not both.&rdquo;</em>
+            <em>&ldquo;You finished, but you were sharper before. Worth noting why.&rdquo;</em> After three
+            sessions, Trends surfaces personal patterns &mdash; sharpest hour, sweet-spot duration,
+            whether breaks help <em>you</em>. Personal n=1 only. No stranger&rsquo;s averages.
+          </p>
+
+          <div class="exhibit-highlights">
+            <div class="highlight">
+              <div class="highlight-label">Platform</div>
+              <div class="highlight-value">iOS Beta</div>
+            </div>
+            <div class="highlight">
+              <div class="highlight-label">Measurement</div>
+              <div class="highlight-value">RT + Alertness</div>
+            </div>
+            <div class="highlight">
+              <div class="highlight-label">Quality Score</div>
+              <div class="highlight-value">0&ndash;100</div>
+            </div>
+          </div>
+
+          <div class="exhibit-features">
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Pre/Post Cognitive Check</strong>
+                Five reaction-time taps on a green flash, plus a one-tap alertness scale &mdash; thirty seconds, twice per session
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Honest Quality Score</strong>
+                0&ndash;100 composite of completion, alertness shift, and RT delta &mdash; with a plain-English read of what actually happened
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Distraction Logging</strong>
+                One pill: &ldquo;I got distracted.&rdquo; Tap to log without breaking the timer &mdash; distraction is data, not failure
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Measured Movement Breaks</strong>
+                Optional 60-second eye-rest, posture-reset, neck-mobility, breath-reset cues. Trends shows whether they help <em>you</em>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Personal Trends (n=1)</strong>
+                After three sessions: your sharpest hour, your sweet-spot duration, your break-density correlation. No stranger&rsquo;s averages
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-marker">&bull;</span>
+              <div class="feature-text">
+                <strong>Local-First Data</strong>
+                Sessions live on your device. Sign out anytime, the data remains. No selling, sharing, or training
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit-audience">
+            <span class="audience-tag">Engineers</span>
+            <span class="audience-tag">Researchers</span>
+            <span class="audience-tag">Writers</span>
+            <span class="audience-tag">Quantified Self</span>
+          </div>
+
+          <div class="exhibit-tech">
+            <span class="tech-pill">React Native</span>
+            <span class="tech-pill">Expo SDK 54</span>
+            <span class="tech-pill">React 19</span>
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Supabase</span>
+            <span class="tech-pill">React Navigation 7</span>
+            <span class="tech-pill">react-native-svg</span>
+            <span class="tech-pill">AsyncStorage</span>
+            <span class="tech-pill">Apple Sign-In</span>
           </div>
         </div>
       </div>

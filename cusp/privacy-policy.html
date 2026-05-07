@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Brevn</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #fafaf9;
+      color: #18181b;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.7;
+      padding: 2rem 1.5rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #18181b;
+      font-size: 1.6rem;
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.02em;
+    }
+    h2 {
+      color: #18181b;
+      font-size: 1.15rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid #d4d4d8;
+      padding-bottom: 0.25rem;
+    }
+    p, li { margin-bottom: 0.75rem; color: #3f3f46; }
+    ul { padding-left: 1.25rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { color: #18181b; }
+    .subtitle { color: #71717a; font-size: 0.9rem; margin-bottom: 2rem; }
+    .accent { color: #2563eb; }
+  </style>
+</head>
+<body>
+  <h1>Privacy Policy</h1>
+  <p class="subtitle">Brevn — by Hyperfocused Labs<br>Effective date: May 6, 2026</p>
+
+  <h2>Overview</h2>
+  <p>Brevn is an iOS app that measures whether you actually focused during a deep-work session, using brief reaction-time and alertness checks. Your privacy matters to us. This policy explains what data we collect, why, and how we handle it.</p>
+  <p><strong>The short version:</strong> Brevn is local-first. Your session data lives on your device. We don't sell, share, or train on it. We don't run ads. We don't track you.</p>
+
+  <h2>What Data We Collect</h2>
+  <p><strong>If you use Brevn without signing in (default):</strong></p>
+  <ul>
+    <li>No personal data is collected.</li>
+    <li>All session data — durations, reaction times, alertness scores, distraction taps, breaks taken — is stored only on your device (locally via AsyncStorage).</li>
+    <li>This data never leaves your device.</li>
+  </ul>
+  <p><strong>If you sign in (Apple or Google):</strong></p>
+  <ul>
+    <li><strong>Email address</strong> — provided by your OAuth provider. Used solely to identify your account.</li>
+    <li><strong>Display name</strong> — if provided by your OAuth provider.</li>
+    <li><strong>Session data</strong> — pre/post reaction times, alertness, durations, completion status. Stored on Supabase so you can access your trends across devices. Optional; you can use Brevn without an account.</li>
+  </ul>
+  <p>We do <strong>not</strong> collect your location, contacts, photos, browsing history, microphone or camera input, motion sensors, or any other personal data.</p>
+
+  <h2>How We Use Your Data</h2>
+  <ul>
+    <li>To compute your personal trends — your sharpest hour, your sweet-spot session length, whether breaks help you. All trends are computed for you, on your data only.</li>
+    <li>To sync your sessions across your own devices, if you sign in.</li>
+    <li>That's it. No marketing, no profiling, no behavioral analysis, no model training.</li>
+  </ul>
+
+  <h2>Third-Party Services</h2>
+  <p>We use the following third-party services:</p>
+  <ul>
+    <li><strong>Supabase</strong> — authentication and optional cloud sync. <a href="https://supabase.com/privacy">Supabase Privacy Policy</a></li>
+    <li><strong>Apple Sign In</strong> — for "Sign in with Apple". <a href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a></li>
+    <li><strong>Google OAuth</strong> — for "Sign in with Google". <a href="https://policies.google.com/privacy">Google Privacy Policy</a></li>
+    <li><strong>Expo / EAS</strong> — app build and update infrastructure. <a href="https://expo.dev/privacy">Expo Privacy Policy</a></li>
+  </ul>
+  <p>We do not use advertising networks, analytics trackers, crash reporters that link data to identity, or third-party SDKs that collect user data.</p>
+
+  <h2>Data Storage & Security</h2>
+  <ul>
+    <li>Local-first: your sessions live on your device by default.</li>
+    <li>If you sign in, session data is stored in Supabase (hosted on AWS) with row-level security enabled — only you can read your own sessions.</li>
+    <li>Authentication tokens are stored securely on your device using the OS keychain.</li>
+    <li>All communication with our servers uses HTTPS / TLS encryption.</li>
+  </ul>
+
+  <h2>Data Retention</h2>
+  <p>Local data is retained until you delete the app. Cloud data, if you sign in, is retained as long as your account exists. If you delete your account, all associated cloud data is permanently removed within 30 days. Local data on your device remains under your control regardless of account state — signing out does not delete it.</p>
+
+  <h2>Your Rights</h2>
+  <p>You can:</p>
+  <ul>
+    <li><strong>Use Brevn without an account</strong> — full functionality, zero data collection.</li>
+    <li><strong>Sign out at any time</strong> — Profile screen → Sign out. Your local data remains.</li>
+    <li><strong>Clear all local data</strong> — Profile screen → Clear all data.</li>
+    <li><strong>Request account deletion</strong> — email us and we will delete your account and all associated cloud data within 30 days.</li>
+    <li><strong>Export your data</strong> — email us and we will provide a JSON export of your sessions.</li>
+  </ul>
+
+  <h2>Children's Privacy</h2>
+  <p>Brevn is not directed at children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal data, please contact us and we will delete it.</p>
+
+  <h2>Health Disclaimer</h2>
+  <p>Brevn measures attention and reaction-time as a personal-productivity tool. It is not a medical device, and the data it produces is not a clinical diagnosis. If you have concerns about your cognitive function, please consult a qualified medical professional.</p>
+
+  <h2>Changes to This Policy</h2>
+  <p>We may update this policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+
+  <h2>Contact</h2>
+  <p>Questions or requests? Reach us at:<br>
+  <a href="mailto:harsh.ssd@gmail.com">harsh.ssd@gmail.com</a></p>
+</body>
+</html>
