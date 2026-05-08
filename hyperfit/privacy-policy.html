@@ -64,13 +64,15 @@
     <li><strong>Workout logs</strong> — the sets, reps, weights, exercises, plans, and rest-timer data you enter. Stored server-side so they sync across devices.</li>
     <li><strong>Nutrition logs</strong> — meals, macros, water taps, and goals you enter. Same storage model.</li>
     <li><strong>Health-adjacent inputs</strong> — body weight or units (kg/lb, ml/oz) you set in Settings. Stored only with your account.</li>
+    <li><strong>Product usage events</strong> — which screens you visit and which actions you take in the app (e.g. workout started, meal logged, water tapped). Sent to <a href="https://posthog.com/" target="_blank" rel="noopener">PostHog</a> (US region) so we can see which features people use and where they get stuck. Linked to your account ID after you sign in; anonymous before that. We do <strong>not</strong> send the contents of your workouts or meals — only event names and a small set of metadata fields like meal slot or set count.</li>
+    <li><strong>Crash diagnostics</strong> — uncaught JavaScript errors are sent to PostHog so we can fix what breaks. Includes the error message and stack; does not include your data.</li>
   </ul>
 
   <h2>What we don't collect</h2>
   <ul>
     <li>No HealthKit access, no advertising IDs, no device fingerprints.</li>
-    <li>No cross-app tracking. We do not link your data to data from other companies for advertising.</li>
-    <li>No third-party analytics SDKs (no Google Analytics, no Firebase Analytics, no Facebook SDK).</li>
+    <li>No cross-app tracking. We do not link your data to data from other companies for advertising or share with data brokers.</li>
+    <li>No advertising SDKs (no Google AdMob, no Facebook SDK, no Firebase Analytics).</li>
     <li>No location data.</li>
   </ul>
 
@@ -78,7 +80,7 @@
   <p>Solely to operate the app: render your dashboard, compute your streak and PR badges, populate the muscle heatmap, sync across your devices. We do not sell, share, or rent your data to third parties.</p>
 
   <h2>Where it lives</h2>
-  <p>Data is stored in <a href="https://supabase.com/" target="_blank" rel="noopener">Supabase</a> (PostgreSQL hosted on AWS, US region). Access is fenced by row-level security keyed to your account ID — no other user can read your rows.</p>
+  <p>Account, workout, and nutrition data are stored in <a href="https://supabase.com/" target="_blank" rel="noopener">Supabase</a> (PostgreSQL hosted on AWS, US region). Access is fenced by row-level security keyed to your account ID, no other user can read your rows. Product usage events and crash diagnostics are stored in <a href="https://posthog.com/" target="_blank" rel="noopener">PostHog</a> (US region) and accessible only by HyperFit's developer.</p>
 
   <h2>Account deletion</h2>
   <p>You can delete your account at any time, fully in-app:</p>
@@ -88,6 +90,7 @@
     <li>On confirm, we immediately delete: workout sessions and sets, plan instances, custom exercises, nutrition days and entries, water logs, settings, and the auth record itself.</li>
   </ul>
   <p>Deletion is irreversible. If you'd rather email us, write to <a href="mailto:hyperfocusedengineer@gmail.com">hyperfocusedengineer@gmail.com</a> and we'll handle it manually within 7 days.</p>
+  <p>Product usage events stored in PostHog are keyed to your account ID. After you sign out the app stops sending events tied to that id (subsequent events are anonymous). Historical events for a deleted account remain in PostHog until our next purge. To request immediate purge, email <a href="mailto:hyperfocusedengineer@gmail.com">hyperfocusedengineer@gmail.com</a>.</p>
 
   <h2>Children</h2>
   <p>HyperFit is not directed at children under 13 and we do not knowingly collect data from them.</p>
