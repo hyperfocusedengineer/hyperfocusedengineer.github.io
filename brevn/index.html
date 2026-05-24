@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brevn — A calm focus timer that measures your sharpness</title>
+  <meta name="description" content="Deep-work timer with cognitive measurement. A 30-second sharpness check before and after each session, so you can see what actually works for your brain. iOS TestFlight beta now open.">
+  <meta property="og:title" content="Brevn — A calm focus timer that measures your sharpness">
+  <meta property="og:description" content="Pick a depth. Measure how sharp you are before and after. Run 7-day experiments on your own data. iOS TestFlight beta open.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hyperfocusedengineer.github.io/brevn/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      /* Brevn palette — see src/styles/theme.ts */
+      --bg:            #fafafa;
+      --surface:       #ffffff;
+      --border-subtle: #e4e4e7;
+      --border-strong: #d4d4d8;
+
+      --text-primary:    #18181b;
+      --text-secondary:  #3f3f46;
+      --text-tertiary:   #71717a;
+      --text-quaternary: #a1a1aa;
+
+      --lift:        #2563eb;
+      --lift-soft:   rgba(37, 99, 235, 0.08);
+      --lift-tint:   #eff6ff;
+
+      --session-up:  #16a34a;
+      --regression:  #dc2626;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-secondary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'tnum' on;
+    }
+
+    a { color: inherit; }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 6rem;
+    }
+
+    /* ════════════════
+       HERO
+       ════════════════ */
+    .hero { padding: 4rem 0 3rem; }
+
+    .kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      color: var(--text-quaternary);
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    h1 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+      letter-spacing: -0.022em;
+      line-height: 1.08;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .lede {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.55;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 2.25rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      border-radius: 0.5rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 0.12s ease, background 0.12s ease;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      background: var(--surface);
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--lift);
+      color: #ffffff;
+      border-color: var(--lift);
+    }
+
+    .btn-primary:hover { background: #1d4ed8; }
+
+    .btn .arrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+    }
+
+    /* ════════════════
+       MARQUEE STATS
+       ════════════════ */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .stat-num {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-quaternary);
+      margin-top: 0.25rem;
+    }
+
+    /* ════════════════
+       SECTION
+       ════════════════ */
+    section { padding: 3.5rem 0; }
+
+    h2 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.75rem;
+      letter-spacing: -0.012em;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      line-height: 1.2;
+    }
+
+    p { margin-bottom: 1.1rem; max-width: 620px; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stats > :last-child { grid-column: span 2; }
+    }
+
+    .feature {
+      padding: 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0.75rem;
+    }
+
+    .feature-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .feature-body {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ════════════════
+       FLOW DIAGRAM (the session loop)
+       ════════════════ */
+    .flow {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .flow-step {
+      display: flex;
+      gap: 0.85rem;
+      align-items: center;
+      padding: 0.55rem 0;
+    }
+
+    .flow-step + .flow-step {
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--lift);
+      flex-shrink: 0;
+    }
+
+    .flow-text { font-size: 0.95rem; color: var(--text-secondary); }
+    .flow-text strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ════════════════
+       PRINCIPLES (calm-by-design)
+       ════════════════ */
+    .principles {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .principles li {
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      background: var(--lift-tint);
+      border-radius: 0.5rem;
+      border-left: 3px solid var(--lift);
+    }
+
+    .principles li strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ════════════════
+       FOOTER
+       ════════════════ */
+    footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-quaternary);
+      letter-spacing: 0.04em;
+    }
+
+    footer a { color: var(--text-tertiary); text-decoration: none; margin-right: 1.25rem; }
+    footer a:hover { color: var(--text-primary); }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-quaternary);
+      text-decoration: none;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="https://hyperfocusedengineer.github.io/" class="back-link">← hyperfocused engineer</a>
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="kicker">iOS · TestFlight beta open</div>
+      <h1>A calm focus timer that measures whether you actually got sharper.</h1>
+      <p class="lede">
+        Pick a depth. 30 seconds of reaction-time taps and an alertness rating before and after. Brevn tells you, in your own data, what kind of session, time of day, and amount of caffeine actually makes your brain work.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#testflight" id="cta-tf">
+          Join the TestFlight <span class="arrow">→</span>
+        </a>
+        <a class="btn" href="#what">
+          What it does
+        </a>
+      </div>
+
+      <div class="stats">
+        <div>
+          <div class="stat-num">30s</div>
+          <div class="stat-label">sharpness check</div>
+        </div>
+        <div>
+          <div class="stat-num">7d</div>
+          <div class="stat-label">experiments</div>
+        </div>
+        <div>
+          <div class="stat-num">0</div>
+          <div class="stat-label">streaks · ads · noise</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- WHAT IT DOES -->
+    <section id="what">
+      <h2>The session loop</h2>
+      <p>
+        Most focus apps time you. Brevn checks whether the timer actually did anything. You take a 30-second cognitive snapshot before the block, work for the depth you picked, and snapshot again. The delta is the verdict.
+      </p>
+
+      <div class="flow">
+        <div class="flow-step">
+          <div class="dot"></div>
+          <div class="flow-text"><strong>Pre-check.</strong> Five reaction-time taps + a 1-5 alertness rating. Takes 30 seconds.</div>
+        </div>
+        <div class="flow-step">
+          <div class="dot"></div>
+          <div class="flow-text"><strong>Deep work block.</strong> 25 / 50 / 75 min. Optional movement breaks. iOS Live Activity on the lock screen so you don't reach for the phone.</div>
+        </div>
+        <div class="flow-step">
+          <div class="dot"></div>
+          <div class="flow-text"><strong>Post-check.</strong> Same five taps, same alertness scale. See your delta. Honest about whether the block helped.</div>
+        </div>
+        <div class="flow-step">
+          <div class="dot"></div>
+          <div class="flow-text"><strong>Reflection (optional).</strong> One line. What did you actually accomplish? Powers Trends without nagging.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- v0.2 FEATURES GRID -->
+    <section>
+      <h2>What's in v0.2</h2>
+
+      <div class="grid-2">
+        <div class="feature">
+          <div class="feature-title">Per-session caffeine</div>
+          <div class="feature-body">Log a one-tap dose. Brevn attributes it to sessions within a 90-minute window and tells you whether caffeine actually moves your numbers, or just your mood.</div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Auto-experiments</div>
+          <div class="feature-body">When your data shows a real swing, Brevn proposes a 7-day test (morning vs afternoon, 25 vs 50 minutes, caffeine vs no caffeine). One tap to start. No nags.</div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Paired experiments</div>
+          <div class="feature-body">Generate a pair code, send it to a friend. You each run the same experiment for 7 days. The app shows both verdicts side by side. No accounts.</div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Session tags</div>
+          <div class="feature-body">Tag a session "Work", "Personal", "Builder", anything. Trends breaks down quality by tag so you see which life domains pull your sharpest brain.</div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Weekly debrief</div>
+          <div class="feature-body">A short, honest read of the week. No streaks. No celebrations. Just what's true, what's changing, and where to look.</div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">HealthKit integration</div>
+          <div class="feature-body">Sleep, HRV, resting heart rate. Median-split on your own baselines. See the days your body was actually rested versus the days you faked it.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRINCIPLES -->
+    <section>
+      <h2>Calm by design</h2>
+      <p>
+        Brevn is built on hard constraints, not soft preferences. The same constraints apply to every feature, every screen, every notification.
+      </p>
+      <ul class="principles">
+        <li><strong>No streaks.</strong> A missed day isn't a moral failure. Streaks turn the tool into a master.</li>
+        <li><strong>No exclamation marks. No celebrations.</strong> A good session is its own reward.</li>
+        <li><strong>≤ 3 colors visible at once.</strong> The interface stays out of the way of the work.</li>
+        <li><strong>Local-first.</strong> Your sessions live on your phone. Nothing leaves the device unless you explicitly share.</li>
+        <li><strong>Honest verdicts.</strong> When the sample is too small, Brevn says so. No fake significance.</li>
+      </ul>
+    </section>
+
+    <!-- CTA -->
+    <section id="testflight">
+      <h2>Try it</h2>
+      <p>
+        iOS TestFlight, public beta. Free, no signup required. The build is private-by-default; you can use Brevn without ever creating an account.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" id="tf-link" href="#">
+          Open TestFlight <span class="arrow">→</span>
+        </a>
+      </div>
+      <p style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-tertiary);">
+        Requires iOS 15.1+. Brevn is a one-person operation (<a href="https://hyperfocusedengineer.github.io/" style="text-decoration: underline;">Hyperfocused Engineer</a>). Feedback goes straight to the builder.
+      </p>
+    </section>
+
+    <footer>
+      <a href="https://hyperfocusedengineer.github.io/brevn-essay/">essay</a>
+      <a href="https://github.com/harshssd/brevn">github</a>
+      <a href="mailto:harsh.ssd@gmail.com">feedback</a>
+      <span style="float: right;">© Hyperfocused Engineer · 2026</span>
+    </footer>
+  </div>
+
+  <script>
+    // TestFlight URL is patched in once the public link is generated after
+    // Beta App Review. Until then the CTAs link to a placeholder so the
+    // page is shippable. Update the href in this script when ASC issues the
+    // public URL (typically ~24h after first external-distribution submit).
+    (function() {
+      var TF_URL = 'TESTFLIGHT_URL_PLACEHOLDER';
+      if (TF_URL !== 'TESTFLIGHT_' + 'URL_PLACEHOLDER') {
+        document.getElementById('cta-tf').href = TF_URL;
+        document.getElementById('tf-link').href = TF_URL;
+      } else {
+        // Until the public URL exists, link to the App Store Connect builds
+        // page. Existing testers see the build under their TestFlight app.
+        var fallback = 'https://testflight.apple.com/';
+        document.getElementById('cta-tf').href = fallback;
+        document.getElementById('tf-link').href = fallback;
+      }
+    })();
+  </script>
+</body>
+</html>
