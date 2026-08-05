@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hyperfocused Engineer — Apps &amp; Tools</title>
-  <meta name="description" content="Building focused, craft-driven software in public. Cross-platform social media composer, system design games, and more. By Hyperfocused Engineer.">
+  <meta name="description" content="Building focused, craft-driven software in public. HFE Studio (AI video production), the Hyperfocused AI channel, system design games, and more. By Hyperfocused Engineer.">
   <meta property="og:title" content="Hyperfocused Engineer — Apps & Tools">
   <meta property="og:description" content="Building focused, craft-driven software in public. Each project solves a real problem, then ships as something others can use.">
   <meta property="og:type" content="website">
@@ -46,6 +46,8 @@
       --hyperfit-green: #00D68F;
       --brevn-cobalt: #2563EB;
       --brevn-graphite: #18181B;
+      --hfestudio-crimson: #D64545;
+      --hfestudio-gold: #E8B44F;
     }
 
     body {
@@ -453,6 +455,7 @@
     .accent-gumball { background: linear-gradient(90deg, var(--gumball-purple), var(--gumball-pink), var(--gumball-purple)); }
     .accent-hyperfit { background: linear-gradient(90deg, var(--hyperfit-orange), var(--hyperfit-green), var(--hyperfit-orange)); }
     .accent-brevn { background: linear-gradient(90deg, var(--brevn-cobalt), var(--brevn-graphite), var(--brevn-cobalt)); }
+    .accent-hfestudio { background: linear-gradient(90deg, var(--hfestudio-crimson), var(--hfestudio-gold), var(--hfestudio-crimson)); }
 
     .exhibit-summary {
       font-size: 1rem;
@@ -758,6 +761,7 @@
       transition: background 0.3s;
     }
     .video-card:hover { background: var(--bg-card); }
+    a.video-card { text-decoration: none; display: block; }
 
     .video-tag {
       font-family: 'IBM Plex Mono', monospace;
@@ -836,7 +840,7 @@
     </p>
     <div class="hero-stats">
       <div class="hero-stat">
-        <span class="hero-stat-num">8</span>
+        <span class="hero-stat-num">10</span>
         <span class="hero-stat-label">Projects</span>
       </div>
       <div class="hero-stat">
@@ -848,7 +852,7 @@
         <span class="hero-stat-label">In Beta</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-num">5</span>
+        <span class="hero-stat-num">6</span>
         <span class="hero-stat-label">In Development</span>
       </div>
     </div>
@@ -937,6 +941,15 @@
         <div class="index-card-type">Focus Measurement</div>
         <p class="index-card-desc">A deep-work timer that measures whether you actually focused. Reaction-time bookends, pre/post deltas, n=1 trends.</p>
         <div class="index-card-status status-beta"><span class="status-dot"></span> TestFlight Beta</div>
+        <span class="index-card-arrow">&darr;</span>
+      </a>
+      <a href="#exhibit-hfestudio" class="index-card">
+        <div class="index-accent accent-hfestudio"></div>
+        <span class="index-card-number">10</span>
+        <div class="index-card-title">HFE Studio</div>
+        <div class="index-card-type">AI Video Production System</div>
+        <p class="index-card-desc">A local-first studio that takes a video from idea to published cut &mdash; an AI director storyboards it, your machine renders it, $0 by default.</p>
+        <div class="index-card-status status-dev"><span class="status-dot"></span> In Production</div>
         <span class="index-card-arrow">&darr;</span>
       </a>
     </div>
@@ -1938,12 +1951,117 @@
       </div>
     </article>
 
+    <!-- ════ EXHIBIT 10: HFE STUDIO ════ -->
+    <article class="exhibit" id="exhibit-hfestudio">
+      <div class="exhibit-inner">
+        <div class="exhibit-meta">
+          <div class="exhibit-number">Exhibit 10</div>
+          <h2 class="exhibit-title">HFE Studio</h2>
+          <div class="exhibit-type">AI Video Production System</div>
+          <a href="https://www.youtube.com/@hyperfocusedai" class="exhibit-link" target="_blank" rel="noopener">Watch it working <span class="arrow">&rarr;</span></a>
+        </div>
+
+        <div class="exhibit-content">
+          <div class="exhibit-accent accent-hfestudio"></div>
+
+          <p class="exhibit-summary">
+            A local-first video production system &mdash; an editing tool for a non-editor. It takes a video from idea to published cut, and everything renders on your machine at $0 by default.
+          </p>
+
+          <p class="exhibit-story">
+            <strong>HFE Studio</strong> automates the mechanical work of video production &mdash; render, stitch,
+            subtitles, sound design, metadata, thumbnails, publish &mdash; and leaves the creative calls to you.
+            An <strong>AI director</strong> storyboards every cut against a genre-aware quality bar and critiques its own
+            work before a single frame renders. It speaks your voice too: record narration on your phone and
+            Whisper times the captions to your actual read. The proof it works is public &mdash; it produces
+            <strong>Hyperfocused AI</strong>, a channel teaching machine learning and LLMs from first principles,
+            plus five more channels, end to end.
+          </p>
+
+          <div class="exhibit-highlights">
+            <div class="highlight-card">
+              <div class="highlight-num">$0</div>
+              <div class="highlight-label">Default render cost</div>
+            </div>
+            <div class="highlight-card">
+              <div class="highlight-num">40+</div>
+              <div class="highlight-label">Motion components</div>
+            </div>
+            <div class="highlight-card">
+              <div class="highlight-num">6</div>
+              <div class="highlight-label">Channels in production</div>
+            </div>
+          </div>
+
+          <div class="exhibit-features">
+            <div class="feature-item">
+              <div class="feature-name">The Director</div>
+              <div class="feature-desc">Storyboards every scene, scores its own cuts against an 8/8/8 quality bar, and revises until the storyboard earns the render.</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-name">Your Voice, Your Assets</div>
+              <div class="feature-desc">Record narration in your own voice &mdash; Whisper times captions to the actual read. Real screenshots and your own art over AI placeholders.</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-name">Sound Design &amp; Kinetic Captions</div>
+              <div class="feature-desc">Auto-placed SFX cues synced to the visual timeline, and word-pop captions driven by per-word timings.</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-name">Publish Pipeline</div>
+              <div class="feature-desc">Metadata, chapters, thumbnails, subtitles, and YouTube upload &mdash; with provenance and attribution baked into every clip it borrows.</div>
+            </div>
+          </div>
+
+          <div class="exhibit-audience">
+            <span class="audience-tag">Creators Who Don't Edit</span>
+            <span class="audience-tag">Educators</span>
+            <span class="audience-tag">Build-in-Public Engineers</span>
+          </div>
+
+          <div class="exhibit-tech">
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Remotion</span>
+            <span class="tech-pill">Motion Canvas</span>
+            <span class="tech-pill">Anthropic Claude</span>
+            <span class="tech-pill">Whisper</span>
+            <span class="tech-pill">ffmpeg</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
   </div>
 
   <!-- ─── YOUTUBE / CONTENT ─── -->
   <section class="content-band">
     <div class="content-band-header">
-      <h2 class="content-band-title">Content</h2>
+      <h2 class="content-band-title">Hyperfocused AI</h2>
+      <a href="https://www.youtube.com/@hyperfocusedai" class="content-band-link" target="_blank" rel="noopener">YouTube &rarr;</a>
+    </div>
+    <p class="content-band-desc">
+      Machine learning and LLMs taught from first principles &mdash; no math walls, no hand-waving.
+      Every video is produced end-to-end by HFE Studio (Exhibit 10): the AI director storyboards it,
+      the pipeline renders and publishes it.
+    </p>
+    <div class="video-grid">
+      <a href="https://www.youtube.com/playlist?list=PLS7Ebr8tng4Y" class="video-card" target="_blank" rel="noopener">
+        <span class="video-tag">Playlist &middot; 8 videos</span>
+        <div class="video-title">Machine Learning from Scratch &mdash; for Complete Beginners (No Math)</div>
+      </a>
+      <a href="https://www.youtube.com/playlist?list=PLNIhXsBW3hCU" class="video-card" target="_blank" rel="noopener">
+        <span class="video-tag">Playlist &middot; 6 videos</span>
+        <div class="video-title">How LLMs Actually Work &mdash; Tokens, Embeddings, Attention, Transformers</div>
+      </a>
+      <a href="https://www.youtube.com/@hyperfocusedai" class="video-card" target="_blank" rel="noopener">
+        <span class="video-tag">Channel</span>
+        <div class="video-title">All videos &mdash; new explainers every week</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="content-band">
+    <div class="content-band-header">
+      <h2 class="content-band-title">Livestreams</h2>
       <a href="https://www.youtube.com/@hyperfocusedengineer" class="content-band-link" target="_blank" rel="noopener">YouTube &rarr;</a>
     </div>
     <p class="content-band-desc">
