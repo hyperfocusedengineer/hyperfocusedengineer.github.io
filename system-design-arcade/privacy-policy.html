@@ -57,10 +57,11 @@
   <ul>
     <li><strong>Email address</strong> — provided by your OAuth provider. Used to identify your account, and associated with your usage analytics.</li>
     <li><strong>Display name</strong> — if provided by your OAuth provider. You can change it in Settings.</li>
-    <li><strong>Avatar</strong> — an emoji you pick in the app. We do not accept or store uploaded photos.</li>
+    <li><strong>Avatar</strong> — an emoji you pick in the app. If your Google or Apple account supplies a profile picture, we may store the link to it. We never upload or host photos from your device.</li>
     <li><strong>Game progress</strong> — scores, stars, streaks, and level completion data, synced to the cloud so you can access it across devices.</li>
     <li><strong>Country</strong> — a two-letter country code derived from your device's region setting, used for the country leaderboard.</li>
     <li><strong>Friends</strong> — if you add friends via a friend code, we store that connection.</li>
+    <li><strong>Event participation</strong> — if you register for a timed event, we store your registration, when you registered, and your score at the event's start.</li>
   </ul>
 
   <p>We do <strong>not</strong> collect your location (beyond the country code above), contacts, photos, microphone input, browsing history, or advertising identifiers.</p>
@@ -71,30 +72,39 @@
   <ul>
     <li>Screens you open and the order you move between them.</li>
     <li>Games and levels started, completed, or abandoned; scores and streaks.</li>
-    <li>Whether a challenge answer was correct, and what type of challenge it was. <strong>We do not record the content of your answers</strong> — only correct/incorrect and the challenge type.</li>
+    <li>Whether a challenge answer was correct, and what type of challenge it was. <strong>We do not record the content of your answers in analytics</strong> — only correct/incorrect and the challenge type. The optional AI Design Coach is the one exception; see <a href="#coach">below</a>.</li>
     <li>Which features you tap (share, leaderboard, hints, daily challenge, theme settings, and similar).</li>
     <li>App version and build, operating system and version, device type, and language.</li>
     <li>Your IP address, which PostHog receives with each event and uses to derive an approximate region.</li>
   </ul>
   <p>If you are signed in, these events are linked to your account and email. If you are a Guest, they are linked only to a random device identifier.</p>
   <p>We do <strong>not</strong> use session recording, screen recording, or heatmaps — these are switched off. We do not use analytics for advertising, and we do not share or sell this data.</p>
-  <p>Analytics events are retained for 12 months.</p>
+  <p>Analytics events are retained for 12 months. There is currently no in-app switch to turn usage analytics off — email us if you would like your analytics data deleted.</p>
 
   <h2>Error and Diagnostic Reports</h2>
-  <p>When the app hits an error, we send a diagnostic report to PostHog so we can fix it. A report contains the error type (for example <code>TypeError</code>), where in our code it happened (function name and line number), and a short error message.</p>
-  <p>Before any report leaves your device, we automatically strip identifying values from it — email addresses, account IDs, access tokens, URLs with credentials, and file paths are replaced with placeholders, and captured variable values and source snippets are removed entirely. This scrubbing is automated and thorough, but we cannot guarantee it catches every possible value an error message might contain.</p>
+  <p>When the app hits an error, a diagnostic report is sent to PostHog so we can fix it. A report contains the error type (for example <code>TypeError</code>), the error message, and a stack trace showing where in our code it happened. It also carries the same app version, device and session information as our other analytics events, and — if you are signed in — is associated with your account.</p>
+  <p>Error messages can occasionally contain incidental data such as an account identifier or a file path. We make a best effort to keep personal data out of these reports and are actively improving how they are filtered before they leave your device.</p>
   <p>We do not collect crash reports from the operating system itself.</p>
 
+  <h2 id="coach">AI Design Coach (optional, off by default)</h2>
+  <p>Some architecture challenges offer optional AI feedback. This is <strong>switched off unless you turn it on</strong>, and limited to a few uses per day.</p>
+  <p>If you enable it, the following is sent to our AI coaching service — a server we operate, which passes the request to a third-party language model — each time you ask for feedback:</p>
+  <ul>
+    <li>The architecture you built, <strong>including any component names you typed</strong>.</li>
+    <li>The challenge brief and how your answer scored against it.</li>
+    <li>Your account identifier and a token proving you are signed in.</li>
+  </ul>
+  <p>Nothing is sent to this service unless you have switched the AI coach on. You can turn it off again at any time in Settings.</p>
+
   <h2>Leaderboards and Social Features</h2>
-  <p>System Design Arcade has public leaderboards. If you are signed in and appear on one, the following is <strong>visible to other users of the app</strong>:</p>
+  <p>System Design Arcade has public leaderboards. If you are signed in and appear on one, the following is <strong>publicly visible — including to people who are not signed in</strong>:</p>
   <ul>
     <li>Your display name</li>
-    <li>Your emoji avatar</li>
     <li>Your total score and rank</li>
     <li>Your country, on the country leaderboard</li>
   </ul>
   <p>Your email address is <strong>never</strong> shown on a leaderboard.</p>
-  <p>You can remove yourself from public leaderboards at any time: <strong>Settings → Leaderboard → opt out</strong>. Guests do not appear on leaderboards.</p>
+  <p>You can remove yourself from public leaderboards at any time: <strong>Settings → Privacy → "Show me on leaderboard"</strong>. You will still appear on the friends leaderboard of people who have added you as a friend. Guests do not appear on any leaderboard.</p>
 
   <h2>Notifications</h2>
   <p>If you turn on study reminders, the app schedules notifications locally on your device. We do not use a push notification service and we do not collect a push token.</p>
@@ -115,6 +125,7 @@
     <li><strong>PostHog</strong> — product analytics and error diagnostics (US region). <a href="https://posthog.com/privacy">PostHog Privacy Policy</a></li>
     <li><strong>Google OAuth</strong> — for "Sign in with Google". <a href="https://policies.google.com/privacy">Google Privacy Policy</a></li>
     <li><strong>Apple Sign In</strong> — for "Sign in with Apple". <a href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a></li>
+    <li><strong>Cloudflare Workers</strong> — hosts our optional AI Design Coach service. <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare Privacy Policy</a></li>
     <li><strong>Expo / EAS</strong> — app build and update infrastructure. <a href="https://expo.dev/privacy">Expo Privacy Policy</a></li>
   </ul>
   <p>We do not use any advertising networks, ad SDKs, or advertising identifiers.</p>
@@ -129,17 +140,31 @@
   </ul>
 
   <h2>Data Retention</h2>
-  <p>Account data is retained as long as your account exists. If you delete your account, all associated data is permanently removed from our servers. Analytics events are retained for 12 months from when they were recorded.</p>
+  <p>Account data is retained as long as your account exists.</p>
+  <p>If you delete your account, your profile, game progress, statistics and event registrations are permanently deleted from our database, and your login is removed. Two things deliberately survive:</p>
+  <ul>
+    <li>A minimal <strong>deletion record</strong> — your user ID, email address, IP address, browser/app user agent, and the time of deletion. We keep this so we can answer disputes about whether and when an account was deleted.</li>
+    <li><strong>Analytics and diagnostic events</strong> already recorded, which expire on their normal 12-month schedule. Email us if you want them removed sooner.</li>
+  </ul>
+  <p>Analytics events are retained for 12 months from when they were recorded. The user profile PostHog builds from them persists until you ask us to remove it.</p>
 
   <h2>Your Rights</h2>
   <p>You can:</p>
   <ul>
     <li><strong>Play without an account</strong> — Guest mode collects no personally identifying information.</li>
-    <li><strong>Delete your account in the app</strong> — Settings → Danger Zone → Delete Account. This permanently removes your account and all associated server-side data.</li>
+    <li><strong>Delete your account in the app</strong> — Settings → Data → Delete Account. This permanently removes your account and all associated server-side data.</li>
     <li><strong>Request data deletion by email</strong> — if you'd rather not use the in-app flow, email us and we will delete your account and all associated data within 30 days.</li>
-    <li><strong>Opt out of public leaderboards</strong> — Settings → Leaderboard.</li>
+    <li><strong>Opt out of public leaderboards</strong> — Settings → Privacy.</li>
+    <li><strong>Turn off the AI Design Coach</strong> — Settings. It is off by default.</li>
     <li><strong>Sign out</strong> — at any time from Settings within the app.</li>
   </ul>
+
+  <h2>Legal Basis, Transfers and Additional Rights</h2>
+  <p>The data controller is Hyperfocused Engineer, contactable at the address below.</p>
+  <p>Where the GDPR or UK GDPR applies, we rely on: <strong>performance of a contract</strong> for authentication and progress sync; <strong>legitimate interests</strong> for usage analytics and error diagnostics, so we can keep the app working and improve it; and <strong>your consent</strong> for the optional AI Design Coach, which you can withdraw at any time by switching it off.</p>
+  <p>Supabase, PostHog and our AI coaching service are hosted in the United States. Transfers out of the EEA and UK rely on the European Commission's Standard Contractual Clauses.</p>
+  <p>In addition to the controls listed above, you may request <strong>access</strong> to the personal data we hold about you, a <strong>portable copy</strong> of it, <strong>correction</strong> of anything inaccurate, <strong>restriction</strong> of processing, or <strong>object</strong> to processing based on legitimate interests. Email us and we will respond within 30 days. You also have the right to complain to your local data protection authority.</p>
+  <p>For California residents: we <strong>do not sell or share</strong> your personal information as those terms are defined by the CCPA, and we have not done so in the preceding twelve months. The categories we collect are identifiers (email, account and device identifiers, IP address), internet activity (how you use the app), and approximate location limited to a country code.</p>
 
   <h2>Children's Privacy</h2>
   <p>System Design Arcade is not directed at children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal data, please contact us and we will delete it.</p>
