@@ -38,58 +38,106 @@
 </head>
 <body>
   <h1>Privacy Policy</h1>
-  <p class="subtitle">System Design Arcade — by Hyperfocused Engineer<br>Effective date: February 28, 2026</p>
+  <p class="subtitle">System Design Arcade — by Hyperfocused Engineer<br>Effective date: August 9, 2026<br>Previous version: February 28, 2026</p>
 
   <h2>Overview</h2>
-  <p>System Design Arcade is a mobile app that teaches system design concepts through interactive, arcade-style games. Your privacy matters to us. This policy explains what data we collect, why, and how we handle it.</p>
-  <p><strong>The short version:</strong> We collect minimal data. We don't sell your data. We don't run ads. We don't track you.</p>
+  <p>System Design Arcade is a mobile app that teaches system design concepts through interactive, arcade-style games. This policy explains what data we collect, why, and how we handle it.</p>
+  <p><strong>The short version:</strong> We collect your email and game progress if you sign in, and we measure how the app is used so we can improve it. We don't sell your data, we don't run ads, and we don't build advertising profiles.</p>
 
   <h2>What Data We Collect</h2>
+
   <p><strong>If you play as a Guest:</strong></p>
   <ul>
-    <li>No personal data is collected.</li>
-    <li>Game progress is stored only on your device (locally via AsyncStorage).</li>
+    <li>We do not collect your name, email, or any other information that identifies you personally.</li>
+    <li>Game progress is stored only on your device (locally, via AsyncStorage).</li>
+    <li>We <em>do</em> collect anonymous usage analytics — see <a href="#usage">Usage Analytics</a> below. These are tied to a randomly generated device identifier, not to you.</li>
   </ul>
+
   <p><strong>If you sign in (Google or Apple):</strong></p>
   <ul>
-    <li><strong>Email address</strong> — provided by your OAuth provider (Google or Apple). Used solely to identify your account.</li>
-    <li><strong>Display name</strong> — if provided by your OAuth provider.</li>
-    <li><strong>Game progress</strong> — scores, stars, and level completion data synced to the cloud so you can access it across devices.</li>
+    <li><strong>Email address</strong> — provided by your OAuth provider. Used to identify your account, and associated with your usage analytics.</li>
+    <li><strong>Display name</strong> — if provided by your OAuth provider. You can change it in Settings.</li>
+    <li><strong>Avatar</strong> — an emoji you pick in the app. We do not accept or store uploaded photos.</li>
+    <li><strong>Game progress</strong> — scores, stars, streaks, and level completion data, synced to the cloud so you can access it across devices.</li>
+    <li><strong>Country</strong> — a two-letter country code derived from your device's region setting, used for the country leaderboard.</li>
+    <li><strong>Friends</strong> — if you add friends via a friend code, we store that connection.</li>
   </ul>
-  <p>We do <strong>not</strong> collect your location, contacts, photos, browsing history, or any other personal data.</p>
+
+  <p>We do <strong>not</strong> collect your location (beyond the country code above), contacts, photos, microphone input, browsing history, or advertising identifiers.</p>
+
+  <h2 id="usage">Usage Analytics</h2>
+  <p>We use <strong>PostHog</strong> for product analytics, so we can see which parts of the app work and which don't. This applies to both Guest and signed-in users.</p>
+  <p><strong>What we measure:</strong></p>
+  <ul>
+    <li>Screens you open and the order you move between them.</li>
+    <li>Games and levels started, completed, or abandoned; scores and streaks.</li>
+    <li>Whether a challenge answer was correct, and what type of challenge it was. <strong>We do not record the content of your answers</strong> — only correct/incorrect and the challenge type.</li>
+    <li>Which features you tap (share, leaderboard, hints, daily challenge, theme settings, and similar).</li>
+    <li>App version and build, operating system and version, device type, and language.</li>
+    <li>Your IP address, which PostHog receives with each event and uses to derive an approximate region.</li>
+  </ul>
+  <p>If you are signed in, these events are linked to your account and email. If you are a Guest, they are linked only to a random device identifier.</p>
+  <p>We do <strong>not</strong> use session recording, screen recording, or heatmaps — these are switched off. We do not use analytics for advertising, and we do not share or sell this data.</p>
+  <p>Analytics events are retained for 12 months.</p>
+
+  <h2>Error and Diagnostic Reports</h2>
+  <p>When the app hits an error, we send a diagnostic report to PostHog so we can fix it. A report contains the error type (for example <code>TypeError</code>), where in our code it happened (function name and line number), and a short error message.</p>
+  <p>Before any report leaves your device, we automatically strip identifying values from it — email addresses, account IDs, access tokens, URLs with credentials, and file paths are replaced with placeholders, and captured variable values and source snippets are removed entirely. This scrubbing is automated and thorough, but we cannot guarantee it catches every possible value an error message might contain.</p>
+  <p>We do not collect crash reports from the operating system itself.</p>
+
+  <h2>Leaderboards and Social Features</h2>
+  <p>System Design Arcade has public leaderboards. If you are signed in and appear on one, the following is <strong>visible to other users of the app</strong>:</p>
+  <ul>
+    <li>Your display name</li>
+    <li>Your emoji avatar</li>
+    <li>Your total score and rank</li>
+    <li>Your country, on the country leaderboard</li>
+  </ul>
+  <p>Your email address is <strong>never</strong> shown on a leaderboard.</p>
+  <p>You can remove yourself from public leaderboards at any time: <strong>Settings → Leaderboard → opt out</strong>. Guests do not appear on leaderboards.</p>
+
+  <h2>Notifications</h2>
+  <p>If you turn on study reminders, the app schedules notifications locally on your device. We do not use a push notification service and we do not collect a push token.</p>
 
   <h2>How We Use Your Data</h2>
   <ul>
-    <li>To authenticate your account and sync game progress across devices.</li>
-    <li>That's it. No marketing, no profiling, no behavioral analysis.</li>
+    <li>To authenticate your account and sync your game progress across devices.</li>
+    <li>To rank you on leaderboards, if you have not opted out.</li>
+    <li>To understand how the app is used, so we can improve the content and fix what's broken.</li>
+    <li>To diagnose and fix errors and crashes.</li>
   </ul>
+  <p>We do not sell your data, share it with data brokers, use it for advertising, or use it to build profiles for any purpose other than improving this app.</p>
 
   <h2>Third-Party Services</h2>
   <p>We use the following third-party services:</p>
   <ul>
     <li><strong>Supabase</strong> — authentication and cloud database for progress sync. <a href="https://supabase.com/privacy">Supabase Privacy Policy</a></li>
+    <li><strong>PostHog</strong> — product analytics and error diagnostics (US region). <a href="https://posthog.com/privacy">PostHog Privacy Policy</a></li>
     <li><strong>Google OAuth</strong> — for "Sign in with Google". <a href="https://policies.google.com/privacy">Google Privacy Policy</a></li>
     <li><strong>Apple Sign In</strong> — for "Sign in with Apple". <a href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a></li>
     <li><strong>Expo / EAS</strong> — app build and update infrastructure. <a href="https://expo.dev/privacy">Expo Privacy Policy</a></li>
   </ul>
-  <p>We do not use any advertising networks, analytics trackers, or third-party SDKs that collect user data.</p>
+  <p>We do not use any advertising networks, ad SDKs, or advertising identifiers.</p>
 
-  <h2>Data Storage & Security</h2>
+  <h2>Data Storage &amp; Security</h2>
   <ul>
-    <li>Guest data is stored locally on your device only.</li>
+    <li>Guest game progress is stored locally on your device only.</li>
     <li>Signed-in user data is stored in Supabase (hosted on AWS) with row-level security enabled.</li>
+    <li>Analytics and diagnostic events are stored by PostHog in the United States.</li>
     <li>Authentication tokens are stored securely on your device.</li>
     <li>All communication with our servers uses HTTPS encryption.</li>
   </ul>
 
   <h2>Data Retention</h2>
-  <p>Your data is retained as long as your account exists. If you delete your account, all associated data is permanently removed from our servers.</p>
+  <p>Account data is retained as long as your account exists. If you delete your account, all associated data is permanently removed from our servers. Analytics events are retained for 12 months from when they were recorded.</p>
 
   <h2>Your Rights</h2>
   <p>You can:</p>
   <ul>
-    <li><strong>Play without an account</strong> — use Guest mode with zero data collection.</li>
-    <li><strong>Request data deletion</strong> — email us and we will delete your account and all associated data within 30 days.</li>
+    <li><strong>Play without an account</strong> — Guest mode collects no personally identifying information.</li>
+    <li><strong>Delete your account in the app</strong> — Settings → Danger Zone → Delete Account. This permanently removes your account and all associated server-side data.</li>
+    <li><strong>Request data deletion by email</strong> — if you'd rather not use the in-app flow, email us and we will delete your account and all associated data within 30 days.</li>
+    <li><strong>Opt out of public leaderboards</strong> — Settings → Leaderboard.</li>
     <li><strong>Sign out</strong> — at any time from Settings within the app.</li>
   </ul>
 
