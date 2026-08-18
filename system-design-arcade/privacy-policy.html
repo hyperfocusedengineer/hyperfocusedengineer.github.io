@@ -38,7 +38,7 @@
 </head>
 <body>
   <h1>Privacy Policy</h1>
-  <p class="subtitle">System Design Arcade — by Hyperfocused Engineer<br>Effective date: August 9, 2026<br>Previous version: February 28, 2026</p>
+  <p class="subtitle">System Design Arcade — by Hyperfocused Engineer<br>Effective date: August 18, 2026<br>Previous versions: August 9, 2026; February 28, 2026</p>
 
   <h2>Overview</h2>
   <p>System Design Arcade is a mobile app that teaches system design concepts through interactive, arcade-style games. This policy explains what data we collect, why, and how we handle it.</p>
@@ -88,12 +88,13 @@
 
   <h2 id="coach">AI Design Coach (optional, off by default)</h2>
   <p>Some architecture challenges offer optional AI feedback. This is <strong>switched off unless you turn it on</strong>, and limited to a few uses per day.</p>
-  <p>If you enable it, the following is sent to our AI coaching service — a server we operate, which passes the request to a third-party language model — each time you ask for feedback:</p>
+  <p>If you enable it, the following is sent to our AI coaching service — a Cloudflare Worker we operate, which passes the request to <strong>Groq</strong> (running Meta's Llama models) — each time you ask for feedback:</p>
   <ul>
-    <li>The architecture you built, <strong>including any component names you typed</strong>.</li>
+    <li>The architecture you built, including the component names you typed. <strong>Before anything leaves your device</strong>, those names are truncated and stripped of email addresses, web addresses and long number sequences.</li>
     <li>The challenge brief and how your answer scored against it.</li>
-    <li>Your account identifier and a token proving you are signed in.</li>
+    <li>A token proving you are signed in. Our server checks it, uses the account id inside it only to count your daily requests, and stores neither.</li>
   </ul>
+  <p><strong>What is kept:</strong> our Worker does not log request contents and stores nothing. Groq states that it does not train models on API data and does not retain it by default; it may keep temporary logs for up to 30 days when investigating errors or abuse. See the <a href="https://console.groq.com/docs/your-data">Groq data policy</a>.</p>
   <p>Nothing is sent to this service unless you have switched the AI coach on. You can turn it off again at any time in Settings.</p>
 
   <h2>Leaderboards and Social Features</h2>
@@ -126,6 +127,7 @@
     <li><strong>Google OAuth</strong> — for "Sign in with Google". <a href="https://policies.google.com/privacy">Google Privacy Policy</a></li>
     <li><strong>Apple Sign In</strong> — for "Sign in with Apple". <a href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a></li>
     <li><strong>Cloudflare Workers</strong> — hosts our optional AI Design Coach service. <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare Privacy Policy</a></li>
+    <li><strong>Groq</strong> — runs the language model behind the optional AI Design Coach. <a href="https://groq.com/privacy-policy/">Groq Privacy Policy</a></li>
     <li><strong>Expo / EAS</strong> — app build and update infrastructure. <a href="https://expo.dev/privacy">Expo Privacy Policy</a></li>
   </ul>
   <p>We do not use any advertising networks, ad SDKs, or advertising identifiers.</p>
@@ -162,7 +164,7 @@
   <h2>Legal Basis, Transfers and Additional Rights</h2>
   <p>The data controller is Hyperfocused Engineer, contactable at the address below.</p>
   <p>Where the GDPR or UK GDPR applies, we rely on: <strong>performance of a contract</strong> for authentication and progress sync; <strong>legitimate interests</strong> for usage analytics and error diagnostics, so we can keep the app working and improve it; and <strong>your consent</strong> for the optional AI Design Coach, which you can withdraw at any time by switching it off.</p>
-  <p>Supabase, PostHog and our AI coaching service are hosted in the United States. Transfers out of the EEA and UK rely on the European Commission's Standard Contractual Clauses.</p>
+  <p>Supabase, PostHog, Groq and our AI coaching service are hosted in the United States. Transfers out of the EEA and UK rely on the European Commission's Standard Contractual Clauses.</p>
   <p>In addition to the controls listed above, you may request <strong>access</strong> to the personal data we hold about you, a <strong>portable copy</strong> of it, <strong>correction</strong> of anything inaccurate, <strong>restriction</strong> of processing, or <strong>object</strong> to processing based on legitimate interests. Email us and we will respond within 30 days. You also have the right to complain to your local data protection authority.</p>
   <p>For California residents: we <strong>do not sell or share</strong> your personal information as those terms are defined by the CCPA, and we have not done so in the preceding twelve months. The categories we collect are identifiers (email, account and device identifiers, IP address), internet activity (how you use the app), and approximate location limited to a country code.</p>
 
