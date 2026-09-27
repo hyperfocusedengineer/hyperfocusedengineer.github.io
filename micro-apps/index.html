@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Micro Apps — Hyperfocused Engineer</title>
+  <meta name="description" content="A family of small, focused iPhone apps built from one monorepo: Party Pack, Duo and more. By Hyperfocused Engineer.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #08090D;
+      --bg-card: #10121A;
+      --text: #EDEFF5;
+      --text-secondary: #A3ABBE;
+      --text-muted: #7C8599;
+      --border: rgba(255, 255, 255, 0.07);
+      --accent: #38BDF8;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Sora', -apple-system, sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed; top: -25%; right: -15%;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(249,115,22,0.07) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed; bottom: -25%; left: -15%;
+      width: 760px; height: 760px;
+      background: radial-gradient(circle, rgba(244,63,94,0.06) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+    .page { position: relative; z-index: 1; }
+    .back-link {
+      display: inline-flex; gap: 0.5rem; padding: 1.5rem 2rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+      color: var(--text-muted); text-decoration: none; letter-spacing: 0.05em;
+    }
+    .back-link:hover { color: var(--text); }
+    .hero { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 3.5rem; text-align: center; }
+    .hero-hook {
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: 1.15rem; color: #FDBA74; margin-bottom: 1.25rem;
+    }
+    .hero-title {
+      font-size: clamp(3rem, 9vw, 5.5rem); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95;
+      background: linear-gradient(135deg, #F97316 0%, #F43F5E 45%, #38BDF8 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 0.9rem;
+    }
+    .hero-tagline {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted);
+      letter-spacing: 0.28em; text-transform: uppercase; margin-bottom: 2rem;
+    }
+    .hero-desc { font-size: 1.15rem; font-weight: 300; color: var(--text-secondary); max-width: 640px; margin: 0 auto; }
+    .hero-desc em { color: var(--text); font-style: normal; font-weight: 400; }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 2rem;
+      padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-secondary);
+    }
+    .status-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: #FACC15; }
+    .section { max-width: 1100px; margin: 0 auto; padding: 3.5rem 1.5rem; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--accent);
+      letter-spacing: 0.12em; margin-bottom: 0.6rem;
+    }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; }
+    .section-hook { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.25rem; color: var(--accent); margin-top: 0.2rem; }
+    .section-desc { color: var(--text-secondary); max-width: 640px; margin: 0.75rem 0 2rem; }
+    .gallery {
+      display: grid; gap: 1.25rem;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    }
+    .phone { margin: 0; }
+    .phone img {
+      width: 100%; height: auto; display: block;
+      border-radius: 26px; border: 1px solid var(--border);
+      background: var(--bg-card);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+    }
+    .phone figcaption { margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45; }
+    .phone figcaption strong { display: block; color: var(--text); font-weight: 600; font-size: 0.95rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.75rem; color: var(--text-secondary);
+    }
+    .card p + p { margin-top: 0.9rem; }
+    .card strong { color: var(--text); font-weight: 600; }
+    .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+    .pill {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-secondary);
+      border: 1px solid var(--border); border-radius: 999px; padding: 0.35rem 0.8rem;
+    }
+    .footer {
+      max-width: 1100px; margin: 0 auto; padding: 3rem 1.5rem 4rem;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+    .footer a { color: var(--text-muted); text-decoration: none; }
+    .footer a:hover { color: var(--text); }
+    .footer-links { display: flex; gap: 1.25rem; }
+    @media (max-width: 520px) {
+      .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; }
+      .phone img { border-radius: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a class="back-link" href="../"><span>&larr;</span> hyperfocused engineer</a>
+
+    <section class="hero">
+      <div class="hero-hook">"One job each. Done well."</div>
+      <h1 class="hero-title">Micro Apps</h1>
+      <div class="hero-tagline">A family of small iPhone apps</div>
+      <p class="hero-desc">
+        Tiny, focused tools grouped into themed iPhone apps: <em>Party Pack</em> for game night and
+        <em>Duo</em> for couples, with more sets on the way. Every app is built from one shared codebase.
+      </p>
+      <div class="status-badge"><span class="dot"></span> In development &mdash; screenshots from the iOS simulator</div>
+    </section>
+
+    <section class="section" style="--accent: #F97316;">
+      <div class="section-label">// app one &middot; 6 micro-apps</div>
+      <h2 class="section-title">Party Pack</h2>
+      <p class="section-hook">Game night, sorted.</p>
+      <p class="section-desc">Quick games and scorers for any group. One phone, passed around the room.</p>
+      <div class="gallery">
+        <figure class="phone">
+          <img src="screenshots/party-pack-launcher.png" alt="Party Pack: Launcher screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>Launcher</strong><span>Search, favorites and categories across the set.</span></figcaption>
+        </figure>
+        <figure class="phone">
+          <img src="screenshots/party-pack-team-splitter.png" alt="Party Pack: Team Splitter screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>Team Splitter</strong><span>Fair random teams, with pairs you can keep apart.</span></figcaption>
+        </figure>
+        <figure class="phone">
+          <img src="screenshots/party-pack-who-pays.png" alt="Party Pack: Who Pays screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>Who Pays</strong><span>Spin for a payer or split the bill to the cent.</span></figcaption>
+        </figure>
+        <figure class="phone">
+          <img src="screenshots/party-pack-pass-the-bomb.png" alt="Party Pack: Pass the Bomb screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>Pass the Bomb</strong><span>Hot-potato word game with a secret fuse.</span></figcaption>
+        </figure>
+        <figure class="phone">
+          <img src="screenshots/party-pack-truth-or-dare.png" alt="Party Pack: Truth or Dare screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>Truth or Dare</strong><span>Friends, family and party decks, all kind and safe.</span></figcaption>
+        </figure>
+        <figure class="phone">
+          <img src="screenshots/party-pack-hot-seat.png" alt="Party Pack: Hot Seat screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>Hot Seat</strong><span>One player, sixty seconds, get-to-know questions.</span></figcaption>
+        </figure>
+        <figure class="phone">
+          <img src="screenshots/party-pack-tapscore.png" alt="Party Pack: TapScore screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>TapScore</strong><span>Eyes-free scorer for pickleball and box cricket.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="section" style="--accent: #F43F5E;">
+      <div class="section-label">// app two &middot; 5 micro-apps</div>
+      <h2 class="section-title">Duo</h2>
+      <p class="section-hook">For the two of you.</p>
+      <p class="section-desc">Small tools that make time together easier, and decisions shorter.</p>
+      <div class="gallery">
+        <figure class="phone">
+          <img src="screenshots/duo-launcher.png" alt="Duo: Launcher screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>Launcher</strong><span>Five couple tools, one home screen.</span></figcaption>
+        </figure>
+        <figure class="phone">
+          <img src="screenshots/duo-duodecide.png" alt="Duo: DuoDecide screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>DuoDecide</strong><span>Zero-debate dinner spinner and a partner wish vault.</span></figcaption>
+        </figure>
+        <figure class="phone">
+          <img src="screenshots/duo-date-jar.png" alt="Duo: Date Jar screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>Date Jar</strong><span>Ideas by budget, effort and setting. Pull one out.</span></figcaption>
+        </figure>
+        <figure class="phone">
+          <img src="screenshots/duo-love-notes.png" alt="Duo: Love Notes screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>Love Notes</strong><span>Queue short notes, get nudged, send in one tap.</span></figcaption>
+        </figure>
+        <figure class="phone">
+          <img src="screenshots/duo-chore-trade.png" alt="Duo: Chore Trade screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>Chore Trade</strong><span>Points for chores and a fair way to swap them.</span></figcaption>
+        </figure>
+        <figure class="phone">
+          <img src="screenshots/duo-pick-for-me.png" alt="Duo: Pick for Me screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>Pick for Me</strong><span>Two vetoes each, then let the app choose.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="section" style="--accent: #38BDF8;">
+      <div class="section-label">// development &middot; all micro-apps</div>
+      <h2 class="section-title">Everything build</h2>
+      <p class="section-hook">Every micro-app in one place.</p>
+      <p class="section-desc">The internal build that contains every set, used for development and testing.</p>
+      <div class="gallery">
+        <figure class="phone">
+          <img src="screenshots/all-launcher.png" alt="Everything build: Launcher screen" loading="lazy" width="600" height="1305">
+          <figcaption><strong>Launcher</strong><span>All fourteen micro-apps with search and filters.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">// how it&rsquo;s built</div>
+      <h2 class="section-title">One monorepo, many apps</h2>
+      <div class="card" style="margin-top: 1.5rem;">
+        <p>
+          Each iPhone app is a thin shell over a <strong>shared host</strong>: the same launcher, search,
+          favorites and detail sheet, with its own name, colours, icon and list of micro-apps.
+        </p>
+        <p>
+          Micro-apps never touch native code directly. They get one <strong>host services</strong> object for
+          haptics, storage, the step counter and links, so each app compiles in only the device features its
+          micro-apps actually use.
+        </p>
+        <p>
+          Tests check every app before it ships: the right native modules and permission strings, unique names
+          and icons, and very little overlap between sets, so each app stands on its own.
+        </p>
+        <div class="pills">
+          <span class="pill">Expo SDK 54</span>
+          <span class="pill">React Native 0.81</span>
+          <span class="pill">TypeScript</span>
+          <span class="pill">npm workspaces</span>
+          <span class="pill">Jest</span>
+          <span class="pill">On-device storage only</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <a href="../">Hyperfocused Engineer</a>
+      <div class="footer-links">
+        <a href="https://github.com/harshssd" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.youtube.com/@hyperfocusedengineer" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
