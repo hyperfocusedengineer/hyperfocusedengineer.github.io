@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Micro Apps — Hyperfocused Engineer</title>
   <meta name="description" content="A family of small, focused iPhone apps built from one monorepo: Party Pack, Duo and more. By Hyperfocused Engineer.">
-  <meta name="robots" content="noindex">
+  <!-- Intentionally unlinked from the home page while the apps are in development. -->
+  <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -49,6 +50,9 @@
       color: var(--text-muted); text-decoration: none; letter-spacing: 0.05em;
     }
     .back-link:hover { color: var(--text); }
+    .back-link:focus-visible, .footer a:focus-visible {
+      color: var(--text); outline: 2px solid #FDBA74; outline-offset: 3px; border-radius: 4px;
+    }
     .hero { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 3.5rem; text-align: center; }
     .hero-hook {
       font-family: 'Instrument Serif', serif; font-style: italic;
@@ -141,31 +145,31 @@
       <p class="section-desc">Quick games and scorers for any group. One phone, passed around the room.</p>
       <div class="gallery">
         <figure class="phone">
-          <img src="screenshots/party-pack-launcher.png" alt="Party Pack: Launcher screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/party-pack-launcher.webp" alt="Party Pack launcher with a search box, category and sort chips, and a grid of six game cards" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>Launcher</strong><span>Search, favorites and categories across the set.</span></figcaption>
         </figure>
         <figure class="phone">
-          <img src="screenshots/party-pack-team-splitter.png" alt="Party Pack: Team Splitter screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/party-pack-team-splitter.webp" alt="Team Splitter with six players listed, a team count of two and keep-apart options" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>Team Splitter</strong><span>Fair random teams, with pairs you can keep apart.</span></figcaption>
         </figure>
         <figure class="phone">
-          <img src="screenshots/party-pack-who-pays.png" alt="Party Pack: Who Pays screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/party-pack-who-pays.webp" alt="Who Pays in spin mode with four names ready and a large Spin button" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>Who Pays</strong><span>Spin for a payer or split the bill to the cent.</span></figcaption>
         </figure>
         <figure class="phone">
-          <img src="screenshots/party-pack-pass-the-bomb.png" alt="Party Pack: Pass the Bomb screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/party-pack-pass-the-bomb.webp" alt="Pass the Bomb category picker with seven decks and a Light the fuse button" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>Pass the Bomb</strong><span>Hot-potato word game with a secret fuse.</span></figcaption>
         </figure>
         <figure class="phone">
-          <img src="screenshots/party-pack-truth-or-dare.png" alt="Party Pack: Truth or Dare screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/party-pack-truth-or-dare.webp" alt="Truth or Dare showing whose turn it is with Truth, Dare and Random buttons" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>Truth or Dare</strong><span>Friends, family and party decks, all kind and safe.</span></figcaption>
         </figure>
         <figure class="phone">
-          <img src="screenshots/party-pack-hot-seat.png" alt="Party Pack: Hot Seat screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/party-pack-hot-seat.webp" alt="Hot Seat with a turn-length picker and four players in seat order" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>Hot Seat</strong><span>One player, sixty seconds, get-to-know questions.</span></figcaption>
         </figure>
         <figure class="phone">
-          <img src="screenshots/party-pack-tapscore.png" alt="Party Pack: TapScore screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/party-pack-tapscore.webp" alt="TapScore with two large team score panels, undo buttons and a serve indicator" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>TapScore</strong><span>Eyes-free scorer for pickleball and box cricket.</span></figcaption>
         </figure>
       </div>
@@ -177,27 +181,27 @@
       <p class="section-desc">Small tools that make time together easier, and decisions shorter.</p>
       <div class="gallery">
         <figure class="phone">
-          <img src="screenshots/duo-launcher.png" alt="Duo: Launcher screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/duo-launcher.webp" alt="Duo launcher with search, filters and cards for five couple apps" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>Launcher</strong><span>Five couple tools, one home screen.</span></figcaption>
         </figure>
         <figure class="phone">
-          <img src="screenshots/duo-duodecide.png" alt="Duo: DuoDecide screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/duo-duodecide.webp" alt="DuoDecide dinner spinner above a list of saved partner wishes" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>DuoDecide</strong><span>Zero-debate dinner spinner and a partner wish vault.</span></figcaption>
         </figure>
         <figure class="phone">
-          <img src="screenshots/duo-date-jar.png" alt="Duo: Date Jar screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/duo-date-jar.webp" alt="Date Jar with budget, effort and setting filters and a Pull from the jar button" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>Date Jar</strong><span>Ideas by budget, effort and setting. Pull one out.</span></figcaption>
         </figure>
         <figure class="phone">
-          <img src="screenshots/duo-love-notes.png" alt="Duo: Love Notes screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/duo-love-notes.webp" alt="Love Notes showing the next queued note, a send button and note ideas" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>Love Notes</strong><span>Queue short notes, get nudged, send in one tap.</span></figcaption>
         </figure>
         <figure class="phone">
-          <img src="screenshots/duo-chore-trade.png" alt="Duo: Chore Trade screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/duo-chore-trade.webp" alt="Chore Trade balance card for two partners and chips for logging a chore" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>Chore Trade</strong><span>Points for chores and a fair way to swap them.</span></figcaption>
         </figure>
         <figure class="phone">
-          <img src="screenshots/duo-pick-for-me.png" alt="Duo: Pick for Me screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/duo-pick-for-me.webp" alt="Pick for Me with list tabs, remaining vetoes and a list of movie options" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>Pick for Me</strong><span>Two vetoes each, then let the app choose.</span></figcaption>
         </figure>
       </div>
@@ -209,7 +213,7 @@
       <p class="section-desc">The internal build that contains every set, used for development and testing.</p>
       <div class="gallery">
         <figure class="phone">
-          <img src="screenshots/all-launcher.png" alt="Everything build: Launcher screen" loading="lazy" width="600" height="1305">
+          <img src="screenshots/all-launcher.webp" alt="Development launcher listing all fourteen micro-apps with search and filters" loading="lazy" decoding="async" width="600" height="1304">
           <figcaption><strong>Launcher</strong><span>All fourteen micro-apps with search and filters.</span></figcaption>
         </figure>
       </div>
@@ -229,7 +233,7 @@
           micro-apps actually use.
         </p>
         <p>
-          Tests check every app before it ships: the right native modules and permission strings, unique names
+          Tests check every app on each build: the right native modules and permission strings, unique names
           and icons, and very little overlap between sets, so each app stands on its own.
         </p>
         <div class="pills">
