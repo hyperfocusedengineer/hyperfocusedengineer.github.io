@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["KC6Z35W95Z.com.hyperfocused.hyperfit"],
+        "appID": "KC6Z35W95Z.com.hyperfocused.hyperfit",
+        "components": [
+          { "/": "/hyperfit/buddy/*", "comment": "HyperFit training buddy invites" }
+        ],
+        "paths": ["/hyperfit/buddy/*"]
+      }
+    ]
+  }
+}

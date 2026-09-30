@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Training buddy invite · HyperFit</title>
+  <meta name="description" content="You've been invited to be training buddies on HyperFit.">
+  <meta property="og:title" content="Be my training buddy on HyperFit">
+  <meta property="og:description" content="One person who notices: each other's training days and last workout, one nudge a day. No leaderboard.">
+  <meta property="og:type" content="website">
+  <script>
+    // The invite code from ?code= (16 hex characters). Safari's App Store
+    // banner hands the whole link to the app, which opens the invite.
+    (function () {
+      var raw = new URLSearchParams(location.search).get('code') || '';
+      var code = raw.toLowerCase().replace(/[\s-]/g, '');
+      window.BUDDY_CODE = /^[0-9a-f]{16}$/.test(code) ? code : null;
+      var arg = window.BUDDY_CODE ? location.origin + '/hyperfit/buddy/?code=' + window.BUDDY_CODE : location.href;
+      document.write('<meta name="apple-itunes-app" content="app-id=6765838078, app-argument=' + arg.replace(/"/g, '') + '">');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      /* HyperFit palette — see HyperFit/src/styles/theme.ts */
+      --bg: #0a0a0a;
+      --surface: #18181b;
+      --border: #27272a;
+      --text-primary: #ffffff;
+      --text-secondary: #d4d4d8;
+      --text-tertiary: #a1a1aa;
+      --lift: #fc4c02;
+      --on-lift: #0a0a0a;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text-secondary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      padding: max(24px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+      display: flex;
+      justify-content: center;
+    }
+    main { width: 100%; max-width: 440px; display: grid; gap: 20px; align-content: start; }
+    .wordmark { font-weight: 900; font-size: 20px; letter-spacing: 0.02em; color: var(--text-primary); }
+    .wordmark b { color: var(--lift); font-weight: 900; }
+    .eyebrow { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; color: var(--text-tertiary); text-transform: uppercase; }
+    h1 { color: var(--text-primary); font-size: 26px; font-weight: 800; line-height: 1.2; letter-spacing: -0.01em; }
+    p { font-size: 15px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: grid; gap: 6px; }
+    .code { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 22px; font-weight: 800; letter-spacing: 0.08em; color: var(--text-primary); word-break: break-all; }
+    .button {
+      display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 12px;
+      font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 800; font-size: 13px; letter-spacing: 0.12em;
+      text-decoration: none; text-transform: uppercase; border: 1px solid var(--lift); cursor: pointer; width: 100%;
+    }
+    .primary { background: var(--lift); color: var(--on-lift); }
+    .secondary { background: transparent; color: var(--lift); }
+    .button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+    ol { padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
+    .note { font-size: 13px; color: var(--text-tertiary); }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="wordmark">HYPER<b>FIT</b></div>
+
+    <section id="invite" hidden>
+      <div style="display:grid; gap:12px">
+        <div class="eyebrow">Training buddy invite</div>
+        <h1>You've been invited to be training buddies.</h1>
+        <p>You'll each see the other's training days this week, their weekly goal, and the name and time of their last workout — nothing else. No leaderboard. One nudge a day.</p>
+      </div>
+      <div class="card" style="margin-top:20px">
+        <div class="eyebrow">Your invite code</div>
+        <div class="code" id="code"></div>
+      </div>
+      <div style="display:grid; gap:10px; margin-top:20px">
+        <a class="button primary" id="get" href="https://apps.apple.com/app/id6765838078">Get HyperFit</a>
+        <a class="button secondary" id="open">I have HyperFit — open it</a>
+      </div>
+      <div class="card" style="margin-top:20px">
+        <div class="eyebrow">New to HyperFit?</div>
+        <ol>
+          <li>Get HyperFit (the code is copied for you).</li>
+          <li>Sign up, then open <strong>Profile → Training buddy</strong>.</li>
+          <li>Paste the code and tap <strong>JOIN</strong>.</li>
+        </ol>
+      </div>
+      <p class="note" id="android" hidden style="margin-top:16px">HyperFit is on iPhone for now. Open this link on an iPhone, or keep the code for later.</p>
+      <p class="note" style="margin-top:16px">This invite is for one person and works for 7 days.</p>
+    </section>
+
+    <section id="broken" hidden>
+      <div style="display:grid; gap:12px">
+        <div class="eyebrow">Training buddy invite</div>
+        <h1>This invite link looks incomplete.</h1>
+        <p>Ask your buddy to share it again — or, in HyperFit, open Profile → Training buddy and type the code they sent.</p>
+        <a class="button primary" href="https://apps.apple.com/app/id6765838078" style="margin-top:8px">Get HyperFit</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var code = window.BUDDY_CODE;
+      if (!code) {
+        document.getElementById('broken').hidden = false;
+        return;
+      }
+      document.getElementById('invite').hidden = false;
+      document.getElementById('code').textContent = code.replace(/(.{4})(?=.)/g, '$1 ').toUpperCase();
+      // The app's own scheme, for when this page shows although HyperFit is installed
+      // (an in-app browser, or a build from before https links).
+      document.getElementById('open').href = 'hyperfit://buddy/' + code;
+      if (/android/i.test(navigator.userAgent)) document.getElementById('android').hidden = false;
+
+      // Copy the code on the way to the App Store, so it survives the install.
+      document.getElementById('get').addEventListener('click', function (e) {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) return;
+        e.preventDefault();
+        var href = this.href;
+        navigator.clipboard.writeText(code).catch(function () {}).then(function () {
+          location.href = href;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
