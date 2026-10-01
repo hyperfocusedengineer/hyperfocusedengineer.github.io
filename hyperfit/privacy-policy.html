@@ -53,7 +53,7 @@
 <body>
   <a href="./" class="back-link">&larr; HyperFit</a>
   <h1>Privacy Policy</h1>
-  <div class="updated">Last updated: 7 May 2026</div>
+  <div class="updated">Last updated: 1 October 2026</div>
 
   <p>HyperFit ("we", "the app") is a personal workout and nutrition tracker. This policy explains what data we collect, why, and what control you have over it.</p>
 
@@ -64,13 +64,21 @@
     <li><strong>Workout logs</strong> — the sets, reps, weights, exercises, plans, and rest-timer data you enter. Stored server-side so they sync across devices.</li>
     <li><strong>Nutrition logs</strong> — meals, macros, water taps, and goals you enter. Same storage model.</li>
     <li><strong>Health-adjacent inputs</strong> — body weight or units (kg/lb, ml/oz) you set in Settings. Stored only with your account.</li>
+    <li><strong>Apple Health (optional, iPhone only)</strong> — only if you turn it on in Profile &rarr; Apple Health, and only what iOS lets you allow:
+      <ul>
+        <li><em>Written to Health:</em> each workout you finish, as a strength-training workout with its start and end time. Nothing else — HyperFit doesn't measure calories or heart rate, so it never claims any.</li>
+        <li><em>Read from Health and stored with your account:</em> body weight, to fill in days you haven't logged a weigh-in in HyperFit. A weigh-in you typed always wins; a day you delete stays deleted.</li>
+        <li><em>Read from Health and kept on your iPhone only:</em> your daily step count and cardio workouts (runs, rides, walks, rows, swims, from your Watch or other apps), shown on Home next to your lifting and in last week's recap. These are never sent to our servers, never used for advertising, and never shared.</li>
+      </ul>
+      Turn it off at any time in HyperFit (Profile &rarr; Apple Health &rarr; Turn Off) or in the Health app (your picture &rarr; Privacy &rarr; Apps &rarr; HyperFit). What's already in Health stays yours there.
+    </li>
     <li><strong>Product usage events</strong> — which screens you visit and which actions you take in the app (e.g. workout started, meal logged, water tapped). Sent to <a href="https://posthog.com/" target="_blank" rel="noopener">PostHog</a> (US region) so we can see which features people use and where they get stuck. Linked to your account ID after you sign in; anonymous before that. We do <strong>not</strong> send the contents of your workouts or meals — only event names and a small set of metadata fields like meal slot or set count.</li>
     <li><strong>Crash diagnostics</strong> — uncaught JavaScript errors are sent to PostHog so we can fix what breaks. Includes the error message and stack; does not include your data.</li>
   </ul>
 
   <h2>What we don't collect</h2>
   <ul>
-    <li>No HealthKit access, no advertising IDs, no device fingerprints.</li>
+    <li>No advertising IDs, no device fingerprints. Health data only with your explicit permission, as described above — and steps and cardio never leave your iPhone.</li>
     <li>No cross-app tracking. We do not link your data to data from other companies for advertising or share with data brokers.</li>
     <li>No advertising SDKs (no Google AdMob, no Facebook SDK, no Firebase Analytics).</li>
     <li>No location data.</li>
