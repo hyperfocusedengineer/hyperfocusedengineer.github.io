@@ -38,7 +38,7 @@
 </head>
 <body>
   <h1>Privacy Policy</h1>
-  <p class="subtitle">System Design Arcade — by Hyperfocused Engineer<br>Effective date: August 18, 2026<br>Previous versions: August 9, 2026; February 28, 2026</p>
+  <p class="subtitle">System Design Arcade — by Hyperfocused Engineer<br>Effective date: October 2, 2026<br>Previous versions: August 18, 2026; August 9, 2026; February 28, 2026</p>
 
   <h2>Overview</h2>
   <p>System Design Arcade is a mobile app that teaches system design concepts through interactive, arcade-style games. This policy explains what data we collect, why, and how we handle it.</p>
@@ -97,6 +97,13 @@
   <p><strong>What is kept:</strong> our Worker does not log request contents and stores nothing. Groq states that it does not train models on API data and does not retain it by default; it may keep temporary logs for up to 30 days when investigating errors or abuse. See the <a href="https://console.groq.com/docs/your-data">Groq data policy</a>.</p>
   <p>Nothing is sent to this service unless you have switched the AI coach on. You can turn it off again at any time in Settings.</p>
 
+  <h2 id="on-device-ai">"Explain it differently" (on-device AI)</h2>
+  <p>After a wrong answer, some phones offer a button that rewords the explanation. The rewording is done by a language model that runs <strong>on your phone</strong>: Apple's on-device model on iPhone (Apple Intelligence), and Google's Gemini Nano on supported Android phones. The model is given the explanation and, for some challenges, the app's own notes on what your answer was missing. <strong>They are not sent to us, to Apple or to Google</strong>, and the reworded text is not stored.</p>
+  <p>Our usage analytics record that you tapped the button, which kind of model answered, and whether it produced a rewording (or an error code if it failed). They never include the text.</p>
+  <p><strong>On Android</strong>, the model is provided through Google's <strong>ML Kit</strong>. ML Kit sends Google its own diagnostics and usage statistics: your device's manufacturer, model and OS version, our app's package name and version, performance figures such as how long a request took, event types (such as starting the feature or downloading the model), error codes and the configured language. Google uses this for diagnostics and usage analytics, sends it over HTTPS, and states that it does not pass it to third parties. See <a href="https://developers.google.com/ml-kit/android-data-disclosure">ML Kit data disclosure</a>.</p>
+  <p>If Gemini Nano is not yet on your Android phone, Settings offers to download it. The download only starts when you tap it, and it comes from Google through the phone's own system service.</p>
+  <p>The button only appears when the phone has a model ready, and using it is always your choice. If you never tap it, nothing on this list happens.</p>
+
   <h2>Leaderboards and Social Features</h2>
   <p>System Design Arcade has public leaderboards. If you are signed in and appear on one, the following is <strong>publicly visible — including to people who are not signed in</strong>:</p>
   <ul>
@@ -129,6 +136,7 @@
     <li><strong>GitHub OAuth</strong> — for "Sign in with GitHub". <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a></li>
     <li><strong>Cloudflare Workers</strong> — hosts our optional AI Design Coach service. <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare Privacy Policy</a></li>
     <li><strong>Groq</strong> — runs the language model behind the optional AI Design Coach. <a href="https://groq.com/privacy-policy/">Groq Privacy Policy</a></li>
+    <li><strong>Google ML Kit</strong> (Android only) — provides the on-device model for "Explain it differently" and sends Google its own diagnostics, as described <a href="#on-device-ai">above</a>. <a href="https://developers.google.com/ml-kit/android-data-disclosure">ML Kit data disclosure</a></li>
     <li><strong>Expo / EAS</strong> — app build and update infrastructure. <a href="https://expo.dev/privacy">Expo Privacy Policy</a></li>
   </ul>
   <p>We do not use any advertising networks, ad SDKs, or advertising identifiers.</p>
@@ -165,7 +173,7 @@
   <h2>Legal Basis, Transfers and Additional Rights</h2>
   <p>The data controller is Hyperfocused Engineer, contactable at the address below.</p>
   <p>Where the GDPR or UK GDPR applies, we rely on: <strong>performance of a contract</strong> for authentication and progress sync; <strong>legitimate interests</strong> for usage analytics and error diagnostics, so we can keep the app working and improve it; and <strong>your consent</strong> for the optional AI Design Coach, which you can withdraw at any time by switching it off.</p>
-  <p>Supabase, PostHog, Groq and our AI coaching service are hosted in the United States. Transfers out of the EEA and UK rely on the European Commission's Standard Contractual Clauses.</p>
+  <p>Supabase, PostHog, Groq and our AI coaching service are hosted in the United States, and Google may process ML Kit diagnostics outside your country. Transfers out of the EEA and UK rely on the European Commission's Standard Contractual Clauses.</p>
   <p>In addition to the controls listed above, you may request <strong>access</strong> to the personal data we hold about you, a <strong>portable copy</strong> of it, <strong>correction</strong> of anything inaccurate, <strong>restriction</strong> of processing, or <strong>object</strong> to processing based on legitimate interests. Email us and we will respond within 30 days. You also have the right to complain to your local data protection authority.</p>
   <p>For California residents: we <strong>do not sell or share</strong> your personal information as those terms are defined by the CCPA, and we have not done so in the preceding twelve months. The categories we collect are identifiers (email, account and device identifiers, IP address), internet activity (how you use the app), and approximate location limited to a country code.</p>
 
