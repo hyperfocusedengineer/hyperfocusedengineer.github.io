@@ -72,7 +72,7 @@
   <ul>
     <li>Screens you open and the order you move between them.</li>
     <li>Games and levels started, completed, or abandoned; scores and streaks.</li>
-    <li>Whether a challenge answer was correct, and what type of challenge it was. <strong>We do not record the content of your answers in analytics</strong> — only correct/incorrect and the challenge type. The optional AI Design Coach is the one exception; see <a href="#coach">below</a>.</li>
+    <li>Whether a challenge answer was correct, and what type of challenge it was. <strong>We do not record the content of your answers in analytics</strong> — only correct/incorrect and the challenge type. What you send to the optional cloud AI Coach is separate from analytics; see <a href="#coach">below</a>.</li>
     <li>Which features you tap (share, leaderboard, hints, daily challenge, theme settings, and similar).</li>
     <li>App version and build, operating system and version, device type, and language.</li>
     <li>Your IP address, which PostHog receives with each event and uses to derive an approximate region.</li>
@@ -86,22 +86,29 @@
   <p>Error messages can occasionally contain incidental data such as an account identifier or a file path. We make a best effort to keep personal data out of these reports and are actively improving how they are filtered before they leave your device.</p>
   <p>We do not collect crash reports from the operating system itself.</p>
 
-  <h2 id="coach">AI Design Coach (optional, off by default)</h2>
-  <p>Some architecture challenges offer optional AI feedback. This is <strong>switched off unless you turn it on</strong>, and limited to a few uses per day.</p>
-  <p>If you enable it, the following is sent to our AI coaching service — a Cloudflare Worker we operate, which passes the request to <strong>Groq</strong> (running Meta's Llama models) — each time you ask for feedback:</p>
+  <h2 id="coach">AI Coach (cloud; optional, off by default)</h2>
+  <p>The app has an optional cloud AI Coach. It is <strong>switched off unless you turn it on</strong> (Settings → AI Coach (cloud)), needs you to be signed in, and is limited to a set number of uses in any 24 hours. When it is on, it is used in two places:</p>
   <ul>
-    <li>The architecture you built, including the component names you typed. <strong>Before anything leaves your device</strong>, those names are truncated and stripped of email addresses, web addresses and long number sequences.</li>
-    <li>The challenge brief and how your answer scored against it.</li>
-    <li>A token proving you are signed in. Our server checks it, uses the account id inside it only to count your daily requests, and stores neither.</li>
+    <li><strong>Design feedback.</strong> After you submit an architecture in a design challenge, it writes feedback on it.</li>
+    <li><strong>"Ask the coach" questions</strong>, on phones without built-in AI only. After you answer a challenge you can ask a follow-up question about it. On phones with built-in AI the question is answered on the phone instead and never sent to us (see <a href="#on-device-ai">below</a>).</li>
   </ul>
-  <p><strong>What is kept:</strong> our Worker does not log request contents and stores nothing. Groq states that it does not train models on API data and does not retain it by default; it may keep temporary logs for up to 30 days when investigating errors or abuse. See the <a href="https://console.groq.com/docs/your-data">Groq data policy</a>.</p>
-  <p>Nothing is sent to this service unless you have switched the AI coach on. You can turn it off again at any time in Settings.</p>
+  <p>Each time it is used, the following is sent to our AI coaching service — a Cloudflare Worker we operate, which passes the request to <strong>Groq</strong> (running Meta's Llama models):</p>
+  <ul>
+    <li><strong>For design feedback:</strong> the architecture you built, including the component names you typed, and the challenge brief and how your answer scored against it.</li>
+    <li><strong>For a question:</strong> the question — one you picked from the app's list, or the words you typed — which challenge it is about (an identifier; our server looks up the challenge text itself), and the app's own notes on what was wrong with your answer, if anything was (for example "Missing: Cache").</li>
+    <li><strong>Before anything leaves your device</strong>, what you typed is shortened and stripped of email addresses, links and most web addresses, phone numbers, long number sequences and @handles. Other things you type, such as a person's name, are not removed, so please don't type personal details into the coach.</li>
+    <li>A token proving you are signed in. Our server checks it and uses the account id inside it only to count your daily requests (see below). The token itself is not stored.</li>
+  </ul>
+  <p><strong>What is kept:</strong> our Worker does not log or store what you send. To enforce the daily limits it keeps a <strong>request count</strong> and the time the current 24-hour period started, filed under a code derived from your account id rather than the id itself (pseudonymous: we could work out which account it belongs to), and deletes it a day after your last request. It also keeps a count of all requests from everyone, which is not linked to you, and uses your IP address briefly (about a minute) to limit bursts of requests. Groq states that it does not train models on API data and does not retain it by default; it may keep temporary logs for up to 30 days when investigating errors or abuse. See the <a href="https://console.groq.com/docs/your-data">Groq data policy</a>.</p>
+  <p>Our usage analytics record that a question was asked, which kind (one from the list, or your own), the challenge type, which coach answered (on the phone or in the cloud), the outcome or an error code if it failed, and, if you tap "Report this answer", that you reported it and which challenge it was about. They never include the question or the answer.</p>
+  <p>Nothing is sent to this service unless you have switched the AI Coach on. You can turn it off again at any time in Settings.</p>
 
-  <h2 id="on-device-ai">"Explain it differently" (on-device AI)</h2>
+  <h2 id="on-device-ai">On-device AI: "Explain it differently" and "Ask the coach"</h2>
   <p>After a wrong or partly wrong answer, some phones offer a button that rewords the explanation. The rewording is done by a language model that runs <strong>on your phone</strong>: Apple's on-device model on iPhone (Apple Intelligence), and Google's Gemini Nano on supported Android phones. The model is given the explanation and, for architecture challenges, the app's own notes on what was wrong with your answer (for example a missing part, or a connection drawn the wrong way). <strong>That text is not sent to us, to Apple or to Google</strong> (on Android, Google learns only how long it was; see below), and the reworded text is not stored.</p>
-  <p>Our usage analytics record that you tapped the button, which kind of model was used, whether the app had notes on your answer to give it, and whether it produced a rewording (or an error code if it failed). On Android they also record when you start a model download from Settings and whether it finished or failed. They never include any of the text.</p>
+  <p><strong>"Ask the coach"</strong> works the same way on those phones. After you answer a challenge you can ask a follow-up question about it, picked from a list or typed. The on-device model is given your question, the challenge, its correct answer and explanation, and the app's notes on your answer if it was wrong. <strong>None of it is sent to us, to Apple or to Google</strong> (on Android, Google learns only how long it was; see below), and the answer is not stored. On phones without built-in AI, the coach is only available through the optional cloud AI Coach <a href="#coach">above</a>.</p>
+  <p>Our usage analytics record that you tapped the button, which kind of model was used, whether the app had notes on your answer to give it, and whether it produced a rewording (or an error code if it failed). For "Ask the coach" they record the kind of question (one from the list, or your own), the challenge type, which kind of model answered, the outcome or an error code if it failed, and — if you tap "Report this answer" — that you reported it and for which challenge. On Android they also record when you start a model download from Settings and whether it finished or failed. They never include any of the text.</p>
   <p><strong>On Android</strong>, the model is provided through Google's <strong>ML Kit</strong>, and ML Kit sends Google its own diagnostics and usage statistics. These include your device's manufacturer, model, OS version and build, and its ML hardware; our app's package name and version; identifiers, including a per-installation identifier that Google says is not meant to identify you or your phone; performance figures such as how long a request took; the size of the input and output (how long the text was, never the text itself); the feature version and settings; event types (such as starting the feature or downloading the model); error codes; and the configured language. Google uses this for diagnostics and usage analytics, sends it over HTTPS, and states that it does not pass it to third parties. See the <a href="https://developers.google.com/ml-kit/android-data-disclosure">ML Kit data disclosure</a>.</p>
-  <p>This happens on Android phones that support Gemini Nano even if you never tap the button: the app asks ML Kit whether the model is ready when you open Settings and when it shows the explanation for a wrong answer, and ML Kit can report those checks.</p>
+  <p>This happens on Android phones that support Gemini Nano even if you never tap the button: the app asks ML Kit whether the model is ready when you open Settings and after you answer a challenge, and ML Kit can report those checks.</p>
   <p>If Gemini Nano is not yet on your Android phone, Settings offers to download it. The download only starts when you tap it and confirm, and it comes from Google through the phone's own system service.</p>
 
   <h2>Leaderboards and Social Features</h2>
@@ -134,9 +141,9 @@
     <li><strong>Google OAuth</strong> — for "Sign in with Google". <a href="https://policies.google.com/privacy">Google Privacy Policy</a></li>
     <li><strong>Apple Sign In</strong> — for "Sign in with Apple". <a href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a></li>
     <li><strong>GitHub OAuth</strong> — for "Sign in with GitHub". <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a></li>
-    <li><strong>Cloudflare Workers</strong> — hosts our optional AI Design Coach service. <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare Privacy Policy</a></li>
-    <li><strong>Groq</strong> — runs the language model behind the optional AI Design Coach. <a href="https://groq.com/privacy-policy/">Groq Privacy Policy</a></li>
-    <li><strong>Google ML Kit</strong> (Android only) — provides the on-device model for "Explain it differently" and sends Google its own diagnostics, as described <a href="#on-device-ai">above</a>. <a href="https://developers.google.com/ml-kit/android-data-disclosure">ML Kit data disclosure</a></li>
+    <li><strong>Cloudflare Workers</strong> — hosts our optional cloud AI Coach service. <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare Privacy Policy</a></li>
+    <li><strong>Groq</strong> — runs the language model behind the optional cloud AI Coach. <a href="https://groq.com/privacy-policy/">Groq Privacy Policy</a></li>
+    <li><strong>Google ML Kit</strong> (Android only) — provides the on-device model for "Explain it differently" and "Ask the coach" and sends Google its own diagnostics, as described <a href="#on-device-ai">above</a>. <a href="https://developers.google.com/ml-kit/android-data-disclosure">ML Kit data disclosure</a></li>
     <li><strong>Expo / EAS</strong> — app build and update infrastructure. <a href="https://expo.dev/privacy">Expo Privacy Policy</a></li>
   </ul>
   <p>We do not use any advertising networks, ad SDKs, or advertising identifiers.</p>
@@ -166,14 +173,14 @@
     <li><strong>Delete your account in the app</strong> — Settings → Data → Delete Account. This permanently removes your account and all associated server-side data.</li>
     <li><strong>Request data deletion by email</strong> — if you'd rather not use the in-app flow, email us and we will delete your account and all associated data within 30 days.</li>
     <li><strong>Opt out of public leaderboards</strong> — Settings → Privacy.</li>
-    <li><strong>Turn off the AI Design Coach</strong> — Settings. It is off by default.</li>
+    <li><strong>Turn off the cloud AI Coach</strong> — Settings → AI Coach (cloud). It is off by default.</li>
     <li><strong>Object to ML Kit diagnostics</strong> — there is no in-app switch for the diagnostics Google's ML Kit collects on Android. Email us if you object, and we will tell you what we can do.</li>
     <li><strong>Sign out</strong> — at any time from Settings within the app.</li>
   </ul>
 
   <h2>Legal Basis, Transfers and Additional Rights</h2>
   <p>The data controller is Hyperfocused Engineer, contactable at the address below.</p>
-  <p>Where the GDPR or UK GDPR applies, we rely on: <strong>performance of a contract</strong> for authentication and progress sync; <strong>legitimate interests</strong> for usage analytics and error diagnostics, so we can keep the app working and improve it, and for the on-device "Explain it differently" feature, including the diagnostics Google's ML Kit collects on Android so the feature can work and be maintained; and <strong>your consent</strong> for the optional AI Design Coach, which you can withdraw at any time by switching it off.</p>
+  <p>Where the GDPR or UK GDPR applies, we rely on: <strong>performance of a contract</strong> for authentication and progress sync; <strong>legitimate interests</strong> for usage analytics and error diagnostics, so we can keep the app working and improve it, and for the on-device "Explain it differently" and "Ask the coach" features, including the diagnostics Google's ML Kit collects on Android so the features can work and be maintained; and <strong>your consent</strong> for the optional cloud AI Coach, which you can withdraw at any time by switching it off.</p>
   <p>Supabase, PostHog, Groq and our AI coaching service are hosted in the United States. Transfers of the data we hold out of the EEA and UK rely on the European Commission's Standard Contractual Clauses. Google handles ML Kit diagnostics under its own terms and may process them outside your country; see the ML Kit data disclosure linked above.</p>
   <p>In addition to the controls listed above, you may request <strong>access</strong> to the personal data we hold about you, a <strong>portable copy</strong> of it, <strong>correction</strong> of anything inaccurate, <strong>restriction</strong> of processing, or <strong>object</strong> to processing based on legitimate interests. Email us and we will respond within 30 days. You also have the right to complain to your local data protection authority.</p>
   <p>For California residents: we <strong>do not sell or share</strong> your personal information as those terms are defined by the CCPA, and we have not done so in the preceding twelve months. The categories we collect are identifiers (email, account and device identifiers, IP address), internet activity (how you use the app), and approximate location limited to a country code.</p>
