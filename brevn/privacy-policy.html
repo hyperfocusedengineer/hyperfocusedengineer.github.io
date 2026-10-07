@@ -31,7 +31,7 @@
     }
     p, li { margin-bottom: 0.75rem; color: #3f3f46; }
     ul { padding-left: 1.25rem; }
-    a { color: #2563eb; text-decoration: none; }
+    a { color: #2563eb; text-decoration: underline; }
     a:hover { text-decoration: underline; }
     strong { color: #18181b; }
     .subtitle { color: #71717a; font-size: 0.9rem; margin-bottom: 2rem; }
@@ -40,76 +40,84 @@
 </head>
 <body>
   <h1>Privacy Policy</h1>
-  <p class="subtitle">Brevn — by Hyperfocused Labs<br>Effective date: May 6, 2026</p>
+  <p class="subtitle">Brevn, by Hyperfocused Labs<br>Effective date: October 6, 2026</p>
 
   <h2>Overview</h2>
-  <p>Brevn is an iOS app that measures whether you actually focused during a deep-work session, using brief reaction-time and alertness checks. Your privacy matters to us. This policy explains what data we collect, why, and how we handle it.</p>
-  <p><strong>The short version:</strong> Brevn is local-first. Your session data lives on your device. We don't sell, share, or train on it. We don't run ads. We don't track you.</p>
+  <p>Brevn is a focus timer for iPhone and Apple Watch, with a Mac app to come. You start a session, optionally answer two short questions when it ends, and over time Brevn shows when, and for how long, you focus best. This policy explains what data Brevn handles, where it goes, and the choices you have.</p>
+  <p><strong>The short version:</strong> your sessions stay on your device unless you sign in, in which case they are kept in your Brevn account so your devices agree. Health readings go to your account only if you turn that on. We use anonymous usage analytics to improve the app. We don't sell your data, show ads, or track you across other companies' apps and websites.</p>
 
-  <h2>What Data We Collect</h2>
-  <p><strong>If you use Brevn without signing in (default):</strong></p>
-  <ul>
-    <li>No personal data is collected.</li>
-    <li>All session data — durations, reaction times, alertness scores, distraction taps, breaks taken — is stored only on your device (locally via AsyncStorage).</li>
-    <li>This data never leaves your device.</li>
-  </ul>
-  <p><strong>If you sign in (Apple or Google):</strong></p>
-  <ul>
-    <li><strong>Email address</strong> — provided by your OAuth provider. Used solely to identify your account.</li>
-    <li><strong>Display name</strong> — if provided by your OAuth provider.</li>
-    <li><strong>Session data</strong> — pre/post reaction times, alertness, durations, completion status. Stored on Supabase so you can access your trends across devices. Optional; you can use Brevn without an account.</li>
-  </ul>
-  <p>We do <strong>not</strong> collect your location, contacts, photos, browsing history, microphone or camera input, motion sensors, or any other personal data.</p>
+  <h2>Without an account</h2>
+  <p>You can use every feature without signing in. Your sessions, check-in answers, notes, parked thoughts, tags, caffeine log, experiments and settings are stored only on your device.</p>
 
-  <h2>How We Use Your Data</h2>
+  <h2>With an account</h2>
+  <p>If you sign in with Apple, Google or email, we store:</p>
   <ul>
-    <li>To compute your personal trends — your sharpest hour, your sweet-spot session length, whether breaks help you. All trends are computed for you, on your data only.</li>
-    <li>To sync your sessions across your own devices, if you sign in.</li>
-    <li>That's it. No marketing, no profiling, no behavioral analysis, no model training.</li>
+    <li><strong>Account details:</strong> your email address (for Sign in with Apple this may be a private relay address), your name if your sign-in provider shares it, and an account identifier.</li>
+    <li><strong>Your sessions:</strong> start and end times, length, the session name, category and tags, your check-in and sleepiness answers, notes, where you left off, parked thoughts (and whether each was sorted as a task or an idea), breaks and distraction taps, how still your phone stayed and how often it was picked up, minutes counted before the timer, whether you logged it afterwards, reaction-test results from older versions, and which experiment a session belonged to. Sessions still running, and sessions on your device from before you signed in that you chose to keep on the device, are not sent.</li>
+    <li><strong>Your caffeine log:</strong> the time and amount of each entry.</li>
+    <li><strong>Health readings, only if you turn on "Health readings in my account":</strong> the night's sleep, heart rate variability and resting heart rate Brevn read for each session. See Apple Health below.</li>
   </ul>
+  <p>This is stored so your sessions are the same on every device you sign in on. It is stored with Supabase (in the United States, region us-west-1), protected so that only your account can read it, and sent over encrypted connections.</p>
 
-  <h2>Third-Party Services</h2>
-  <p>We use the following third-party services:</p>
-  <ul>
-    <li><strong>Supabase</strong> — authentication and optional cloud sync. <a href="https://supabase.com/privacy">Supabase Privacy Policy</a></li>
-    <li><strong>Apple Sign In</strong> — for "Sign in with Apple". <a href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a></li>
-    <li><strong>Google OAuth</strong> — for "Sign in with Google". <a href="https://policies.google.com/privacy">Google Privacy Policy</a></li>
-    <li><strong>Expo / EAS</strong> — app build and update infrastructure. <a href="https://expo.dev/privacy">Expo Privacy Policy</a></li>
-  </ul>
-  <p>We do not use advertising networks, analytics trackers, crash reporters that link data to identity, or third-party SDKs that collect user data.</p>
+  <h2>Phone motion</h2>
+  <p>During a session Brevn reads the phone's motion sensor to tell whether the phone stayed at rest. Only a summary is kept with the session (how much of it the phone was still, and how many times it was picked up), never the raw motion.</p>
 
-  <h2>Data Storage & Security</h2>
+  <h2>Apple Health</h2>
+  <p>If you allow it, Brevn reads sleep analysis, heart rate variability and resting heart rate from Apple Health, to set them beside your sessions. Brevn never writes to Apple Health.</p>
   <ul>
-    <li>Local-first: your sessions live on your device by default.</li>
-    <li>If you sign in, session data is stored in Supabase (hosted on AWS) with row-level security enabled — only you can read your own sessions.</li>
-    <li>Authentication tokens are stored securely on your device using the OS keychain.</li>
-    <li>All communication with our servers uses HTTPS / TLS encryption.</li>
+    <li>Readings stay on your device unless you turn on "Health readings in my account" in Profile, which asks first and records your consent.</li>
+    <li>Turning it off deletes the readings from your account.</li>
+    <li>Health data is never used for advertising or marketing, never sold, and never shared with third parties. Analytics events carry no Health readings, nor whether a session had one.</li>
   </ul>
 
-  <h2>Data Retention</h2>
-  <p>Local data is retained until you delete the app. Cloud data, if you sign in, is retained as long as your account exists. If you delete your account, all associated cloud data is permanently removed within 30 days. Local data on your device remains under your control regardless of account state — signing out does not delete it.</p>
+  <h2>Analytics and crash reports</h2>
+  <p>Brevn sends usage events to PostHog (in the United States) so we can see which features are used and where the app fails. Events record what happened in the app: for example that a session started or finished, its planned and actual length, category, number of tags, breaks and distraction taps, how still the phone stayed, your check-in and sleepiness answers as numbers, the outcome of a morning reading, purchases, and settings you changed. Every event also carries the app version, device model, iOS version, language and time zone, and error reports add the error message. Events never contain anything you typed (session names, notes, tags, parked thoughts, where you left off) or Health readings.</p>
+  <p>Without an account, events carry a random identifier created on your device. If you sign in, events are linked to your account identifier (not your email address). As with any internet service, PostHog receives your IP address when events are sent, and may use it to estimate your country and city.</p>
 
-  <h2>Your Rights</h2>
-  <p>You can:</p>
+  <h2>Community findings and paired experiments</h2>
+  <p>Only if you choose to share an experiment's result, Brevn posts the experiment's name from Brevn's own list, its result and session counts. Community results are public. Paired results are stored with the pair code and can be read by anyone using the app's data service, not only your partner. Neither carries your name, your account or anything you typed.</p>
+
+  <h2>On your device only</h2>
   <ul>
-    <li><strong>Use Brevn without an account</strong> — full functionality, zero data collection.</li>
-    <li><strong>Sign out at any time</strong> — Profile screen → Sign out. Your local data remains.</li>
-    <li><strong>Clear all local data</strong> — Profile screen → Clear all data.</li>
-    <li><strong>Request account deletion</strong> — email us and we will delete your account and all associated cloud data within 30 days.</li>
-    <li><strong>Export your data</strong> — email us and we will provide a JSON export of your sessions.</li>
+    <li><strong>Apple Intelligence:</strong> suggestions such as a session's category, sorting parked thoughts and "In your words" run on your device. Your text is not sent to us or to Apple's servers by Brevn.</li>
+    <li><strong>Calendar:</strong> if you ask Brevn to hold your sharp hour, it creates events in its own "Brevn" calendar (on iCloud if you use iCloud Calendar) and reads your other events' busy times to avoid nudging you during them. Your calendar is not sent to us.</li>
+    <li><strong>Shortcuts:</strong> if you turn on "Sessions in Shortcuts", a list of recent sessions is made available to the Shortcuts app on your device. Brevn sends it nowhere; a shortcut you run may.</li>
+    <li><strong>Brevn for Mac:</strong> if you turn on counting app switches or time per app, the names of apps you use during a session, the time in each, and whether there was keyboard or mouse input are recorded on your Mac only.</li>
+    <li><strong>Morning readings</strong> are stored on your device; analytics record only whether one was completed and how it compared with your usual. <strong>Notifications and widgets</strong> run on your device.</li>
   </ul>
 
-  <h2>Children's Privacy</h2>
-  <p>Brevn is not directed at children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal data, please contact us and we will delete it.</p>
+  <h2>Purchases</h2>
+  <p>Brevn Pro is bought through Apple. We don't receive your payment details; the app checks with Apple on your device which purchases you own.</p>
 
-  <h2>Health Disclaimer</h2>
-  <p>Brevn measures attention and reaction-time as a personal-productivity tool. It is not a medical device, and the data it produces is not a clinical diagnosis. If you have concerns about your cognitive function, please consult a qualified medical professional.</p>
+  <h2>Who we share data with</h2>
+  <p>We use these service providers to run Brevn, and they handle data only on our behalf, under terms that require the same protection of your data as this policy:</p>
+  <ul>
+    <li><strong>Supabase:</strong> accounts and account storage. <a href="https://supabase.com/privacy">Privacy policy</a></li>
+    <li><strong>PostHog:</strong> usage analytics and crash reports. <a href="https://posthog.com/privacy">Privacy policy</a></li>
+    <li><strong>Apple</strong> and <strong>Google:</strong> sign-in, when you choose them. <a href="https://www.apple.com/legal/privacy/">Apple</a> · <a href="https://policies.google.com/privacy">Google</a></li>
+  </ul>
+  <p>We don't sell personal data, share it for advertising, or use it to train AI models. We would disclose data only if required by law.</p>
 
-  <h2>Changes to This Policy</h2>
-  <p>We may update this policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+  <h2>Keeping and deleting your data</h2>
+  <ul>
+    <li><strong>On your device:</strong> kept until you delete it (Profile → Clear all sessions) or delete the app. Signing out leaves it on the device.</li>
+    <li><strong>Your account:</strong> kept while your account exists. Delete it any time in Profile → Delete account: your account and everything stored in it are deleted straight away, and for Sign in with Apple accounts Brevn's access to your Apple ID is revoked (you confirm with Apple first). Copies in our provider's backups expire within 7 days. Results you posted to the community pool or a pairing are not linked to your account and stay after it is deleted.</li>
+    <li><strong>Analytics:</strong> kept for up to 12 months. Ask us and we will delete events linked to your account or device.</li>
+  </ul>
+
+  <h2>Your rights</h2>
+  <p>You can use Brevn without an account, withdraw Health consent at any time, and delete your account in the app. Wherever you live, you can ask us for a copy of your account data, to correct it, or to delete it, by emailing us. You can also object to analytics by emailing us, and we will delete the events linked to your account or device. Depending on where you live (for example in the EU, UK or California) you may have further rights under local law, and you may complain to your data protection authority. We process account data to provide the service you asked for, Health data with your consent, and analytics in our legitimate interest in keeping the app working and improving it.</p>
+
+  <h2>Children</h2>
+  <p>Brevn is not directed at children under 13, and we do not knowingly collect personal information from them. If you believe a child has given us personal data, contact us and we will delete it.</p>
+
+  <h2>Not medical advice</h2>
+  <p>Brevn shows patterns from your own sessions as a productivity tool. It is not a medical device and does not diagnose anything. If you have concerns about your health, sleep or concentration, please see a qualified professional.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>We will post changes on this page with a new effective date, and tell you in the app if a change affects how your data is used.</p>
 
   <h2>Contact</h2>
-  <p>Questions or requests? Reach us at:<br>
-  <a href="mailto:harsh.ssd@gmail.com">harsh.ssd@gmail.com</a></p>
+  <p>Questions or requests: <a href="mailto:harsh.ssd@gmail.com">harsh.ssd@gmail.com</a></p>
 </body>
 </html>
