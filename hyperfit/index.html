@@ -544,6 +544,21 @@
     /* ══════════════════════════
        RESPONSIVE
        ══════════════════════════ */
+    /* ── See it in action ── */
+    .showcase { display: grid; grid-template-columns: 300px 1fr; gap: 2.5rem; align-items: start; margin-top: 2.5rem; }
+    .demo-video { width: 100%; aspect-ratio: 9 / 16; border-radius: 22px; border: 1px solid var(--border-strong); background: #0b0b0c; display: block; }
+    .demo-note { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 0.75rem; line-height: 1.5; }
+    .shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+    .shot { margin: 0; }
+    .shot img { width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--border-strong); display: block; background: #0b0b0c; }
+    .shot figcaption { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-tertiary); margin-top: 0.6rem; line-height: 1.4; }
+    @media (max-width: 900px) {
+      .showcase { grid-template-columns: 1fr; }
+      .demo-video { max-width: 320px; margin: 0 auto; }
+      .shots { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 0.5rem; }
+      .shot { flex: 0 0 62%; scroll-snap-align: start; }
+    }
+
     @media (max-width: 768px) {
       .stat-strip { grid-template-columns: 1fr 1fr; }
       .feature-grid { grid-template-columns: 1fr; }
@@ -635,7 +650,7 @@
           <div class="tf-step-num">03</div>
           <div class="tf-step-title">Lift</div>
           <div class="tf-step-desc">
-            Tap <code>LOG SET</code>. It fills in what you did last time, so most sets take one tap.
+            Tap <code>LOG SET</code>. It fills in today&rsquo;s target from last time, so most sets take one tap.
           </div>
         </div>
       </div>
@@ -646,6 +661,30 @@
       </p>
     </div>
   </div>
+
+  <!-- ─── SEE IT IN ACTION ─── -->
+  <section class="section" id="see-it">
+    <div class="section-label">See it in action</div>
+    <h2 class="section-title">Real screens from the app.</h2>
+    <p class="section-lead">
+      A 44-second walk through: start today&rsquo;s session, log a set in one tap, rest,
+      a follow-along routine, and a meal typed in plain words.
+    </p>
+
+    <div class="showcase">
+      <div>
+        <video class="demo-video" src="media/demo.mp4" poster="media/demo-poster.jpg" controls muted playsinline loop preload="metadata" aria-label="44-second HyperFit demo"></video>
+        <p class="demo-note">No sound. Recorded in the iOS Simulator.</p>
+      </div>
+      <div class="shots">
+        <figure class="shot"><img src="screenshots/home.jpg" alt="Home: today's session and the start button" loading="lazy" width="552" height="1200"><figcaption>Today&rsquo;s session</figcaption></figure>
+        <figure class="shot"><img src="screenshots/plan.jpg" alt="Today's plan with the muscles it trains and the time it takes" loading="lazy" width="552" height="1200"><figcaption>The plan and the muscles it trains</figcaption></figure>
+        <figure class="shot"><img src="screenshots/log-set.jpg" alt="A logged set of 60 kg for 8 reps, with LOG SET 2 ready" loading="lazy" width="552" height="1200"><figcaption>Log a set in one tap</figcaption></figure>
+        <figure class="shot"><img src="screenshots/follow-along.jpg" alt="Follow-along player showing Cat-Cow with a 19 second countdown" loading="lazy" width="552" height="1200"><figcaption>Follow-along with a voice coach</figcaption></figure>
+        <figure class="shot"><img src="screenshots/describe-meal.jpg" alt="Two eggs and a cup of rice read as 348 kcal" loading="lazy" width="552" height="1200"><figcaption>Type what you ate</figcaption></figure>
+      </div>
+    </div>
+  </section>
 
   <!-- ─── FEATURES ─── -->
   <section class="section" id="features">
