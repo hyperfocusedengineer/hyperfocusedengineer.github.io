@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I built a workout app so I'd have to work out — HyperFit</title>
+  <meta name="description" content="After a hard year I'd stopped training. The way I got back was to build a workout app — because the only way to test it was to work out.">
+  <meta name="author" content="Harsha Hassan Somashekara">
+  <meta property="og:title" content="I built a workout app so I'd have to work out">
+  <meta property="og:description" content="After a hard year I'd stopped training. The way I got back was to build a workout app — because the only way to test it was to work out.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://hyperfocusedengineer.github.io/hyperfit/story/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@Hyperfocusedeng">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --paper: #fafaf9;
+      --ink: #18181b;
+      --mute: #52525b;
+      --quiet: #71717a;
+      --rule: #e4e4e7;
+      --orange: #c2410c;
+      --cta: #FC4C02;
+    }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-optical-sizing: auto;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 680px; margin: 0 auto; padding: 4rem 1rem 6rem; }
+    .kicker {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: clamp(1.85rem, 5vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .byline { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--quiet); margin-bottom: 3rem; }
+    h2 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.01em; margin-top: 3rem; margin-bottom: 1rem; }
+    p { margin-bottom: 1.1rem; font-size: 1.05rem; }
+    a { color: var(--orange); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s; }
+    a:hover { border-bottom-color: var(--orange); }
+    strong { font-weight: 800; }
+    em { font-style: italic; color: var(--mute); }
+    ul { margin: 0 0 1.1rem 1.25rem; }
+    li { margin-bottom: 0.5rem; font-size: 1.05rem; }
+    .cta {
+      margin: 2.5rem 0;
+      padding: 1.5rem;
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      background: #fff;
+      font-family: 'Inter', sans-serif;
+    }
+    .cta-title { font-weight: 800; font-size: 1rem; margin-bottom: 0.35rem; }
+    .cta-sub { font-size: 0.9rem; color: var(--mute); margin-bottom: 1rem; }
+    .cta-button {
+      display: inline-block;
+      padding: 0.8rem 1.25rem;
+      border-radius: 999px;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+    }
+    .cta-button:hover { background: #000; border: none; }
+    .cta-links { margin-top: 0.9rem; font-size: 0.85rem; }
+    .cta-links a { margin-right: 1rem; }
+    hr { border: none; border-top: 1px solid var(--rule); margin: 3rem 0 2rem; }
+    .footer-meta { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--mute); font-style: italic; line-height: 1.6; }
+    .home-link {
+      display: inline-block;
+      margin-top: 3rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--quiet);
+    }
+  </style>
+</head>
+<body>
+  <article class="wrap">
+    <div class="kicker">HyperFit · Story</div>
+    <h1>I built a workout app so I'd have to work out</h1>
+    <p class="byline">By <a href="https://x.com/Hyperfocusedeng">Harsha Hassan Somashekara</a> · October 2026</p>
+
+    <p>Last year a few things happened in my life that took up all the room. Nothing I want to write about here. The point is what it did to everything else, and the first thing to go was training.</p>
+
+    <p>It didn't stop all at once. A missed week became a missed month. The gym bag stayed in the car, then came back into the house, then went into a cupboard. By the time things settled I was well behind where I'd been, physically. I knew it every time I took the stairs.</p>
+
+    <p>I wanted to restart. Wanting it wasn't the problem. The problem was the first ten sessions, the ones where you're slower and weaker than you remember, nothing shows yet, and there's always a good reason to start next Monday.</p>
+
+    <h2>The trick I played on myself</h2>
+
+    <p>I know one thing about how I work: I'll do almost anything if it's part of building something. I'll skip a meal to chase down a bug. I'll stay up to see a feature work end to end. Motivation has never been my problem when there's something on the bench.</p>
+
+    <p>So I put the workout on the bench. I started building a training app, <strong>HyperFit</strong>, and gave myself one rule: <em>nothing ships until I've used it in a real session.</em></p>
+
+    <p>That rule is the whole trick. You can't test a set logger from a desk. You can't tell whether a rest timer feels right unless you're the one resting. You can't judge a "what should I lift today" suggestion without lifting what it says. Every feature needed a workout to check it, so every feature got one.</p>
+
+    <p>I stopped asking myself <em>"do I feel like training today?"</em> and started asking <em>"what do I need to test today?"</em> The answer was always something. So I trained.</p>
+
+    <h2>What testing in the gym taught me</h2>
+
+    <p>Building it this way changed the app as much as it changed me. A lot of what's in HyperFit exists because something annoyed me mid-set:</p>
+
+    <ul>
+      <li><strong>Logging a set should take one tap.</strong> Between sets you're out of breath and holding a dumbbell. So LOG SET fills in what it expects you to do, based on last time, and ticks it off.</li>
+      <li><strong>Rest is part of the workout.</strong> The rest timer suggests a length that fits the lift (longer after a heavy set), counts down on the lock screen and buzzes the Apple Watch.</li>
+      <li><strong>Some days you have less in the tank.</strong> Early on I had plenty of short, tired days. So there's a three-tap check-in (sleep, soreness, energy), and on a rough day it offers a shorter version of the session instead of an all-or-nothing choice.</li>
+      <li><strong>Not every day is a gym day.</strong> Follow-along routines talk you through mobility, core or a walk/run session, with the phone as the coach. Those ended up being what got me through the busiest weeks.</li>
+      <li><strong>Food counts too.</strong> You can type <em>"2 eggs and a cup of rice"</em> and it works out the numbers, or photograph a nutrition label and it reads it on the phone.</li>
+    </ul>
+
+    <p>None of it came from a feature list. It came from being the person in the gym who needed it.</p>
+
+    <h2>An honest mirror, not a cheerleader</h2>
+
+    <p>Coming back after a long break, the last thing I needed was confetti for showing up, or a streak that shames you the first time life gets in the way. I'd had a year of life getting in the way.</p>
+
+    <p>What I wanted was a mirror: what did I actually do, and is it more than last time? So HyperFit is built around that. It shows a weekly goal you set yourself, records only when they&rsquo;re real, and a body map of which muscles you've trained. If a lift has stalled for three sessions, it says so and suggests a lighter week. If it's going up, you'll see that too. The numbers aren't dressed up either way.</p>
+
+    <p>That honesty worked on me. Watching my own numbers climb back, week by week, did more for me than any badge ever could.</p>
+
+    <h2>Where it is now</h2>
+
+    <p>I'm training regularly again, which was the real goal. And the app I built to drag myself back is now out in the world. HyperFit 2.8.0 is on the App Store. It's free, it works offline, and it has Apple Health, Apple Watch and Siri support ("Log water in HyperFit", "Start Core 10 in HyperFit").</p>
+
+    <div class="cta">
+      <div class="cta-title">HyperFit: Lift &amp; Fuel Tracker</div>
+      <div class="cta-sub">Free on iPhone and iPad · Apple Watch app included</div>
+      <a class="cta-button" href="https://apps.apple.com/us/app/hyperfit-lift-fuel-tracker/id6765838078">Download on the App Store &rarr;</a>
+      <div class="cta-links">
+        <a href="../">What's inside</a>
+        <a href="../privacy-policy.html">Privacy</a>
+        <a href="../support.html">Support</a>
+      </div>
+    </div>
+
+    <p>If you're where I was a few months ago, behind and not sure how to start again, my advice isn't to download my app. It's to find your own version of the trick. Tie the workout to something you already can't stop doing. For me that was building. For you it might be a friend, a dog that needs walking, or a promise to someone.</p>
+
+    <p>Just make the first ten sessions about something other than willpower. After that, it gets easier.</p>
+
+    <hr>
+
+    <p class="footer-meta">If you try HyperFit and something feels wrong mid-set, I want to hear it. That's how most of it got built. <a href="https://x.com/Hyperfocusedeng">@Hyperfocusedeng</a> on X, or <a href="mailto:hyperfocusedengineer@gmail.com">hyperfocusedengineer@gmail.com</a>.</p>
+
+    <a class="home-link" href="../../">&larr; All projects</a>
+  </article>
+</body>
+</html>
