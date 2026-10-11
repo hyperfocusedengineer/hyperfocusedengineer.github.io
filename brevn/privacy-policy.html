@@ -40,7 +40,7 @@
 </head>
 <body>
   <h1>Privacy Policy</h1>
-  <p class="subtitle">Brevn, by Hyperfocused Labs<br>Effective date: October 7, 2026</p>
+  <p class="subtitle">Brevn, by Hyperfocused Labs<br>Effective date: October 11, 2026</p>
 
   <h2>Overview</h2>
   <p>Brevn is a focus timer for iPhone, with a Mac app to come. You start a session, optionally answer two short questions when it ends, and over time Brevn shows when, and for how long, you focus best. This policy explains what data Brevn handles, where it goes, and the choices you have.</p>
@@ -58,6 +58,9 @@
     <li><strong>Health readings, only if you turn on "Health readings in my account":</strong> the night's sleep, heart rate variability and resting heart rate Brevn read for each session. See Apple Health below.</li>
   </ul>
   <p>This is stored so your sessions are the same on every device you sign in on. It is stored with Supabase (in the United States, region us-west-1), protected so that only your account can read it, and sent over encrypted connections.</p>
+
+  <h2>Checking for switched-off features</h2>
+  <p>When Brevn starts, and from time to time while it is in use, it asks our server whether any feature is switched off for now (for example because something isn't working as it should) and whether a newer version is out. This happens whether or not you have an account. The request says nothing about who you are, your account or your sessions, and carries no identifier. Like any request an iPhone app makes, it includes the app's version, the iOS version and your language. Supabase, which answers it, sees your IP address and keeps it for a short time in its request logs, as it does for every request the app makes to it. We don't keep it anywhere else or use it for anything.</p>
 
   <h2>Phone motion</h2>
   <p>During a session Brevn reads the phone's motion sensor to tell whether the phone stayed at rest. Only a summary is kept with the session (how much of it the phone was still, and how many times it was picked up), never the raw motion.</p>
@@ -92,7 +95,7 @@
   <h2>Who we share data with</h2>
   <p>We use these service providers to run Brevn, and they handle data only on our behalf, under terms that require the same protection of your data as this policy:</p>
   <ul>
-    <li><strong>Supabase:</strong> accounts and account storage. <a href="https://supabase.com/privacy">Privacy policy</a></li>
+    <li><strong>Supabase:</strong> accounts, account storage, shared experiment results and the list of features that are switched off. <a href="https://supabase.com/privacy">Privacy policy</a></li>
     <li><strong>PostHog:</strong> usage analytics and crash reports. <a href="https://posthog.com/privacy">Privacy policy</a></li>
     <li><strong>Apple</strong> and <strong>Google:</strong> sign-in, when you choose them. <a href="https://www.apple.com/legal/privacy/">Apple</a> · <a href="https://policies.google.com/privacy">Google</a></li>
   </ul>
