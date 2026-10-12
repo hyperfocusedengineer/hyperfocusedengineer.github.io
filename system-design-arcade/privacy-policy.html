@@ -38,7 +38,7 @@
 </head>
 <body>
   <h1>Privacy Policy</h1>
-  <p class="subtitle">System Design Arcade — by Hyperfocused Engineer<br>Effective date: October 2, 2026<br>Previous versions: August 18, 2026; August 9, 2026; February 28, 2026</p>
+  <p class="subtitle">System Design Arcade — by Hyperfocused Engineer<br>Effective date: October 8, 2026<br>Previous versions: October 2, 2026; August 18, 2026; August 9, 2026; February 28, 2026</p>
 
   <h2>Overview</h2>
   <p>System Design Arcade is a mobile app that teaches system design concepts through interactive, arcade-style games. This policy explains what data we collect, why, and how we handle it.</p>
@@ -58,7 +58,7 @@
     <li><strong>Email address</strong> — provided by your OAuth provider. Used to identify your account, and associated with your usage analytics.</li>
     <li><strong>Display name</strong> — if provided by your OAuth provider. You can change it in Settings.</li>
     <li><strong>Avatar</strong> — an emoji you pick in the app. If your Google or Apple account supplies a profile picture, we may store the link to it. We never upload or host photos from your device.</li>
-    <li><strong>Game progress</strong> — scores, stars, streaks, and level completion data, synced to the cloud so you can access it across devices.</li>
+    <li><strong>Game progress</strong> — scores, stars and level completion; your day streak with its freezes and shields; the days you played, with how many times on each day; and when you unlocked each achievement. Synced to the cloud so you can access it across devices and keep it when you reinstall.</li>
     <li><strong>Country</strong> — a two-letter country code derived from your device's region setting, used for the country leaderboard.</li>
     <li><strong>Friends</strong> — if you add friends via a friend code, we store that connection.</li>
     <li><strong>Event participation</strong> — if you register for a timed event, we store your registration, when you registered, and your score at the event's start.</li>
@@ -74,6 +74,8 @@
     <li>Games and levels started, completed, or abandoned; scores and streaks.</li>
     <li>Whether a challenge answer was correct, and what type of challenge it was. <strong>We do not record the content of your answers in analytics</strong> — only correct/incorrect and the challenge type. What you send to the optional cloud AI Coach is separate from analytics; see <a href="#coach">below</a>.</li>
     <li>Which features you tap (share, leaderboard, hints, daily challenge, theme settings, and similar).</li>
+    <li>The learning goal you pick and the daily study time you choose, if you set them.</li>
+    <li>Performance: how long the app takes to start and to load its games, how much memory the app is using, and your phone's total memory and approximate model year.</li>
     <li>App version and build, operating system and version, device type, and language.</li>
     <li>Your IP address, which PostHog receives with each event and uses to derive an approximate region.</li>
   </ul>
@@ -106,9 +108,9 @@
   <h2 id="on-device-ai">On-device AI: "Explain it differently" and "Ask the coach"</h2>
   <p>After a wrong or partly wrong answer, some phones offer a button that rewords the explanation. The rewording is done by a language model that runs <strong>on your phone</strong>: Apple's on-device model on iPhone (Apple Intelligence), and Google's Gemini Nano on supported Android phones. The model is given the explanation and, for architecture challenges, the app's own notes on what was wrong with your answer (for example a missing part, or a connection drawn the wrong way). <strong>That text is not sent to us, to Apple or to Google</strong> (on Android, Google learns only how long it was; see below), and the reworded text is not stored.</p>
   <p><strong>"Ask the coach"</strong> works the same way on those phones. After you answer a challenge you can ask a follow-up question about it, picked from a list or typed. The on-device model is given your question, the challenge, its correct answer and explanation, and the app's notes on your answer if it was wrong. <strong>None of it is sent to us, to Apple or to Google</strong> (on Android, Google learns only how long it was; see below), and the answer is not stored. On phones without built-in AI, the coach is only available through the optional cloud AI Coach <a href="#coach">above</a>.</p>
-  <p>Our usage analytics record that you tapped the button, which kind of model was used, whether the app had notes on your answer to give it, and whether it produced a rewording (or an error code if it failed). For "Ask the coach" they record the kind of question (one from the list, or your own), the challenge type, which kind of model answered, the outcome or an error code if it failed, and — if you tap "Report this answer" — that you reported it and for which challenge. On Android they also record when you start a model download from Settings and whether it finished or failed. They never include any of the text.</p>
+  <p>Our usage analytics record that you tapped the button, which kind of model was used, whether the app had notes on your answer to give it, and whether it produced a rewording (or an error code if it failed). For "Ask the coach" they record the kind of question (one from the list, or your own), the challenge type, which kind of model answered, the outcome or an error code if it failed, and — if you tap "Report this answer" — that you reported it and for which challenge. On Android they also record when you start a model download from Settings and whether it finished or failed. They also record when you turn Settings → AI Features on or off. They never include any of the text.</p>
   <p><strong>On Android</strong>, the model is provided through Google's <strong>ML Kit</strong>, and ML Kit sends Google its own diagnostics and usage statistics. These include your device's manufacturer, model, OS version and build, and its ML hardware; our app's package name and version; identifiers, including a per-installation identifier that Google says is not meant to identify you or your phone; performance figures such as how long a request took; the size of the input and output (how long the text was, never the text itself); the feature version and settings; event types (such as starting the feature or downloading the model); error codes; and the configured language. Google uses this for diagnostics and usage analytics, sends it over HTTPS, and states that it does not pass it to third parties. See the <a href="https://developers.google.com/ml-kit/android-data-disclosure">ML Kit data disclosure</a>.</p>
-  <p>This happens on Android phones that support Gemini Nano even if you never tap the button: the app asks ML Kit whether the model is ready when you open Settings and after you answer a challenge, and ML Kit can report those checks.</p>
+  <p>This happens on Android 8 and later phones, whether or not they support Gemini Nano, even if you never tap the button: the app asks ML Kit whether the model is ready when Settings is open or the app returns to it, and after you answer a challenge, and ML Kit can report those checks. <strong>Turn off Settings → AI Features</strong> and, from then on, no AI feature appears and the app makes no requests to ML Kit. A model download the phone's system service has already started may still finish. Statistics ML Kit collected before you turned it off are handled by Google under its own terms.</p>
   <p>If Gemini Nano is not yet on your Android phone, Settings offers to download it. The download only starts when you tap it and confirm, and it comes from Google through the phone's own system service.</p>
 
   <h2>Leaderboards and Social Features</h2>
@@ -123,6 +125,9 @@
 
   <h2>Notifications</h2>
   <p>If you turn on study reminders, the app schedules notifications locally on your device. We do not use a push notification service and we do not collect a push token.</p>
+
+  <h2>Read Aloud</h2>
+  <p>The app can read study cards and explanations aloud. It hands the text, which is the game's own content, to your phone's built-in text-to-speech; we receive nothing from it. The voice you choose is stored on your phone. If a chosen voice turns out not to be installed, our usage analytics record that this happened and which voice it was, not what was being read.</p>
 
   <h2>How We Use Your Data</h2>
   <ul>
@@ -159,7 +164,7 @@
 
   <h2>Data Retention</h2>
   <p>Account data is retained as long as your account exists.</p>
-  <p>If you delete your account, your profile, game progress, statistics and event registrations are permanently deleted from our database, and your login is removed. Two things deliberately survive:</p>
+  <p>If you delete your account, your profile, game progress (including your streak, days played and achievements), statistics and event registrations are permanently deleted from our database, and your login is removed. Two things deliberately survive:</p>
   <ul>
     <li>A minimal <strong>deletion record</strong> — your user ID, email address, IP address, browser/app user agent, and the time of deletion. We keep this so we can answer disputes about whether and when an account was deleted.</li>
     <li><strong>Analytics and diagnostic events</strong> already recorded, which expire on their normal 12-month schedule. Email us if you want them removed sooner.</li>
@@ -173,14 +178,14 @@
     <li><strong>Delete your account in the app</strong> — Settings → Data → Delete Account. This permanently removes your account and all associated server-side data.</li>
     <li><strong>Request data deletion by email</strong> — if you'd rather not use the in-app flow, email us and we will delete your account and all associated data within 30 days.</li>
     <li><strong>Opt out of public leaderboards</strong> — Settings → Privacy.</li>
-    <li><strong>Turn off the cloud AI Coach</strong> — Settings → AI Coach (cloud). It is off by default.</li>
-    <li><strong>Object to ML Kit diagnostics</strong> — there is no in-app switch for the diagnostics Google's ML Kit collects on Android. Email us if you object, and we will tell you what we can do.</li>
+    <li><strong>Turn off every AI feature</strong> — Settings → AI Features. With it off, no AI feature appears, nothing is sent to our AI coaching service, and on Android the app makes no further requests to Google's ML Kit. It is on by default, and applies to the phone it is set on.</li>
+    <li><strong>Turn off the cloud AI Coach</strong> — Settings → AI Coach (cloud), shown while AI Features is on. Turning AI Features off also stops it; turning AI Features back on restores your earlier AI Coach choice. It is off by default.</li>
     <li><strong>Sign out</strong> — at any time from Settings within the app.</li>
   </ul>
 
   <h2>Legal Basis, Transfers and Additional Rights</h2>
   <p>The data controller is Hyperfocused Engineer, contactable at the address below.</p>
-  <p>Where the GDPR or UK GDPR applies, we rely on: <strong>performance of a contract</strong> for authentication and progress sync; <strong>legitimate interests</strong> for usage analytics and error diagnostics, so we can keep the app working and improve it, and for the on-device "Explain it differently" and "Ask the coach" features, including the diagnostics Google's ML Kit collects on Android so the features can work and be maintained; and <strong>your consent</strong> for the optional cloud AI Coach, which you can withdraw at any time by switching it off.</p>
+  <p>Where the GDPR or UK GDPR applies, we rely on: <strong>performance of a contract</strong> for authentication and progress sync; <strong>legitimate interests</strong> for usage analytics and error diagnostics, so we can keep the app working and improve it, and for the on-device "Explain it differently" and "Ask the coach" features, including the diagnostics Google's ML Kit collects on Android so the features can work and be maintained (you can stop it at any time, on that phone, by turning off Settings → AI Features; this does not affect statistics already sent); and <strong>your consent</strong> for the optional cloud AI Coach, which you can withdraw at any time by switching it off.</p>
   <p>Supabase, PostHog, Groq and our AI coaching service are hosted in the United States. Transfers of the data we hold out of the EEA and UK rely on the European Commission's Standard Contractual Clauses. Google handles ML Kit diagnostics under its own terms and may process them outside your country; see the ML Kit data disclosure linked above.</p>
   <p>In addition to the controls listed above, you may request <strong>access</strong> to the personal data we hold about you, a <strong>portable copy</strong> of it, <strong>correction</strong> of anything inaccurate, <strong>restriction</strong> of processing, or <strong>object</strong> to processing based on legitimate interests. Email us and we will respond within 30 days. You also have the right to complain to your local data protection authority.</p>
   <p>For California residents: we <strong>do not sell or share</strong> your personal information as those terms are defined by the CCPA, and we have not done so in the preceding twelve months. The categories we collect are identifiers (email, account and device identifiers, IP address), internet activity (how you use the app), and approximate location limited to a country code.</p>
