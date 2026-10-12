@@ -58,7 +58,7 @@
     <li><strong>Email address</strong> — provided by your OAuth provider. Used to identify your account, and associated with your usage analytics.</li>
     <li><strong>Display name</strong> — if provided by your OAuth provider. You can change it in Settings.</li>
     <li><strong>Avatar</strong> — an emoji you pick in the app. If your Google or Apple account supplies a profile picture, we may store the link to it. We never upload or host photos from your device.</li>
-    <li><strong>Game progress</strong> — scores, stars, streaks, and level completion data, synced to the cloud so you can access it across devices.</li>
+    <li><strong>Game progress</strong> — scores, stars and level completion; your day streak with its freezes and shields; the days you played, with how many times on each day; and when you unlocked each achievement. Synced to the cloud so you can access it across devices and keep it when you reinstall.</li>
     <li><strong>Country</strong> — a two-letter country code derived from your device's region setting, used for the country leaderboard.</li>
     <li><strong>Friends</strong> — if you add friends via a friend code, we store that connection.</li>
     <li><strong>Event participation</strong> — if you register for a timed event, we store your registration, when you registered, and your score at the event's start.</li>
@@ -74,6 +74,8 @@
     <li>Games and levels started, completed, or abandoned; scores and streaks.</li>
     <li>Whether a challenge answer was correct, and what type of challenge it was. <strong>We do not record the content of your answers in analytics</strong> — only correct/incorrect and the challenge type. What you send to the optional cloud AI Coach is separate from analytics; see <a href="#coach">below</a>.</li>
     <li>Which features you tap (share, leaderboard, hints, daily challenge, theme settings, and similar).</li>
+    <li>The learning goal you pick and the daily study time you choose, if you set them.</li>
+    <li>Performance: how long the app takes to start and to load its games, how much memory the app is using, and your phone's total memory and approximate model year.</li>
     <li>App version and build, operating system and version, device type, and language.</li>
     <li>Your IP address, which PostHog receives with each event and uses to derive an approximate region.</li>
   </ul>
@@ -124,6 +126,9 @@
   <h2>Notifications</h2>
   <p>If you turn on study reminders, the app schedules notifications locally on your device. We do not use a push notification service and we do not collect a push token.</p>
 
+  <h2>Read Aloud</h2>
+  <p>The app can read study cards and explanations aloud. It hands the text, which is the game's own content, to your phone's built-in text-to-speech; we receive nothing from it. The voice you choose is stored on your phone. If a chosen voice turns out not to be installed, our usage analytics record that this happened and which voice it was, not what was being read.</p>
+
   <h2>How We Use Your Data</h2>
   <ul>
     <li>To authenticate your account and sync your game progress across devices.</li>
@@ -159,7 +164,7 @@
 
   <h2>Data Retention</h2>
   <p>Account data is retained as long as your account exists.</p>
-  <p>If you delete your account, your profile, game progress, statistics and event registrations are permanently deleted from our database, and your login is removed. Two things deliberately survive:</p>
+  <p>If you delete your account, your profile, game progress (including your streak, days played and achievements), statistics and event registrations are permanently deleted from our database, and your login is removed. Two things deliberately survive:</p>
   <ul>
     <li>A minimal <strong>deletion record</strong> — your user ID, email address, IP address, browser/app user agent, and the time of deletion. We keep this so we can answer disputes about whether and when an account was deleted.</li>
     <li><strong>Analytics and diagnostic events</strong> already recorded, which expire on their normal 12-month schedule. Email us if you want them removed sooner.</li>
