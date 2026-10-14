@@ -40,14 +40,14 @@
 </head>
 <body>
   <h1>Privacy Policy</h1>
-  <p class="subtitle">Brevn, by Hyperfocused Labs<br>Effective date: October 11, 2026</p>
+  <p class="subtitle">Brevn, by Hyperfocused Labs<br>Effective date: October 14, 2026</p>
 
   <h2>Overview</h2>
   <p>Brevn is a focus timer for iPhone, with a Mac app to come. You start a session, optionally answer two short questions when it ends, and over time Brevn shows when, and for how long, you focus best. This policy explains what data Brevn handles, where it goes, and the choices you have.</p>
-  <p><strong>The short version:</strong> your sessions stay on your device unless you sign in, in which case they are kept in your Brevn account so your devices agree. Health readings go to your account only if you turn that on. We use usage analytics to improve the app; they never include what you type or your Health readings. We don't sell your data, show ads, or track you across other companies' apps and websites.</p>
+  <p><strong>The short version:</strong> your sessions stay on your device unless you sign in, in which case they are kept in your Brevn account so your devices agree. Health readings go to your account only if you turn that on. If you leave an email address to use Brevn Pro while it cannot be bought, we keep that address, whether or not you have an account, to send you news about Brevn Pro, until you ask us to stop. We use usage analytics to improve the app; they never include what you type or your Health readings. We don't sell your data, show ads, or track you across other companies' apps and websites.</p>
 
   <h2>Without an account</h2>
-  <p>You can use every feature without signing in. Your sessions, check-in answers, notes, parked thoughts, tags, caffeine log, experiments and settings are stored only on your device.</p>
+  <p>You can use Brevn without signing in. Your sessions, check-in answers, notes, parked thoughts, tags, caffeine log, experiments and settings are stored only on your device. The one exception is an email address you choose to leave for the Brevn Pro list (below).</p>
 
   <h2>With an account</h2>
   <p>If you sign in with Apple or Google, we store:</p>
@@ -74,7 +74,7 @@
   </ul>
 
   <h2>Analytics and crash reports</h2>
-  <p>Brevn sends usage events to PostHog (in the United States) so we can see which features are used and where the app fails. Events record what happened in the app: for example that a session started or finished, its planned and actual length, category, number of tags, breaks and distraction taps, how still the phone stayed, your check-in and sleepiness answers as numbers, the outcome of a morning reading, purchases, and settings you changed. Every event also carries the app version, device model, iOS version, language and time zone, and error reports add the error message. Events never contain anything you typed (session names, notes, tags, parked thoughts, where you left off) or Health readings.</p>
+  <p>Brevn sends usage events to PostHog (in the United States) so we can see which features are used and where the app fails. Events record what happened in the app: for example that a session started or finished, its planned and actual length, category, number of tags, breaks and distraction taps, how still the phone stayed, your check-in and sleepiness answers as numbers, the outcome of a morning reading, purchases, joining the Brevn Pro list, and settings you changed. Every event also carries the app version, device model, iOS version, language and time zone, and error reports add the error message. Events never contain anything you typed (session names, notes, tags, parked thoughts, where you left off) or Health readings.</p>
   <p>Without an account, events carry a random identifier created on your device. If you sign in, events are linked to your account identifier (not your email address). As with any internet service, PostHog sees your IP address when events arrive. Brevn has PostHog discard it, so it is not stored with events or used to estimate where you are.</p>
 
   <h2>Community findings and paired experiments</h2>
@@ -90,12 +90,22 @@
   </ul>
 
   <h2>Purchases</h2>
-  <p>Brevn Pro is bought through Apple. We don't receive your payment details; the app checks with Apple on your device which purchases you own.</p>
+  <p>When Brevn Pro is on sale, it is bought through Apple. We don't receive your payment details; the app checks with Apple on your device which purchases you own. Until then, see The Brevn Pro list.</p>
+
+  <h2>The Brevn Pro list</h2>
+  <p>While Brevn Pro cannot be bought yet, leaving an email address is how you turn Pro on, at no charge. By doing so you agree to receive news about Brevn Pro. This is optional: without it Brevn works as before, without the Pro features. If you leave an address, we store:</p>
+  <ul>
+    <li>the email address, the part of Pro you were opening (or that you came from Profile), the app version, and the date and time;</li>
+    <li>if you are signed in, usually a link to your account (see Keeping and deleting your data), and whether the address is the one Apple or Google gave us for that account.</li>
+  </ul>
+  <p>We use the address only to send you news about Brevn Pro, including when payment starts. We don't sell it or share it for advertising. It is handled only by Supabase, which stores it in the United States, and by the email service we send from, which will be named under "Who we share data with" before the first email goes out. The app can add an address but cannot read the list back, and the address is not kept on your device; the app only remembers that you joined. As with any internet service, Supabase sees your IP address when the app sends the address; we don't store it with the list.</p>
+  <p>The address itself is never included in analytics. Analytics record only that you joined, which part of Pro you were opening, and whether Pro on your device is paid or free.</p>
+  <p>Emails come from Hyperfocused Labs. Every one will say how to stop them, and you can also email us at any time to be taken off. We don't check that a typed address belongs to the person who typed it: if you get an email from us that you didn't ask for, tell us and we will remove the address. Being taken off the list does not turn Pro off on a device where it is already on.</p>
 
   <h2>Who we share data with</h2>
   <p>We use these service providers to run Brevn, and they handle data only on our behalf, under terms that require the same protection of your data as this policy:</p>
   <ul>
-    <li><strong>Supabase:</strong> accounts, account storage, shared experiment results and the list of features that are switched off. <a href="https://supabase.com/privacy">Privacy policy</a></li>
+    <li><strong>Supabase:</strong> accounts, account storage, shared experiment results, the list of features that are switched off, and the Brevn Pro list. <a href="https://supabase.com/privacy">Privacy policy</a></li>
     <li><strong>PostHog:</strong> usage analytics and crash reports. <a href="https://posthog.com/privacy">Privacy policy</a></li>
     <li><strong>Apple</strong> and <strong>Google:</strong> sign-in, when you choose them. <a href="https://www.apple.com/legal/privacy/">Apple</a> · <a href="https://policies.google.com/privacy">Google</a></li>
   </ul>
@@ -105,11 +115,12 @@
   <ul>
     <li><strong>On your device:</strong> kept until you delete it (Profile → Clear all sessions) or delete the app. Signing out leaves it on the device.</li>
     <li><strong>Your account:</strong> kept while your account exists. Delete it any time in Profile → Delete account: your account and everything stored in it are deleted straight away, and for Sign in with Apple accounts Brevn's access to your Apple ID is revoked (you confirm with Apple first). Copies in our provider's backups expire within 7 days. Results you posted to the community pool or a pairing are not linked to your account and stay after it is deleted.</li>
+    <li><strong>The Brevn Pro list:</strong> kept until you ask to be taken off, the account it is linked to is deleted, or we stop sending news about Brevn Pro, at which point the list is deleted. Copies in our provider's backups expire within 7 days. An entry is linked to your account only if you were signed in when you left the address and it was not already on the list, or if it is your account's own Apple or Google address. An address left while signed out stays unlinked even if you sign in later. If you are not sure, email us and we will remove it.</li>
     <li><strong>Analytics:</strong> kept for up to 12 months. Ask us and we will delete events linked to your account or device.</li>
   </ul>
 
   <h2>Your rights</h2>
-  <p>You can use Brevn without an account, withdraw Health consent at any time, and delete your account in the app. Wherever you live, you can ask us for a copy of your account data, to correct it, or to delete it, by emailing us. You can also object to analytics by emailing us, and we will delete the events linked to your account or device. Depending on where you live (for example in the EU, UK or California) you may have further rights under local law, and you may complain to your data protection authority. We process account data to provide the service you asked for, Health data with your consent, and analytics in our legitimate interest in keeping the app working and improving it.</p>
+  <p>You can use Brevn without an account, withdraw Health consent at any time, and delete your account in the app. Wherever you live, you can ask us for a copy of your account data or your Brevn Pro list entry, to correct it, or to delete it, by emailing us. You can also object to analytics by emailing us, and we will delete the events linked to your account or device. Depending on where you live (for example in the EU, UK or California) you may have further rights under local law, and you may complain to your data protection authority. You can withdraw your consent to the Brevn Pro list at any time by asking to be taken off; that does not affect emails already sent. We process account data to provide the service you asked for, Health data and the Brevn Pro list with your consent, and analytics in our legitimate interest in keeping the app working and improving it.</p>
 
   <h2>Children</h2>
   <p>Brevn is not directed at children under 13, and we do not knowingly collect personal information from them. If you believe a child has given us personal data, contact us and we will delete it.</p>
