@@ -144,6 +144,26 @@
       animation: fadeUp 0.8s ease forwards 0.8s;
     }
 
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 2.25rem;
+      padding: 0.8rem 1.4rem;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.9s;
+      transition: background 0.3s, color 0.3s;
+    }
+    .hero-cta:hover, .hero-cta:focus-visible { background: var(--accent); color: var(--bg); }
+
     .hero-stats {
       margin-top: 3.5rem;
       display: flex;
@@ -838,6 +858,7 @@
       Building focused, craft-driven software in public.
       Each project solves a real problem I hit &mdash; then ships as something others can use.
     </p>
+    <a href="download/" class="hero-cta">Download the apps <span aria-hidden="true">&rarr;</span></a>
     <div class="hero-stats">
       <div class="hero-stat">
         <span class="hero-stat-num">10</span>
@@ -2102,6 +2123,7 @@
   <footer class="footer">
     <div class="footer-brand">Hyperfocused Engineer</div>
     <div class="footer-links">
+      <a href="download/" class="footer-link">Download the apps</a>
       <a href="https://github.com/harshssd" class="footer-link">GitHub</a>
       <a href="https://www.youtube.com/@hyperfocusedengineer" class="footer-link">YouTube</a>
       <a href="mailto:hyperfocusedengineer@gmail.com" class="footer-link">Contact</a>
