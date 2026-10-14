@@ -157,6 +157,17 @@
     .btn:focus-visible, .more:focus-visible, .top a:focus-visible {
       outline: 2px solid var(--accent); outline-offset: 3px;
     }
+    .qr-soon {
+      display: grid; place-items: center; width: 156px; height: 156px;
+      border: 1.5px dashed var(--border-hover); border-radius: 12px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.06em;
+      text-transform: uppercase; text-align: center; line-height: 1.6; color: var(--text-muted);
+    }
+    .btn.btn-soon {
+      background: transparent; color: var(--text-muted);
+      border: 1.5px dashed var(--border-hover); cursor: default;
+    }
+    .btn.btn-soon:hover { opacity: 1; }
     .note {
       font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--text-muted);
       text-align: center; line-height: 1.4;
@@ -179,11 +190,12 @@
       .app { grid-template-columns: 1fr; gap: 20px; padding: 22px 20px 22px 24px; }
       .stores { width: 100%; }
       .store { flex: 1 1 0; width: auto; max-width: 200px; }
-      .qr { width: 120px; height: 120px; }
+      .qr, .qr-soon { width: 120px; height: 120px; }
     }
     @media (max-width: 380px) {
       .stores { flex-direction: column; align-items: stretch; }
       .store { max-width: none; }
+      .qr-soon { display: none; }
     }
     @media print {
       body { background: #fff; color: #000; }
@@ -250,7 +262,7 @@
             <div class="mark" aria-hidden="true">HF</div>
             <div>
               <h2>HyperFit</h2>
-              <div class="platforms">iPhone &middot; Android coming</div>
+              <div class="platforms">iPhone &middot; Android coming soon</div>
             </div>
           </div>
           <p class="desc">Lift and fuel tracker. Log sets and meals, and watch a muscle heatmap fill in. Free, no paywall.</p>
@@ -266,6 +278,10 @@
               App Store
             </a>
           </div>
+          <div class="store soon" data-platform="android">
+            <div class="qr-soon" aria-hidden="true">Android<br>coming soon</div>
+            <span class="btn btn-soon">Google Play &middot; soon</span>
+          </div>
         </div>
       </article>
 
@@ -276,7 +292,7 @@
             <div class="mark" aria-hidden="true">B</div>
             <div>
               <h2>Brevn</h2>
-              <div class="platforms">iPhone</div>
+              <div class="platforms">iPhone &middot; Android coming soon</div>
             </div>
           </div>
           <p class="desc">A calm focus timer that learns when, and for how long, you focus best. From your own sessions.</p>
@@ -292,6 +308,10 @@
               App Store
             </a>
           </div>
+          <div class="store soon" data-platform="android">
+            <div class="qr-soon" aria-hidden="true">Android<br>coming soon</div>
+            <span class="btn btn-soon">Google Play &middot; soon</span>
+          </div>
         </div>
       </article>
 
@@ -302,7 +322,7 @@
             <div class="mark" aria-hidden="true">PP</div>
             <div>
               <h2>Party Pocket</h2>
-              <div class="platforms">iPhone</div>
+              <div class="platforms">iPhone &middot; Android coming soon</div>
             </div>
           </div>
           <p class="desc">Quick party games for any group, on one phone. Seven pass-the-phone games and 36 decks.</p>
@@ -317,6 +337,10 @@
               <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
               App Store
             </a>
+          </div>
+          <div class="store soon" data-platform="android">
+            <div class="qr-soon" aria-hidden="true">Android<br>coming soon</div>
+            <span class="btn btn-soon">Google Play &middot; soon</span>
           </div>
         </div>
       </article>
@@ -338,7 +362,7 @@
       if (!isIOS && !isAndroid) return;
       var mine = isIOS ? 'ios' : 'android';
       document.querySelectorAll('.stores').forEach(function (group) {
-        var stores = group.querySelectorAll('.store');
+        var stores = group.querySelectorAll('.store:not(.soon)');
         if (stores.length < 2) return;
         stores.forEach(function (s) {
           s.classList.add(s.dataset.platform === mine ? 'yours' : 'other');
