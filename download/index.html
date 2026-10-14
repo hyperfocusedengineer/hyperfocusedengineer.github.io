@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download the Apps — Hyperfocused Engineer</title>
+  <meta name="description" content="Download links and QR codes for System Design Arcade, HyperFit, Brevn and Party Pocket on the App Store and Google Play. By Hyperfocused Engineer.">
+  <meta property="og:title" content="Download the Apps — Hyperfocused Engineer">
+  <meta property="og:description" content="System Design Arcade, HyperFit, Brevn and Party Pocket. Tap a store button, or scan a code with your phone's camera.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hyperfocusedengineer.github.io/download/">
+  <meta name="theme-color" content="#0A0908">
+  <link rel="canonical" href="https://hyperfocusedengineer.github.io/download/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0A0908;
+      --bg-card: #141312;
+      --bg-subtle: #1A1918;
+      --text: #E8E2D8;
+      --text-secondary: #9E9689;
+      --text-muted: #6E675F;
+      --accent: #C17F3E;
+      --border: rgba(200, 180, 150, 0.09);
+      --border-hover: rgba(200, 180, 150, 0.2);
+      --btn-bg: #E8E2D8;
+      --btn-text: #0A0908;
+      --arcade: #00E5D0;
+      --arcade-2: #FF2D78;
+      --hyperfit: #FC4C02;
+      --hyperfit-2: #00D68F;
+      --brevn: #2563EB;
+      --brevn-2: #60A5FA;
+      --party: #F97316;
+      --party-2: #E879F9;
+    }
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme="dark"]) {
+        --bg: #F7F3EC;
+        --bg-card: #FFFDF9;
+        --bg-subtle: #EFE9DF;
+        --text: #1C1A17;
+        --text-secondary: #5E574E;
+        --text-muted: #8A8278;
+        --accent: #9A5F24;
+        --border: rgba(60, 45, 25, 0.12);
+        --border-hover: rgba(60, 45, 25, 0.25);
+        --btn-bg: #1C1A17;
+        --btn-text: #F7F3EC;
+      }
+    }
+
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    a { color: inherit; }
+
+    .wrap { max-width: 920px; margin: 0 auto; padding: 0 16px; }
+
+    /* Header */
+    .top {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 0;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+    .top a { color: var(--text-secondary); text-decoration: none; }
+    .top a:hover { color: var(--text); }
+
+    .hero { padding: 40px 0 36px; }
+    .kicker {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(2.4rem, 7vw, 3.8rem); line-height: 1.05;
+      letter-spacing: -0.01em; margin-bottom: 16px;
+    }
+    .lede { font-size: 1.12rem; color: var(--text-secondary); max-width: 560px; font-weight: 300; }
+
+    /* App cards */
+    .apps { display: grid; gap: 20px; padding-bottom: 56px; }
+    .app {
+      position: relative; overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center;
+      transition: border-color .2s;
+    }
+    .app:hover { border-color: var(--border-hover); }
+    .app::before {
+      content: ""; position: absolute; inset: 0 auto 0 0; width: 4px;
+      background: linear-gradient(180deg, var(--c1), var(--c2));
+    }
+    .app[data-app="arcade"]   { --c1: var(--arcade);   --c2: var(--arcade-2); }
+    .app[data-app="hyperfit"] { --c1: var(--hyperfit); --c2: var(--hyperfit-2); }
+    .app[data-app="brevn"]    { --c1: var(--brevn);    --c2: var(--brevn-2); }
+    .app[data-app="party"]    { --c1: var(--party);    --c2: var(--party-2); }
+
+    .app-head { display: flex; gap: 16px; align-items: center; margin-bottom: 12px; }
+    .mark {
+      flex: none; width: 56px; height: 56px; border-radius: 14px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      color: #fff; font-family: 'DM Serif Display', serif; font-size: 1.5rem;
+      text-shadow: 0 1px 2px rgba(0,0,0,.25);
+    }
+    .app h2 { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 1.7rem; line-height: 1.15; }
+    .platforms {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--text-muted); margin-top: 2px;
+    }
+    .app p.desc { color: var(--text-secondary); font-size: 1rem; max-width: 440px; margin-bottom: 18px; }
+    .more {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+      color: var(--text-secondary); text-decoration: none; border-bottom: 1px solid var(--border-hover);
+    }
+    .more:hover { color: var(--text); }
+
+    /* Store blocks: one per platform, button + QR */
+    .stores { display: flex; gap: 16px; }
+    .store {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      width: 156px;
+    }
+    .qr {
+      display: block; width: 156px; height: 156px; padding: 8px;
+      background: #fff; border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .qr img { display: block; width: 100%; height: 100%; image-rendering: pixelated; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 10px 12px; border-radius: 10px;
+      background: var(--btn-bg); color: var(--btn-text);
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; font-weight: 500;
+      text-decoration: none; white-space: nowrap;
+      transition: transform .15s, opacity .15s;
+    }
+    .btn:hover { opacity: .88; }
+    .btn:active { transform: scale(.98); }
+    .btn svg { width: 16px; height: 16px; flex: none; fill: currentColor; }
+    .btn:focus-visible, .more:focus-visible, .top a:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px;
+    }
+    .note {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--text-muted);
+      text-align: center; line-height: 1.4;
+    }
+    /* Your-device highlight, set by the small script below */
+    .store.yours .btn { box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 4px var(--c1); }
+    .store.other { opacity: .55; }
+
+    .how {
+      border-top: 1px solid var(--border);
+      padding: 28px 0 48px;
+      color: var(--text-secondary); font-size: 0.95rem;
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px;
+    }
+    .how a { color: var(--text); }
+    .how .mono { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; }
+
+    /* Phones: QR codes matter less on the device that installs the app, so stack and shrink them */
+    @media (max-width: 720px) {
+      .app { grid-template-columns: 1fr; gap: 20px; padding: 22px 20px 22px 24px; }
+      .stores { width: 100%; }
+      .store { flex: 1 1 0; width: auto; max-width: 200px; }
+      .qr { width: 120px; height: 120px; }
+    }
+    @media (max-width: 380px) {
+      .stores { flex-direction: column; align-items: stretch; }
+      .store { max-width: none; }
+    }
+    @media print {
+      body { background: #fff; color: #000; }
+      .top, .how .mono { display: none; }
+      .app { break-inside: avoid; border-color: #ccc; }
+      .store.other { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="top">
+      <a href="../">&larr; Hyperfocused Engineer</a>
+      <a href="mailto:Hyperfocusedengineer@gmail.com">Contact</a>
+    </nav>
+
+    <header class="hero">
+      <div class="kicker">Downloads</div>
+      <h1>Get the apps.</h1>
+      <p class="lede">Tap a store button on your phone, or point your phone&rsquo;s camera at a code on this screen.</p>
+    </header>
+
+    <main class="apps">
+
+      <!-- System Design Arcade: iOS + Android -->
+      <article class="app" data-app="arcade" id="system-design-arcade">
+        <div>
+          <div class="app-head">
+            <div class="mark" aria-hidden="true">SD</div>
+            <div>
+              <h2>System Design Arcade</h2>
+              <div class="platforms">iPhone &middot; Android</div>
+            </div>
+          </div>
+          <p class="desc">50+ arcade-style games for the system design interview. Free, offline, no subscription.</p>
+          <a class="more" href="../system-design-arcade/">About the app &rarr;</a>
+        </div>
+        <div class="stores">
+          <div class="store" data-platform="ios">
+            <a class="qr" href="qr/system-design-arcade-ios.svg" download title="Download this QR code">
+              <img src="qr/system-design-arcade-ios.svg" alt="QR code for System Design Arcade on the App Store" width="140" height="140">
+            </a>
+            <a class="btn" href="https://apps.apple.com/us/app/system-design-arcade/id6759821733" target="_blank" rel="noopener">
+              <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+              App Store
+            </a>
+          </div>
+          <div class="store" data-platform="android">
+            <a class="qr" href="qr/system-design-arcade-android.svg" download title="Download this QR code">
+              <img src="qr/system-design-arcade-android.svg" alt="QR code for System Design Arcade on Google Play" width="140" height="140">
+            </a>
+            <a class="btn" href="https://play.google.com/store/apps/details?id=com.hyperfocused.systemdesignarcade" target="_blank" rel="noopener">
+              <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M325.3 234.3 104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+              Google Play
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- HyperFit: iOS -->
+      <article class="app" data-app="hyperfit" id="hyperfit">
+        <div>
+          <div class="app-head">
+            <div class="mark" aria-hidden="true">HF</div>
+            <div>
+              <h2>HyperFit</h2>
+              <div class="platforms">iPhone &middot; Android coming</div>
+            </div>
+          </div>
+          <p class="desc">Lift and fuel tracker. Log sets and meals, and watch a muscle heatmap fill in. Free, no paywall.</p>
+          <a class="more" href="../hyperfit/">About the app &rarr;</a>
+        </div>
+        <div class="stores">
+          <div class="store" data-platform="ios">
+            <a class="qr" href="qr/hyperfit-ios.svg" download title="Download this QR code">
+              <img src="qr/hyperfit-ios.svg" alt="QR code for HyperFit on the App Store" width="140" height="140">
+            </a>
+            <a class="btn" href="https://apps.apple.com/us/app/hyperfit-lift-fuel-tracker/id6765838078" target="_blank" rel="noopener">
+              <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+              App Store
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Brevn: iOS -->
+      <article class="app" data-app="brevn" id="brevn">
+        <div>
+          <div class="app-head">
+            <div class="mark" aria-hidden="true">B</div>
+            <div>
+              <h2>Brevn</h2>
+              <div class="platforms">iPhone</div>
+            </div>
+          </div>
+          <p class="desc">A calm focus timer that learns when, and for how long, you focus best. From your own sessions.</p>
+          <a class="more" href="../brevn/">About the app &rarr;</a>
+        </div>
+        <div class="stores">
+          <div class="store" data-platform="ios">
+            <a class="qr" href="qr/brevn-ios.svg" download title="Download this QR code">
+              <img src="qr/brevn-ios.svg" alt="QR code for Brevn on the App Store" width="140" height="140">
+            </a>
+            <a class="btn" href="https://apps.apple.com/app/id6772656566" target="_blank" rel="noopener">
+              <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+              App Store
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Party Pocket: iOS -->
+      <article class="app" data-app="party" id="party-pocket">
+        <div>
+          <div class="app-head">
+            <div class="mark" aria-hidden="true">PP</div>
+            <div>
+              <h2>Party Pocket</h2>
+              <div class="platforms">iPhone</div>
+            </div>
+          </div>
+          <p class="desc">Quick party games for any group, on one phone. Seven pass-the-phone games and 36 decks.</p>
+          <a class="more" href="../micro-apps/">About the app &rarr;</a>
+        </div>
+        <div class="stores">
+          <div class="store" data-platform="ios">
+            <a class="qr" href="qr/party-pocket-ios.svg" download title="Download this QR code">
+              <img src="qr/party-pocket-ios.svg" alt="QR code for Party Pocket on the App Store" width="140" height="140">
+            </a>
+            <a class="btn" href="https://apps.apple.com/app/id6817111219" target="_blank" rel="noopener">
+              <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+              App Store
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </main>
+
+    <footer class="how">
+      <span>All four apps are free to download. Built by one person, <a href="../">Hyperfocused Engineer</a>.</span>
+      <span class="mono">Tap a QR code to save it for print.</span>
+    </footer>
+  </div>
+
+  <script>
+    // On a phone, highlight the store that phone uses and dim the other one.
+    (function () {
+      var ua = navigator.userAgent || '';
+      var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      var isAndroid = /Android/i.test(ua);
+      if (!isIOS && !isAndroid) return;
+      var mine = isIOS ? 'ios' : 'android';
+      document.querySelectorAll('.stores').forEach(function (group) {
+        var stores = group.querySelectorAll('.store');
+        if (stores.length < 2) return;
+        stores.forEach(function (s) {
+          s.classList.add(s.dataset.platform === mine ? 'yours' : 'other');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
