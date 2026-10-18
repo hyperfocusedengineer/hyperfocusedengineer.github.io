@@ -92,7 +92,7 @@
     <li>No meal or label photos — they're read on your device and deleted.</li>
     <li>No cross-app tracking. We do not link your data to data from other companies for advertising or share with data brokers.</li>
     <li>No advertising SDKs (no Google AdMob, no Facebook SDK, no Firebase Analytics).</li>
-    <li>No location data.</li>
+    <li>No location permission or GPS; our analytics provider may derive an approximate city from your IP address.</li>
   </ul>
 
   <h2>How we use it</h2>
@@ -109,7 +109,7 @@
     <li>On confirm, we immediately delete: workout sessions and sets (including cardio, stretch and follow-along sessions), your own plans (including any you shared) and plan instances, custom exercises, exercise notes, readiness check-ins, fitness self-test results, body-weight entries (typed or imported from Apple Health), nutrition days and entries, your saved foods, water logs, a training-buddy link, invites and nudges, settings and profile answers (including sex), and the auth record itself. Steps, cardio, VO2 max and resting heart rate read from Apple Health, and any Siri requests still waiting on the phone, are cleared from the phone at the same time; what's in the Health app itself stays.</li>
   </ul>
   <p>Deletion is irreversible. If you'd rather email us, write to <a href="mailto:hyperfocusedengineer@gmail.com">hyperfocusedengineer@gmail.com</a> and we'll handle it manually within 7 days.</p>
-  <p>Product usage events stored in PostHog are keyed to your account ID. After you sign out the app stops sending events tied to that id (subsequent events are anonymous). Events and crash reports tied to a deleted account are deleted from PostHog within 30 days of the deletion. Our database host's encrypted backups age out on their own schedule and are never used to restore a deleted account.</p>
+  <p>Product usage events stored in PostHog are keyed to your account ID. After you sign out the app stops sending events tied to that id (subsequent events are anonymous). Events and crash reports tied to your account are deleted from PostHog when your account is deleted (processing can take up to 30 days). Encrypted backups are kept for the backup retention period of our database provider (typically up to 7 days on our plan); a deleted account disappears from them as they expire, and they are never used to restore it. Sign-in audit records held by our database provider (your email and account ID) are kept only for its log retention period.</p>
 
   <h2>Children</h2>
   <p>HyperFit is not directed at children under 13 and we do not knowingly collect data from them.</p>

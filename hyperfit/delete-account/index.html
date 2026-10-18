@@ -106,8 +106,9 @@
     <section class="card" aria-labelledby="kept-title">
       <div class="eyebrow" id="kept-title">What is kept, and for how long</div>
       <ul>
-        <li>Nothing that identifies you is kept on purpose. Analytics events tied to your account are deleted within 30 days of the deletion.</li>
-        <li>Our database host keeps encrypted backups for disaster recovery; a deleted account disappears from them as the backups expire, and they are never used to restore a deleted account.</li>
+        <li>Nothing that identifies you is kept on purpose. Usage events and crash reports tied to your account are deleted from PostHog when your account is deleted (processing can take up to 30 days).</li>
+        <li>Encrypted backups made for disaster recovery are kept for the backup retention period of our database provider (typically up to 7 days on our plan). A deleted account disappears from them as they expire, and they are never used to restore it.</li>
+        <li>Sign-in audit records held by our database provider, which include your email and account ID, are kept only for the provider's log retention period.</li>
         <li>Deletion can't be undone. You can sign up again with the same email, but you start with no data.</li>
       </ul>
     </section>
