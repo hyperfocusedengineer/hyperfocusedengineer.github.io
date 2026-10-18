@@ -10,6 +10,12 @@
   <meta property="og:description" content="One person who notices: each other's training days and last workout, one nudge a day. No leaderboard.">
   <meta property="og:type" content="website">
   <script>
+    // Google Play: false shows "Google Play · coming soon" (no link) until
+    // HyperFit is public on Google Play. Set it to true then, and update the
+    // <noscript> line below too. The App Store button is always shown.
+    window.PLAY_STORE_LIVE = false;
+    window.PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.hyperfocused.hyperfit';
+
     // The invite code from ?code= (16 hex characters). Safari's App Store
     // banner hands the whole link to the app, which opens the invite.
     (function () {
@@ -62,6 +68,7 @@
     }
     .primary { background: var(--lift); color: var(--on-lift); }
     .secondary { background: transparent; color: var(--lift); }
+    .soon { background: transparent; color: var(--text-tertiary); border-color: var(--border); cursor: default; }
     .button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
     ol { padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
     .note { font-size: 13px; color: var(--text-tertiary); }
@@ -74,6 +81,8 @@
     <noscript>
       <h1>You've been invited to be training buddies on HyperFit.</h1>
       <p style="margin-top:12px">Get HyperFit from the <a href="https://apps.apple.com/app/id6765838078" style="color:#fc4c02">App Store</a>, then open Profile → Training buddy and enter the code from this link (the part after <code>code=</code>).</p>
+      <!-- Update with PLAY_STORE_LIVE: link Google Play here once the app is public. -->
+      <p style="margin-top:12px">On Android, HyperFit is coming soon to Google Play.</p>
     </noscript>
 
     <section id="invite" hidden>
@@ -90,7 +99,10 @@
         <div class="note" id="copied" role="status" aria-live="polite"></div>
       </div>
       <div style="display:grid; gap:10px; margin-top:20px">
-        <a class="button primary" href="https://apps.apple.com/app/id6765838078">Get HyperFit</a>
+        <div class="stores" style="display:grid; gap:10px">
+          <a class="button primary" data-store="app" href="https://apps.apple.com/app/id6765838078">Get it on the App Store</a>
+          <a class="button secondary" data-store="play">Get it on Google Play</a>
+        </div>
         <a class="button secondary" id="open">I have HyperFit — open it</a>
       </div>
       <div class="card" style="margin-top:20px">
@@ -101,7 +113,7 @@
           <li>Or open <strong>Profile → Training buddy</strong>, enter the code above and tap <strong>JOIN</strong>.</li>
         </ol>
       </div>
-      <p class="note" id="android" hidden style="margin-top:16px">HyperFit is on iPhone for now. Open this link on an iPhone, or keep the code for later.</p>
+      <p class="note" id="android" hidden style="margin-top:16px">HyperFit for Android is coming soon to Google Play. Keep the code for later, or open this link on an iPhone.</p>
       <p class="note" style="margin-top:16px">This invite is for one person and works for 7 days from when it was sent.</p>
     </section>
 
@@ -110,13 +122,38 @@
         <div class="eyebrow">Training buddy invite</div>
         <h1>This invite link looks incomplete.</h1>
         <p>Ask your buddy to share it again — or, in HyperFit, open Profile → Training buddy and type the code they sent.</p>
-        <a class="button primary" href="https://apps.apple.com/app/id6765838078" style="margin-top:8px">Get HyperFit</a>
+        <div class="stores" style="display:grid; gap:10px; margin-top:8px">
+          <a class="button primary" data-store="app" href="https://apps.apple.com/app/id6765838078">Get it on the App Store</a>
+          <a class="button secondary" data-store="play">Get it on Google Play</a>
+        </div>
       </div>
     </section>
   </main>
 
   <script>
     (function () {
+      // Store buttons: Google Play is a link only once PLAY_STORE_LIVE is true; on
+      // Android it then comes first and takes the filled style.
+      var android = /android/i.test(navigator.userAgent);
+      var live = window.PLAY_STORE_LIVE === true;
+      Array.prototype.forEach.call(document.querySelectorAll('.stores'), function (stores) {
+        var app = stores.querySelector('[data-store="app"]');
+        var play = stores.querySelector('[data-store="play"]');
+        if (!live) {
+          play.removeAttribute('href');
+          play.className = 'button soon';
+          play.setAttribute('aria-disabled', 'true');
+          play.textContent = 'Google Play · coming soon';
+          return;
+        }
+        play.href = window.PLAY_STORE_URL;
+        if (android) {
+          play.className = 'button primary';
+          app.className = 'button secondary';
+          stores.insertBefore(play, app);
+        }
+      });
+
       var code = window.BUDDY_CODE;
       if (!code) {
         document.getElementById('broken').hidden = false;
@@ -127,7 +164,7 @@
       // The app's own scheme, for when this page shows although HyperFit is installed
       // (an in-app browser, or a build from before https links).
       document.getElementById('open').href = 'hyperfit://buddy/' + code;
-      if (/android/i.test(navigator.userAgent)) document.getElementById('android').hidden = false;
+      if (android && !live) document.getElementById('android').hidden = false;
 
       // A copy the page can confirm (in-app browsers without a clipboard keep the code on screen).
       var copy = document.getElementById('copy');
