@@ -1,5 +1,6 @@
 # GitHub Pages (Jekyll) skips dot folders by default. /.well-known holds the
-# Apple app-site-association file that lets https links open installed apps
-# (HyperFit training buddy invites: /hyperfit/buddy/*). Nothing else changes.
+# files that let https links open installed apps (HyperFit training buddy
+# invites: /hyperfit/buddy/*): apple-app-site-association for iOS universal
+# links and assetlinks.json for Android App Links. Nothing else changes.
 include:
   - .well-known
