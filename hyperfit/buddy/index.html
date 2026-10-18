@@ -68,7 +68,6 @@
     }
     .primary { background: var(--lift); color: var(--on-lift); }
     .secondary { background: transparent; color: var(--lift); }
-    .soon { background: transparent; color: var(--text-tertiary); border-color: var(--border); cursor: default; }
     .button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
     ol { padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
     .note { font-size: 13px; color: var(--text-tertiary); }
@@ -140,10 +139,12 @@
         var app = stores.querySelector('[data-store="app"]');
         var play = stores.querySelector('[data-store="play"]');
         if (!live) {
-          play.removeAttribute('href');
-          play.className = 'button soon';
-          play.setAttribute('aria-disabled', 'true');
-          play.textContent = 'Google Play · coming soon';
+          // Plain text, not a button: nothing to tap until the app is public.
+          var soon = document.createElement('p');
+          soon.className = 'note';
+          soon.style.textAlign = 'center';
+          soon.textContent = 'Google Play · coming soon';
+          play.replaceWith(soon);
           return;
         }
         play.href = window.PLAY_STORE_URL;
