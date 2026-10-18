@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Delete your HyperFit account · HyperFit</title>
+  <meta name="description" content="How to delete your HyperFit account and its data, in the app or by email, and what is deleted.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      /* HyperFit palette, see HyperFit/src/styles/theme.ts */
+      --bg: #0a0a0a;
+      --surface: #18181b;
+      --border: #27272a;
+      --text-primary: #ffffff;
+      --text-secondary: #d4d4d8;
+      --text-tertiary: #a1a1aa;
+      --lift: #fc4c02;
+      --on-lift: #0a0a0a;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text-secondary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      padding: max(24px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+      display: flex;
+      justify-content: center;
+    }
+    main { width: 100%; max-width: 560px; display: grid; gap: 20px; align-content: start; }
+    .back-link {
+      color: var(--text-tertiary); text-decoration: none;
+      font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px;
+      letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+    }
+    .back-link:hover { color: var(--lift); }
+    .wordmark { font-weight: 900; font-size: 20px; letter-spacing: 0.02em; color: var(--text-primary); }
+    .wordmark b { color: var(--lift); font-weight: 900; }
+    .eyebrow { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; color: var(--text-tertiary); text-transform: uppercase; }
+    h1 { color: var(--text-primary); font-size: 26px; font-weight: 800; line-height: 1.2; letter-spacing: -0.01em; }
+    p, li { font-size: 15px; }
+    a { color: var(--lift); }
+    strong { color: var(--text-primary); font-weight: 600; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: grid; gap: 10px; }
+    .button {
+      display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 12px;
+      font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 800; font-size: 13px; letter-spacing: 0.12em;
+      text-decoration: none; text-transform: uppercase; border: 1px solid var(--lift); width: 100%;
+      background: var(--lift); color: var(--on-lift); text-align: center; padding: 0 12px;
+    }
+    .button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+    ol, ul { padding-left: 20px; display: grid; gap: 6px; }
+    .note { font-size: 13px; color: var(--text-tertiary); }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; color: var(--text-primary); }
+    .footer { margin-top: 12px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-tertiary); }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../" class="back-link">&larr; HyperFit</a>
+    <div class="wordmark">HYPER<b>FIT</b></div>
+
+    <div style="display:grid; gap:12px">
+      <div class="eyebrow">Account deletion</div>
+      <h1>Delete your HyperFit account</h1>
+      <p>HyperFit, by Hyperfocused Engineer, on Android and iPhone. You can delete your account and everything stored with it at any time: in the app, or by email if you no longer have the app.</p>
+    </div>
+
+    <section class="card" id="in-app" aria-labelledby="in-app-title">
+      <div class="eyebrow" id="in-app-title">In the app</div>
+      <ol>
+        <li>Open HyperFit and tap your initials at the top right of any tab to open <strong>Profile</strong>.</li>
+        <li>Scroll to <strong>Danger zone</strong> and tap <strong>Delete account</strong>.</li>
+        <li>Read what gets deleted, then tap <strong>I understand · continue</strong>.</li>
+        <li>Type <span class="mono">DELETE</span> and tap <strong>Delete forever</strong>.</li>
+      </ol>
+      <p class="note">Your account is deleted at once, and HyperFit signs you out and clears its copy on the phone.</p>
+    </section>
+
+    <section class="card" id="by-email" aria-labelledby="by-email-title">
+      <div class="eyebrow" id="by-email-title">Without the app</div>
+      <p>Email <a href="mailto:hyperfocusedengineer@gmail.com?subject=Delete%20my%20HyperFit%20account">hyperfocusedengineer@gmail.com</a> with the subject <strong>Delete my HyperFit account</strong>, from the email address you sign in with (for Sign in with Google, your Google account's address). If you write from another address, we reply to that sign-in address to check it's you before deleting anything.</p>
+      <a class="button" href="mailto:hyperfocusedengineer@gmail.com?subject=Delete%20my%20HyperFit%20account">Email a deletion request</a>
+      <p class="note">We delete the account within 7 days and reply when it's done.</p>
+    </section>
+
+    <section class="card" aria-labelledby="deleted-title">
+      <div class="eyebrow" id="deleted-title">What is deleted</div>
+      <ul>
+        <li>Your sign-in identity: email, name and account ID.</li>
+        <li>Every workout session and set, including cardio, stretch and follow-along sessions and imported workouts.</li>
+        <li>Your plans (including any you shared or published), the plans and routines you follow, custom exercises and exercise notes.</li>
+        <li>Readiness check-ins, fitness check results and body-weight entries.</li>
+        <li>Meals, water logs, nutrition targets and the foods you saved.</li>
+        <li>Your training-buddy link, invites and nudges.</li>
+        <li>Your profile answers and settings, including sex if you gave it.</li>
+        <li>Usage events and crash reports tied to your account in our analytics service (PostHog).</li>
+      </ul>
+    </section>
+
+    <section class="card" aria-labelledby="kept-title">
+      <div class="eyebrow" id="kept-title">What is kept, and for how long</div>
+      <ul>
+        <li>Nothing that identifies you is kept on purpose. Analytics events tied to your account are deleted within 30 days of the deletion.</li>
+        <li>Our database host keeps encrypted backups for disaster recovery; a deleted account disappears from them as the backups expire, and they are never used to restore a deleted account.</li>
+        <li>Deletion can't be undone. You can sign up again with the same email, but you start with no data.</li>
+      </ul>
+    </section>
+
+    <p class="note">More on what HyperFit stores and why: <a href="../privacy-policy.html#account-deletion">privacy policy</a>. Questions: <a href="mailto:hyperfocusedengineer@gmail.com">hyperfocusedengineer@gmail.com</a>.</p>
+
+    <div class="footer">HyperFit is built by Hyperfocused Engineer. <a href="../">Back to HyperFit</a> &middot; <a href="../../">All Projects</a></div>
+  </main>
+</body>
+</html>
