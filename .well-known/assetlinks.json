@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "com.hyperfocused.hyperfit",
       "sha256_cert_fingerprints": [
-        "B6:99:61:6C:F7:88:0A:61:29:44:69:24:04:09:C5:A8:ED:2E:6D:F6:C3:B2:94:FB:BA:5B:B7:00:83:E3:5F:14"
+        "B6:99:61:6C:F7:88:0A:61:29:44:69:24:04:09:C5:A8:ED:2E:6D:F6:C3:B2:94:FB:BA:5B:B7:00:83:E3:5F:14",
+        "EE:EF:0A:FE:CF:73:C4:60:A2:EA:61:4F:47:46:4E:3D:BD:18:46:7F:E9:C1:79:6B:13:85:FB:9B:3F:5C:7A:4B"
       ]
     }
   }
